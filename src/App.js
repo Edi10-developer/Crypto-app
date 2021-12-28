@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { NavBar } from "./components/exports";
-import { CoinList, Portfolio } from "./pages/exports";
+import { CoinList, Portfolio, Coin } from "./pages/exports";
 
 const App = () => (
   <>
@@ -9,7 +9,7 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={CoinList} />
         <Route exact path="/portfolio" component={Portfolio} />
-        {/*  <Route exact path="/:coinId" component={Coin} /> */}
+        <Route exact path="/:coinId" component={Coin} />
       </Switch>
     </Router>
   </>
