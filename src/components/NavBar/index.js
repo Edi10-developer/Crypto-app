@@ -1,26 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { SearchInput } from "../exports";
+import { SearchInput, SelectCurrency, SelectTheme } from "../exports";
 
 class NavBar extends React.Component {
+  state = {
+    coin: "",
+  };
+  handleSubmit = (coinValue) => this.setState({ coin: coinValue });
   render() {
     return (
-      <div>
+      <div style={{ display: "flex", alignContent: "space-between" }}>
         <Link to="/">Coins</Link>
-        <Link to="/portfolio">Portfolio</Link>
-        <div>
-          <SearchInput />
-          <div>
-            <select name="fiat" form="carform">
-              <option value="USD">USD</option>
-              <option value="EUR">EUR</option>
-            </select>
-          </div>
-          <label class="switch">
-            <input type="checkbox" />
-            <span class="slider round"></span>
-          </label>
-        </div>
+        <Link to="/portfolio"> Portfolio</Link>
+        <h3>{this.state.coin}</h3>
+        <SearchInput handleSubmit={this.handleSubmit} />
+        <SelectCurrency currency1="USD" currency2="EUR" />
+        <SelectTheme />
       </div>
     );
   }
