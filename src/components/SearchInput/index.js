@@ -1,4 +1,5 @@
 import React from "react";
+import { FormStyled } from "./styles";
 
 class SearchInput extends React.Component {
   state = {
@@ -13,14 +14,13 @@ class SearchInput extends React.Component {
   };
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <FormStyled onSubmit={this.handleSubmit}>
         <input
           type="text"
-          pleaceholder="Search..."
+          placeholder={` Search...`}
           onChange={this.handleChange}
         />
-        <p>{this.state.coin}</p>
-      </form>
+      </FormStyled>
     );
   }
 }
