@@ -1,7 +1,11 @@
 import React from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import { SearchInput, SelectCurrency, SelectTheme } from "../exports";
+import {
+  SearchInput,
+  SelectCurrency,
+  SelectTheme,
+  DropdownCoinList,
+} from "../exports";
 
 import { Container, LinkStyled } from "./styles";
 
@@ -11,10 +15,14 @@ class NavBar extends React.Component {
     currency: "USD",
     data: [],
     coinData: [],
+    coins: [],
   };
 
-  handleSubmit = async (coinValue) => {
-    await this.setState({ coin: coinValue });
+  handleChange = async (coinValue) => {
+    this.setState({ coin: coinValue });
+  };
+  handleSubmit = (coinValue) => {
+    //  await this.setState({ coin: coinValue });
     this.getCoinData();
     window.location.pathname = `/${this.state.coin}`;
   };
@@ -30,25 +38,42 @@ class NavBar extends React.Component {
     }
   };
 
-  render() {
-    console.log(this.state.coinData);
+  getCoinList = async () => {
+    try {
+      const { data } = await axios(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=${this.state.orderList}&per_page=100&page=1&sparkline=true&price_change_percentage=7d`
+      );
+      // const coinsIds = data.map((item) => item);
+      this.setState({ coins: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  componentDidMount() {
+    this.getCoinList();
+  }
 
+  render() {
+    console.log(this.state.coins.map((i) => i.id));
     return (
       <Container>
         <div>
-          <Link to="/" style={LinkStyled}>
-            Coins
-          </Link>
-          <Link to="/portfolio" style={LinkStyled}>
-            {" "}
-            Portfolio
-          </Link>
-          <Link to={`/${this.state.coin}`} />
+          <LinkStyled to="/">Coins</LinkStyled>
+          <LinkStyled to="/portfolio"> Portfolio</LinkStyled>
+          <LinkStyled to={`/${this.state.coin}`} />
         </div>
         <div>
-          <Link to={`/${this.state.coin}`} />
-          <SearchInput handleSubmit={this.handleSubmit} />
-          <SelectCurrency currency1="USD" currency2="EUR" />
+          <LinkStyled to={`/${this.state.coin}`} />
+          <SearchInput
+            handleSubmit={this.handleSubmit}
+            coins={this.state.coins}
+            handleChange={this.handleChange}
+          />
+          {this.state.coin !== "" && (
+            <DropdownCoinList coins={this.state.coins} coin={this.state.coin} />
+          )}
+
+          <SelectCurrency currency1={"USD"} currency2={"EUR"} />
           <SelectTheme />
         </div>
       </Container>
@@ -56,3 +81,36 @@ class NavBar extends React.Component {
   }
 }
 export default NavBar;
+
+{
+  /* 
+ <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: "370px",
+                position: "fixed",
+                backgroundColor: "black",
+                color: "white",
+                top: "60px",
+              }}
+            >
+              {this.state.coins
+                .filter((element) => {
+                  if (this.state.coin == "") {
+                    return element;
+                  } else if (element[0] === this.state.coin[0]) {
+                    return element;
+                  }
+                })
+                .map((item, key) => (
+                  <div
+                    onClick={() => (window.location.pathname = `/${item}`)}
+                    key={item}
+                  >
+                    {item}
+                  </div>
+                ))}
+            </div>
+*/
+}

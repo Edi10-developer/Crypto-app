@@ -5,3 +5,5 @@ export { default as LineChart } from "./Charts/LineChart/index";
 export { default as BarChart } from "./Charts/BarChart/index";
 export { default as NavBar } from "./NavBar/index";
 export { default as Table } from "./Table/index";
+export { default as Progressbar } from "./ProgressBar/index";
+export { default as DropdownCoinList } from "./DropdownCoinList/index";

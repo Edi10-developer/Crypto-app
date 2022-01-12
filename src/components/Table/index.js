@@ -1,5 +1,5 @@
 import { TableStyled } from "./styles";
-import { LineChart } from "../exports";
+import { LineChart, Progressbar } from "../exports";
 
 const Table = (props) => (
   <TableStyled>
@@ -56,6 +56,33 @@ const Table = (props) => (
             {Math.round((total_supply / 1000000000) * 100) / 100}B
           </td>
           <td>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignContent: "space-between",
+              }}
+            >
+              <h4>{Math.round(market_cap_change_24h / 10000000)}B</h4>
+              <h4>{Math.round(market_cap_change_24h / 10000000)}B</h4>
+            </div>
+            <Progressbar
+              percent={
+                Math.round(market_cap_change_24h / 1000000000) /
+                Math.round(market_cap / 1000000000)
+              }
+            />
+          </td>
+          <td>
+            <Progressbar
+              percent={
+                Math.round(circulating_supply / 1000000000) /
+                Math.round(total_supply / 1000000000)
+              }
+              bilion={circulating_supply}
+            />
+          </td>
+          <td>
             <LineChart
               data={{
                 labels: ["", "", "", "", "", "", ""],
@@ -78,7 +105,6 @@ const Table = (props) => (
               }}
             />
           </td>
-          <td></td>
         </tr>
       )
     )}

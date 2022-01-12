@@ -25,8 +25,6 @@ class CoinList extends React.Component {
     this.getCoinList();
   }
   render() {
-    console.log(this.state.data);
-
     return (
       <Container>
         <h4>Your overview</h4>

@@ -11,5 +11,6 @@ export const FormStyled = styled.form`
     height: 25px;
     width: 100%;
     border-radius: 7px;
+    margin-left: 30px;
   }
 `;
