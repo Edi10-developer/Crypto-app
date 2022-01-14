@@ -1,13 +1,9 @@
 import { Container } from "./styles";
-import { ThemeToggle } from "../img/themeToggle.svg";
+import themeToggle from "../img/themeToggleSelect.png";
 
 const SelectTheme = () => (
   <Container>
-    <label className="switch">
-      <img src={ThemeToggle} />
-      <input type="checkbox" />
-      <span className="slider round"></span>
-    </label>
+    <img src={themeToggle} alt="Select Theme" />
   </Container>
 );
 export default SelectTheme;

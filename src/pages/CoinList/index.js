@@ -14,7 +14,7 @@ class CoinList extends React.Component {
   getCoinList = async () => {
     try {
       const { data } = await axios(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=${this.state.orderList}&per_page=20&page=1&sparkline=true&7d`
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=${this.state.orderList}&per_page=5&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
       );
       this.setState({ data: data });
     } catch (err) {
@@ -25,6 +25,7 @@ class CoinList extends React.Component {
     this.getCoinList();
   }
   render() {
+    console.log(this.state.data);
     return (
       <Container>
         <h4>Your overview</h4>
@@ -39,8 +40,8 @@ class CoinList extends React.Component {
                     data: this.state.data.map(
                       (item) => item.sparkline_in_7d.price
                     ),
-                    borderColor: "rgb(255, 99, 132)",
-                    backgroundColor: "rgba(255, 99, 132, 0.5)",
+                    borderColor: "#568E2B",
+                    backgroundColor: "#568E2B",
                   },
                 ],
               }}
