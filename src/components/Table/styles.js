@@ -12,24 +12,57 @@ export const TableStyled = styled.table`
 `;
 
 export const TableData = styled.div`
-  margin: 0 auto;
-  border: 1px solid #ccc;
+  width: 86%;
+  background-color: black;
+  color: white;
+  padding-bottom: 10px;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid red;
+  border-radius: 9px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 20px;
+  overflow: hidden;
 `;
 
 export const Row = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  padding: 7px;
+  border-bottom: 1px solid #ccc;
+  padding-left: 10px;
+
+  :first-child {
+    border-bottom: none;
+  }
 `;
 
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
+  align-content: center;
+  font-size: 14px;
+  width: 8rem;
 
-  align-items: stretch;
+  :first-child {
+    width: 2rem;
+  }
 
-  min-width: 30px;
-  border: 1px solid #ccc;
+  :nth-child(4),
+  :nth-child(5),
+  :nth-child(6) {
+    color: ${(props) =>
+      props.children > "0.00" || props.children > 0.0 ? "green" : "red"};
+
+    span {
+      color: white;
+    }
+  }
 `;
 
 export const IconCoin = styled.img`

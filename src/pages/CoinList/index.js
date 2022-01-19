@@ -42,18 +42,46 @@ class CoinList extends React.Component {
                     ),
                     borderColor: "#568E2B",
                     backgroundColor: "#568E2B",
+                    pointBackgroundColor: "transparent",
+                    pointBorderColor: "transparent",
+                    tension: 0.5,
                   },
                 ],
               }}
               options={{
-                maintainAspectRatio: false,
-                scales: {
-                  y: {
-                    beginAtZero: false,
+                layout: {
+                  padding: {
+                    top: 100,
                   },
                 },
-                width: "200px",
-                height: "100px",
+
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                },
+                animation: {
+                  duration: 2000,
+                },
+                maintainAspectRatio: false,
+                responsive: true,
+                scales: {
+                  y: {
+                    display: false,
+                  },
+                  x: {
+                    grid: {
+                      color: "transparent",
+                    },
+                    ticks: {
+                      font: {
+                        size: 12,
+                      },
+                      maxRotation: 0,
+                      minRotation: 0,
+                    },
+                  },
+                },
               }}
             />
           </ChartContainer>
@@ -86,7 +114,7 @@ class CoinList extends React.Component {
           </ChartContainer>
         </ChartsContainer>
         <h4>Your overview</h4>
-        <Table data={this.state.data} />
+        <Table data={this.state.data} currency={this.state.currency} />
       </Container>
     );
   }
