@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export const Container = styled.div`
-  border: 1px solid #ccc;
   display: flex;
   justify-content: space-between;
   background-color: black;
@@ -25,6 +24,6 @@ export const LinkStyled = styled(Link)`
   transition: 300ms;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: #2c2f35;
   }
 `;

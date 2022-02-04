@@ -7,8 +7,8 @@ class Progressbar extends React.Component {
     return (
       <ProgressBar
         percent={this.props.percent}
-        unfilledBackground="red"
-        filledBackground="green"
+        unfilledBackground={this.props.unfilledBackground}
+        filledBackground={this.props.filledBackground}
         width={this.props.width}
       />
     );

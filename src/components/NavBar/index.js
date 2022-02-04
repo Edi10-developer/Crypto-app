@@ -27,6 +27,17 @@ class NavBar extends React.Component {
     window.location.pathname = `/${this.state.coin}`;
   };
 
+  getBitcoinData = async () => {
+    try {
+      const { data } = await axios(
+        `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=dollar&days=30`
+      );
+      this.setState({ coinData: data });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   getCoinData = async () => {
     try {
       const { data } = await axios(

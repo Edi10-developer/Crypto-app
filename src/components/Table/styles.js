@@ -12,7 +12,7 @@ export const TableStyled = styled.table`
 `;
 
 export const TableData = styled.div`
-  width: 86%;
+  width: calc(100% - 20px);
   background-color: black;
   color: white;
   padding-bottom: 10px;
@@ -57,16 +57,16 @@ export const Column = styled.div`
   :nth-child(5),
   :nth-child(6) {
     color: ${(props) =>
-      props.children > "0.00" || props.children > 0.0 ? "green" : "red"};
+      props.children >= "0" || props.children <= 0 ? "green" : "red"};
 
     span {
       color: white;
     }
   }
-`;
 
-export const IconCoin = styled.img`
-  width: 17px;
-  height: 17px;
-  margin: 0 5px -5px 0;
+  img {
+    width: 17px;
+    height: 17px;
+    margin: 0 5px -5px 0;
+  }
 `;
