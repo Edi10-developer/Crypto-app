@@ -57,7 +57,9 @@ export const Column = styled.div`
   :nth-child(5),
   :nth-child(6) {
     color: ${(props) =>
-      props.children >= "0" || props.children <= 0 ? "green" : "red"};
+      props.isNegative === false
+        ? "rgba(0, 255, 95, 1)"
+        : "rgba(255, 0, 7, 1)"};
 
     span {
       color: white;

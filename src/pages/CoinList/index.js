@@ -36,7 +36,7 @@ class CoinList extends React.Component {
   getCoinList = async () => {
     try {
       const { data } = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=${this.state.orderList}&per_page=10&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=${this.state.orderList}&per_page=100&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
       );
       this.setState({ data: data });
     } catch (err) {

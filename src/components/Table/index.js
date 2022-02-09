@@ -6,7 +6,7 @@ import { SparkLine } from "../Charts/exports";
 import { Line } from "react-chartjs-2";
 
 class Table extends React.Component {
-  state = { colors: [] };
+  state = { colors: [], isNegative: true };
 
   renderSwatches = () => {
     const { colors } = this.state;
@@ -22,12 +22,14 @@ class Table extends React.Component {
       );
     });
   };
-
-  getLabels = (arr) => {
-    let counter = 0;
-    let labels = arr.map(() => counter++);
-    return labels;
+  checkIsNegative = (number) => {
+    if (number < 0) {
+      return true;
+    } else {
+      return false;
+    }
   };
+
   getColors = (colors) =>
     this.setState((state) => ({ colors: [...state.colors, ...colors] }));
 
@@ -47,10 +49,10 @@ class Table extends React.Component {
               <span>1h %</span>
             </Column>
             <Column>
-              <span>124h %</span>
+              <span>24h %</span>
             </Column>
             <Column>
-              <span>17d %</span>
+              <span>7d %</span>
             </Column>
             <Column>24h Volume/Market Cap</Column>
             <Column>Circulating/Total Supply</Column>
@@ -91,15 +93,25 @@ class Table extends React.Component {
                   {current_price}&nbsp;
                   {this.props.currency}
                 </Column>
-                <Column>
+                <Column
+                  isNegative={this.checkIsNegative(
+                    price_change_percentage_1h_in_currency
+                  )}
+                >
                   {Math.round(price_change_percentage_1h_in_currency * 100) /
                     100}
                   %
                 </Column>
-                <Column>
+                <Column
+                  isNegative={this.checkIsNegative(price_change_percentage_24h)}
+                >
                   {Math.round(price_change_percentage_24h * 100) / 100}%
                 </Column>
-                <Column>
+                <Column
+                  isNegative={this.checkIsNegative(
+                    price_change_percentage_7d_in_currency
+                  )}
+                >
                   {" "}
                   {Math.round(price_change_percentage_7d_in_currency * 100) /
                     100}
@@ -136,45 +148,12 @@ class Table extends React.Component {
                 </Column>
                 <Column>
                   {" "}
-                  <Line
-                    data={{
-                      labels: this.getLabels(sparkline_in_7d.price),
-                      datasets: [
-                        {
-                          label: "",
-                          data: sparkline_in_7d.price,
-                          borderColor: "#568E2B",
-                          backgroundColor: "#568E2B",
-                          pointBackgroundColor: "transparent",
-                          pointBorderColor: "transparent",
-                          with: 35,
-                          tension: 0.6,
-                        },
-                      ],
-                    }}
-                    options={{
-                      plugins: {
-                        legend: {
-                          display: false,
-                        },
-                      },
-                      scales: {
-                        maintainAspectRatio: true,
-                        y: {
-                          display: false,
-                        },
-                        x: {
-                          grid: {
-                            color: "transparent",
-                          },
-                          ticks: {
-                            font: {
-                              size: 0.3,
-                            },
-                          },
-                        },
-                      },
-                    }}
+                  <SparkLine
+                    price={sparkline_in_7d.price}
+                    coinName={id}
+                    weekPercentageResult={
+                      price_change_percentage_7d_in_currency
+                    }
                   />
                 </Column>
               </Row>

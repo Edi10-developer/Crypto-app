@@ -1,73 +1,60 @@
 import { Line } from "react-chartjs-2";
 
 const SparkLine = (props) => {
-  const getLabels = (arr) => {
+  const getLabels = (labelsArray) => {
     let counter = 0;
-    let labels = arr.map(() => counter++);
+    let labels = labelsArray.map(() => counter++);
     return labels;
   };
 
-  const chartData = (canvas) => {
-    let borderColor = "";
-    if (props.prices[0] > props.prices[props.prices.length - 1]) {
-      borderColor = "rgba(254, 16, 64, 1)";
+  const checkColor = (weekPercentageResult) => {
+    if (weekPercentageResult > 0) {
+      return "rgba(0, 255, 95, 1)";
     } else {
-      borderColor = "rgba(0, 255, 95, 1)";
+      return "rgba(255, 0, 7, 1)";
     }
-    return {
-      labels: getLabels(props.prices),
-      datasets: [
-        {
-          data: props.prices,
-          tension: 0.4,
-          borderColor: borderColor,
-          fill: false,
-        },
-      ],
-    };
   };
-  const options = {
+  const chartsData = {
+    labels: getLabels(props.price),
+    datasets: [
+      {
+        label: props.coinName,
+        data: props.price,
+        borderColor: checkColor(props.weekPercentageResult),
+        backgroundColor: checkColor(props.weekPercentageResult),
+        pointBackgroundColor: "transparent",
+        pointBorderColor: "transparent",
+        with: 35,
+        tension: 0.5,
+      },
+    ],
+  };
+
+  const chartOptions = {
     plugins: {
       legend: {
         display: false,
       },
     },
-    maintainAspectRatio: false,
-    elements: {
-      point: {
-        radius: 0,
-      },
-    },
     scales: {
+      maintainAspectRatio: true,
+      y: {
+        display: false,
+      },
       x: {
         grid: {
-          display: false,
-          drawBorder: false,
+          color: "transparent",
         },
         ticks: {
-          display: false,
-          beginAtZero: true,
-          maxTicksLimit: 5,
-        },
-      },
-      y: {
-        grid: {
-          display: false,
-          drawBorder: false,
-        },
-        ticks: {
-          display: false,
-          beginAtZero: true,
-          maxTicksLimit: 5,
+          font: {
+            size: 0.3,
+          },
         },
       },
     },
   };
-  return (
-    <>
-      <Line data={chartData} options={options} width={115} height={70} />
-    </>
-  );
+
+  return <Line data={chartsData} options={chartOptions} />;
 };
 
 export default SparkLine;
