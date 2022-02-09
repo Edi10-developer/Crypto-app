@@ -30,15 +30,18 @@ export default function LineChart(props) {
           {
             label: "BTC",
             data: props.coinPrice,
-            borderColor: "#568E2B",
+            borderColor: "rgba(0, 255, 95, 1)",
             backgroundColor: "#568E2B",
             pointBackgroundColor: "transparent",
             pointBorderColor: "transparent",
             tension: 0.4,
+            drawOnChartArea: true,
+            drawTicks: true,
           },
         ],
       }}
       options={{
+        showLabelBackdrop: true,
         layout: {
           padding: {
             top: 100,
@@ -55,6 +58,7 @@ export default function LineChart(props) {
         },
         maintainAspectRatio: true,
         responsive: true,
+
         scales: {
           x: {
             grid: {

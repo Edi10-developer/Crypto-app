@@ -1,19 +1,15 @@
 import React from "react";
 import axios from "axios";
 import { LineChart, BarChart, Table } from "../../components/exports";
-
 import { Container, ChartsContainer, ChartContainer } from "./styles";
-import { findByDisplayValue } from "@testing-library/dom";
 
-const current = new Date();
-const datee = new Date().setDate(current.getDate() - 30);
 class CoinList extends React.Component {
   state = {
     currency: "USD",
     data: [],
     orderList: "market_cap_desc",
     btcChartsData: [],
-    days: 365,
+    days: 10,
   };
 
   corsProblemFixer = "https://cors-anywhere.herokuapp.com/";
@@ -86,7 +82,10 @@ class CoinList extends React.Component {
               />
             </ChartContainer>
             <ChartContainer>
-              <BarChart totalVolumes={this.state.btcChartsData.total_volumes} />
+              <BarChart
+                totalVolumes={this.state.btcChartsData.total_volumes}
+                coinTimestamp={this.coinTimestamp}
+              />
             </ChartContainer>
           </ChartsContainer>
           <h4>Your overview</h4>

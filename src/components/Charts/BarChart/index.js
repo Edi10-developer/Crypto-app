@@ -22,9 +22,9 @@ ChartJS.register(
 );
 
 export default function BarChart(props) {
-  const getLabels = (arr) => {
-    let labels = arr.map((arr) =>
-      new Date(arr[0]).toLocaleString(undefined, {
+  const getLabels = (labelsArray) => {
+    let labels = labelsArray.map((array) =>
+      new Date(array[0]).toLocaleString(undefined, {
         month: "short",
         day: "numeric",
       })
@@ -34,7 +34,7 @@ export default function BarChart(props) {
 
   const getPrices = (arr) => arr.map((arr) => arr[1]);
 
-  const chartData = (canvas) => {
+  const chartDatasss = (canvas) => {
     const ctx = canvas.getContext("2d");
     var gradientFill = ctx.createLinearGradient(0, 0, 0, 350);
     gradientFill.addColorStop(0, "rgba(33, 114, 229, 1)");
@@ -52,124 +52,21 @@ export default function BarChart(props) {
       ],
     };
   };
+
+  const chartData = {
+    labels: getLabels(props.coinTimestamp),
+
+    datasets: [
+      {
+        label: "",
+        data: props.totalVolumes,
+        backgroundColor: "rgb(26, 44, 73)",
+      },
+    ],
+  };
   return (
     <Bar
-      data={{
-        labels: [
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-          "",
-        ],
-        datasets: [
-          {
-            label: "",
-            data: props.totalVolumes,
-            backgroundColor: "rgb(26, 44, 73)",
-          },
-        ],
-      }}
+      data={chartData}
       options={{
         plugins: {
           legend: {
