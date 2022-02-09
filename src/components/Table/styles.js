@@ -70,3 +70,12 @@ export const Column = styled.div`
     margin: 0 5px -5px 0;
   }
 `;
+
+export const GreenBall = styled.div`
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(0, 255, 95, 1);
+  margin-top: -13px;
+  margin-left: 60px;
+`;

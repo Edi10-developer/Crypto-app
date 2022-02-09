@@ -1,6 +1,6 @@
 import { Line } from "react-chartjs-2";
 
-const Sparkline = (props) => {
+const SparkLine = (props) => {
   const getLabels = (arr) => {
     let counter = 0;
     let labels = arr.map(() => counter++);
@@ -70,4 +70,4 @@ const Sparkline = (props) => {
   );
 };
 
-export default Sparkline;
+export default SparkLine;

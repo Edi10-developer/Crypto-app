@@ -1,1 +1,1 @@
-export { default as Sparkline } from "./Sparkline/index";
+export { default as SparkLine } from "./Sparkline/index";

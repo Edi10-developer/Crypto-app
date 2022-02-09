@@ -1,8 +1,9 @@
 import React from "react";
-import { Row, Column, TableData, IconCoin } from "./styles";
+import { Row, Column, TableData, IconCoin, GreenBall } from "./styles";
 import { LineChart, Progressbar } from "../exports";
 import { ColorExtractor } from "react-color-extractor";
 import { SparkLine } from "../Charts/exports";
+import { Line } from "react-chartjs-2";
 
 class Table extends React.Component {
   state = { colors: [] };
@@ -22,6 +23,11 @@ class Table extends React.Component {
     });
   };
 
+  getLabels = (arr) => {
+    let counter = 0;
+    let labels = arr.map(() => counter++);
+    return labels;
+  };
   getColors = (colors) =>
     this.setState((state) => ({ colors: [...state.colors, ...colors] }));
 
@@ -48,7 +54,9 @@ class Table extends React.Component {
             </Column>
             <Column>24h Volume/Market Cap</Column>
             <Column>Circulating/Total Supply</Column>
-            <Column>Last7days</Column>
+            <Column>
+              Last7days <GreenBall />
+            </Column>
           </Row>
           {this.props.data.map(
             (
@@ -128,9 +136,9 @@ class Table extends React.Component {
                 </Column>
                 <Column>
                   {" "}
-                  <LineChart
+                  <Line
                     data={{
-                      labels: ["", "", "", "", "", "", ""],
+                      labels: this.getLabels(sparkline_in_7d.price),
                       datasets: [
                         {
                           label: "",
@@ -139,7 +147,7 @@ class Table extends React.Component {
                           backgroundColor: "#568E2B",
                           pointBackgroundColor: "transparent",
                           pointBorderColor: "transparent",
-                          with: 25,
+                          with: 35,
                           tension: 0.6,
                         },
                       ],
@@ -161,7 +169,7 @@ class Table extends React.Component {
                           },
                           ticks: {
                             font: {
-                              size: 12,
+                              size: 0.3,
                             },
                           },
                         },
