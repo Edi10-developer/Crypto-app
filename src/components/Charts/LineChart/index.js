@@ -22,14 +22,27 @@ ChartJS.register(
 );
 
 export default function LineChart(props) {
+  const coinPrice = [];
+  const coinTimestamp = [];
+  console.log(props.prices);
+  props.prices.map((value, index) => {
+    var price = value[1];
+    var findChartDates = new Date(value[0]);
+    var chartDate = `${findChartDates.getDate()} - ${
+      findChartDates.getMonth() + 1
+    } - ${findChartDates.getFullYear()}`;
+    coinTimestamp.push(chartDate);
+    coinPrice.push(price);
+  });
+
   return (
     <Line
       data={{
-        labels: props.coinTimestamp,
+        labels: coinTimestamp,
         datasets: [
           {
             label: "BTC",
-            data: props.coinPrice,
+            data: coinPrice,
             borderColor: "rgba(0, 255, 95, 1)",
             backgroundColor: "#568E2B",
             pointBackgroundColor: "transparent",

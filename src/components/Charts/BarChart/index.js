@@ -32,7 +32,7 @@ export default function BarChart(props) {
     return labels;
   };
 
-  const getPrices = (arr) => arr.map((arr) => arr[1]);
+  const getPrices = (arr) => arr.map((arr) => console.log(arr[1]));
 
   const chartDatasss = (canvas) => {
     const ctx = canvas.getContext("2d");
@@ -40,10 +40,10 @@ export default function BarChart(props) {
     gradientFill.addColorStop(0, "rgba(33, 114, 229, 1)");
     gradientFill.addColorStop(1, "rgba(0, 0, 0, 1)");
     return {
-      labels: getLabels(props.totalVolumes),
+      labels: props.coinTimestamp,
       datasets: [
         {
-          data: getPrices(props.totalVolumes),
+          data: props.coinTotalVolumes,
           tension: 0.4,
           borderColor: "rgba(33, 114, 229, 1)",
           fill: true,
@@ -54,13 +54,13 @@ export default function BarChart(props) {
   };
 
   const chartData = {
-    labels: getLabels(props.coinTimestamp),
+    labels: props.coinTimestamp,
 
     datasets: [
       {
         label: "",
-        data: props.totalVolumes,
-        backgroundColor: "rgb(26, 44, 73)",
+        data: props.coinTotalVolumes,
+        backgroundColor: "#2172E6",
       },
     ],
   };
@@ -92,12 +92,14 @@ export default function BarChart(props) {
             ticks: {
               align: "start",
               source: "auto",
-              maxRotation: 0,
-              autoSkip: true,
+
+              autoSkip: false,
               maxTicksLimit: 7,
               font: {
-                size: 9,
+                size: 7,
               },
+              maxRotation: 49,
+              minRotation: 49,
             },
             grid: {
               display: false,

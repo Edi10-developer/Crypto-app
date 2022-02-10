@@ -9,13 +9,12 @@ class CoinList extends React.Component {
     data: [],
     orderList: "market_cap_desc",
     btcChartsData: [],
-    days: 10,
+    days: 7,
   };
 
   corsProblemFixer = "https://cors-anywhere.herokuapp.com/";
 
-  coinPrice = [];
-  coinTimestamp = [];
+  coinVolumes = [];
 
   getBitcoinData = async () => {
     try {
@@ -27,6 +26,7 @@ class CoinList extends React.Component {
       console.log(err);
     }
     this.getDate();
+    this.getVolumes();
   };
 
   getCoinList = async () => {
@@ -40,13 +40,10 @@ class CoinList extends React.Component {
     }
   };
 
-  getDate = () => {
-    this.state.btcChartsData.prices.map((value, index) => {
-      var price = value[1];
-      var findChartDates = new Date(value[0]);
-      var chartDate = `${findChartDates.getDate()} - ${findChartDates.getMonth()} - ${findChartDates.getFullYear()}`;
-      this.coinTimestamp.push(chartDate);
-      this.coinPrice.push(price);
+  getVolumes = () => {
+    this.state.btcChartsData.total_volumes.map((value, index) => {
+      var volume = value[1];
+      this.coinVolumes.push(volume);
     });
   };
 
@@ -59,7 +56,7 @@ class CoinList extends React.Component {
     <span>{el[0].current_price}</span>
   ));
   render() {
-    console.log(this.btcCurrentPrice);
+    console.log(this.state.btcChartsData.prices);
     return (
       <Container>
         <div
@@ -76,14 +73,11 @@ class CoinList extends React.Component {
             <ChartContainer>
               <h6>BTC</h6>
               <h2>{this.btcCurrentPrice}</h2>
-              <LineChart
-                coinTimestamp={this.coinTimestamp}
-                coinPrice={this.coinPrice}
-              />
+              <LineChart prices={this.state.btcChartsData.prices} />
             </ChartContainer>
             <ChartContainer>
               <BarChart
-                totalVolumes={this.state.btcChartsData.total_volumes}
+                coinTotalVolumes={this.coinVolumes}
                 coinTimestamp={this.coinTimestamp}
               />
             </ChartContainer>
