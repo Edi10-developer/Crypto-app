@@ -92,6 +92,9 @@ class LineChart extends React.Component {
         ref={this.lineChartRef}
         data={this.chartData}
         options={this.chartOptions}
+        style={{
+          maxHeight: "80%",
+        }}
       />
     );
   }
