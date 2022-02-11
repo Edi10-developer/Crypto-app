@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { render } from "@testing-library/react";
 
 ChartJS.register(
   CategoryScale,
@@ -21,82 +22,79 @@ ChartJS.register(
   Legend
 );
 
-export default function LineChart(props) {
-  const coinPrice = [];
-  const coinTimestamp = [];
-  console.log(props.prices);
-  props.prices.map((value, index) => {
-    var price = value[1];
-    var findChartDates = new Date(value[0]);
-    var chartDate = `${findChartDates.getDate()} - ${
-      findChartDates.getMonth() + 1
-    } - ${findChartDates.getFullYear()}`;
-    coinTimestamp.push(chartDate);
-    coinPrice.push(price);
-  });
+class LineChart extends React.Component {
+  lineChartRef = React.createRef();
 
-  return (
-    <Line
-      data={{
-        labels: coinTimestamp,
-        datasets: [
-          {
-            label: "BTC",
-            data: coinPrice,
-            borderColor: "rgba(0, 255, 95, 1)",
-            backgroundColor: "#568E2B",
-            pointBackgroundColor: "transparent",
-            pointBorderColor: "transparent",
-            tension: 0.4,
-            drawOnChartArea: true,
-            drawTicks: true,
-          },
-        ],
-      }}
-      options={{
-        showLabelBackdrop: true,
-        layout: {
-          padding: {
-            top: 100,
-          },
-        },
+  chartData = {
+    labels: this.props.coinTimestamp,
+    datasets: [
+      {
+        label: "BTC Prices",
+        data: this.props.coinPrice,
+        borderColor: "rgba(0, 255, 95, 1)",
+        backgroundColor: "rgba(0, 255, 95, 1)",
+        pointBackgroundColor: "transparent",
+        pointBorderColor: "transparent",
+        tension: 0.4,
+        drawOnChartArea: true,
+        drawTicks: true,
+      },
+    ],
+  };
 
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-        animation: {
-          duration: 2000,
-        },
-        maintainAspectRatio: true,
-        responsive: true,
+  chartOptions = {
+    showLabelBackdrop: true,
+    layout: {
+      padding: {
+        top: 100,
+      },
+    },
 
-        scales: {
-          x: {
-            grid: {
-              color: "transparent",
-            },
-            ticks: {
-              font: {
-                size: 7,
-              },
-              maxRotation: 49,
-              minRotation: 49,
-            },
-          },
-          y: {
-            grid: {
-              display: false,
-            },
-            ticks: {
-              display: false,
-              beginAtZero: true,
-              maxTicksLimit: 5,
-            },
-          },
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+    animation: {
+      duration: 2000,
+    },
+    maintainAspectRatio: true,
+    responsive: true,
+
+    scales: {
+      x: {
+        grid: {
+          color: "transparent",
         },
-      }}
-    />
-  );
+        ticks: {
+          font: {
+            size: 7,
+          },
+          maxRotation: 49,
+          minRotation: 49,
+        },
+      },
+      y: {
+        grid: {
+          display: false,
+        },
+        ticks: {
+          display: false,
+          beginAtZero: true,
+          maxTicksLimit: 5,
+        },
+      },
+    },
+  };
+  render() {
+    return (
+      <Line
+        ref={this.lineChartRef}
+        data={this.chartData}
+        options={this.chartOptions}
+      />
+    );
+  }
 }
+
+export default LineChart;

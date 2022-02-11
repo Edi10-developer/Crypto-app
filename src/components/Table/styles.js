@@ -13,7 +13,7 @@ export const TableStyled = styled.table`
 
 export const TableData = styled.div`
   width: calc(100% - 20px);
-  background-color: black;
+  background-color: #191b1f;
   color: white;
   padding-bottom: 10px;
   margin: 20px auto;

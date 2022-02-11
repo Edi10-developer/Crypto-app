@@ -1,11 +1,19 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
+export const PageContainer = styled.div`
   text-align: left;
   padding: 50px;
   background-color: #1f2127;
   color: white;
   width: calc(100% - 100px);
+`;
+
+export const MainContainer = styled.div`
+  width: 1100px;
+  border: 1px solid blue;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const ChartsContainer = styled.div`
@@ -15,10 +23,21 @@ export const ChartsContainer = styled.div`
 `;
 
 export const ChartContainer = styled.div`
-  width: 45%;
-  height: 300px;
+  display: flex;
+  flex-direction: column;
+  width: 43%;
+  height: 460px;
   border: 1px solid #ccc;
-  padding: 5px;
+  padding-left: 20px;
+  padding-right: 30px;
   background-color: #191b1f;
-  border-radius: 10px; ;
+  border-radius: 10px;
+
+  h6 {
+    font-size: 14px;
+  }
+  h2 {
+    margin-top: -30px;
+    margin-bottom: -30px;
+  }
 `;
