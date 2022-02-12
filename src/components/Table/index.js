@@ -1,9 +1,15 @@
 import React from "react";
-import { Row, Column, TableData, IconCoin, GreenBall } from "./styles";
-import { LineChart, Progressbar } from "../exports";
+import {
+  Row,
+  Column,
+  TableData,
+  GreenBall,
+  arrowValueChangeStyled,
+} from "./styles";
+import { Progressbar } from "../exports";
 import { ColorExtractor } from "react-color-extractor";
 import { SparkLine } from "../Charts/exports";
-import { Line } from "react-chartjs-2";
+import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 
 class Table extends React.Component {
   state = { colors: [], isNegative: true };
@@ -22,6 +28,7 @@ class Table extends React.Component {
       );
     });
   };
+
   checkIsNegative = (number) => {
     if (number < 0) {
       return true;
@@ -30,16 +37,20 @@ class Table extends React.Component {
     }
   };
 
+  arrowValueChange = (number) => {
+    if (number < 0) {
+      return <TiArrowSortedDown style={arrowValueChangeStyled} />;
+    } else {
+      return <TiArrowSortedUp style={arrowValueChangeStyled} />;
+    }
+  };
+
   getColors = (colors) =>
     this.setState((state) => ({ colors: [...state.colors, ...colors] }));
 
   render() {
     return (
-      <div
-        style={{
-          margin: "0 auto",
-        }}
-      >
+      <div>
         <TableData>
           <Row>
             <Column>#</Column>
@@ -78,14 +89,14 @@ class Table extends React.Component {
               },
               index
             ) => (
-              <Row>
+              <Row key={index}>
                 <Column>{index + 1}</Column>
                 <Column>
                   <p>
-                    {" "}
-                    <ColorExtractor getColors={this.getColors}>
+                    {/* <ColorExtractor getColors={this.getColors}>
                       <img src={image} alt={id} />
-                    </ColorExtractor>
+                    </ColorExtractor> */}
+                    <img src={image} alt={id} />
                     {id.charAt(0).toUpperCase() + id.slice(1)}
                   </p>
                 </Column>
@@ -98,29 +109,46 @@ class Table extends React.Component {
                     price_change_percentage_1h_in_currency
                   )}
                 >
-                  {Math.round(price_change_percentage_1h_in_currency * 100) /
-                    100}
-                  %
+                  <p>
+                    {" "}
+                    {this.arrowValueChange(
+                      price_change_percentage_1h_in_currency
+                    )}
+                    &nbsp;
+                    {Math.round(price_change_percentage_1h_in_currency * 100) /
+                      100}
+                    %
+                  </p>
                 </Column>
                 <Column
                   isNegative={this.checkIsNegative(price_change_percentage_24h)}
                 >
-                  {Math.round(price_change_percentage_24h * 100) / 100}%
+                  <p>
+                    {" "}
+                    {this.arrowValueChange(price_change_percentage_24h)}
+                    &nbsp;
+                    {Math.round(price_change_percentage_24h * 100) / 100}%
+                  </p>
                 </Column>
                 <Column
                   isNegative={this.checkIsNegative(
                     price_change_percentage_7d_in_currency
                   )}
                 >
-                  {" "}
-                  {Math.round(price_change_percentage_7d_in_currency * 100) /
-                    100}
-                  %
+                  <p>
+                    {" "}
+                    {this.arrowValueChange(
+                      price_change_percentage_7d_in_currency
+                    )}
+                    &nbsp;
+                    {Math.round(price_change_percentage_7d_in_currency * 100) /
+                      100}
+                    %
+                  </p>
                 </Column>
                 <Column>
-                  <p style={{ color: this.state.color }}>
-                    {" "}
-                    {this.renderSwatches()}
+                  {/* <p style={{ color: this.state.color }}> {this.renderSwatches()} </p> */}
+                  <p>
                     {Math.round((total_volume / 1000000000) * 100) / 100}B
                     &nbsp;&nbsp; &nbsp;&nbsp;
                     {Math.round((market_cap / 1000000000) * 100) / 100}B
@@ -133,9 +161,8 @@ class Table extends React.Component {
                   />
                 </Column>
                 <Column>
-                  {this.renderSwatches()}
+                  {/* <p style={{ color: this.state.color }}> {this.renderSwatches()} </p> */}{" "}
                   <p>
-                    {" "}
                     {Math.round((circulating_supply / 1000000000) * 100) / 100}B
                     &nbsp;&nbsp; &nbsp;&nbsp;
                     {Math.round((total_supply / 1000000000) * 100) / 100}B

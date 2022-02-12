@@ -81,3 +81,7 @@ export const GreenBall = styled.div`
   margin-top: -13px;
   margin-left: 60px;
 `;
+
+export const arrowValueChangeStyled = {
+  marginBottom: "-3px",
+};
