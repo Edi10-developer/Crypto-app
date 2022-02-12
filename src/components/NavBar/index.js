@@ -65,7 +65,6 @@ class NavBar extends React.Component {
   }
 
   render() {
-    console.log(this.state.coins.map((i) => i.id));
     return (
       <Container>
         <div>

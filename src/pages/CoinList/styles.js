@@ -25,9 +25,10 @@ export const ChartsContainer = styled.div`
 export const ChartContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
   width: 43%;
-  height: 460px;
-  border: 1px solid #ccc;
+  height: 370px;
   padding-left: 20px;
   padding-right: 30px;
   background-color: #191b1f;

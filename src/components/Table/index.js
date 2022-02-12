@@ -117,7 +117,6 @@ class Table extends React.Component {
                     100}
                   %
                 </Column>
-
                 <Column>
                   <p style={{ color: this.state.color }}>
                     {" "}

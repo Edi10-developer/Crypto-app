@@ -1,11 +1,11 @@
 const date = new Date();
 
-const day = date.getDay();
+const day = date.getDate();
 const month = date.getMonth() + 1;
 const year = date.getFullYear();
 var monthName = "";
 
-const getMonthName = (monthName) => {
+const getMonthName = (month) => {
   switch (month) {
     case 1:
       monthName = "January";
@@ -48,6 +48,4 @@ const getMonthName = (monthName) => {
 };
 
 getMonthName(month);
-export const currentDate = `${day}, ${monthName} ${year}`;
-
-console.log(monthName);
+export const currentDate = `${monthName} ${day}, ${year}`;

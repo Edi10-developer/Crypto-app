@@ -48,7 +48,7 @@ class CoinList extends React.Component {
       this.setState({
         data: data,
         btcCurrentPrice: data[0].current_price,
-        btcCurrentVolume: data[0].market_cap_change_24h,
+        btcCurrentVolume: `${data[0].total_volume / 1000000000} B`,
       });
     } catch (err) {
       console.log(err);
