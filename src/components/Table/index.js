@@ -1,18 +1,13 @@
 import React from "react";
-import {
-  Row,
-  Column,
-  TableData,
-  GreenBall,
-  arrowValueChangeStyled,
-} from "./styles";
+import { Row, Column, TableData, GreenBall, arrowStyled } from "./styles";
 import { Progressbar } from "../exports";
 import { ColorExtractor } from "react-color-extractor";
 import { SparkLine } from "../Charts/exports";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
+import { nFormatter } from "../../utils/nFormatter";
 
 class Table extends React.Component {
-  state = { colors: [], isNegative: true };
+  state = { colors: [], isNegative: true, oderList: this.props.oderList };
 
   renderSwatches = () => {
     const { colors } = this.state;
@@ -39,9 +34,21 @@ class Table extends React.Component {
 
   arrowValueChange = (number) => {
     if (number < 0) {
-      return <TiArrowSortedDown style={arrowValueChangeStyled} />;
+      return <TiArrowSortedDown style={arrowStyled} />;
     } else {
-      return <TiArrowSortedUp style={arrowValueChangeStyled} />;
+      return <TiArrowSortedUp style={arrowStyled} />;
+    }
+  };
+
+  arrowSort = (sortedDesc) => {
+    if (sortedDesc === true) {
+      return <button onClick={this.props.orderCoinList}></button>;
+    } else {
+      return (
+        <button onClick={this.props.orderCoinList}>
+          <TiArrowSortedDown />
+        </button>
+      );
     }
   };
 
@@ -54,7 +61,18 @@ class Table extends React.Component {
         <TableData>
           <Row>
             <Column>#</Column>
-            <Column>Name</Column>
+            <Column>
+              <p>
+                Name{" "}
+                <span onClick={this.props.orderCoinList}>
+                  {this.props.orderList === true ? (
+                    <TiArrowSortedDown style={arrowStyled} />
+                  ) : (
+                    <TiArrowSortedUp style={arrowStyled} />
+                  )}
+                </span>
+              </p>
+            </Column>
             <Column>Price</Column>
             <Column>
               <span>1h %</span>
@@ -149,31 +167,32 @@ class Table extends React.Component {
                 <Column>
                   {/* <p style={{ color: this.state.color }}> {this.renderSwatches()} </p> */}
                   <p>
-                    {Math.round((total_volume / 1000000000) * 100) / 100}B
+                    {nFormatter(total_volume)}
                     &nbsp;&nbsp; &nbsp;&nbsp;
-                    {Math.round((market_cap / 1000000000) * 100) / 100}B
+                    {nFormatter(market_cap)}
                   </p>
                   <Progressbar
                     percent={(market_cap_change_24h * 100) / market_cap}
                     width="100px"
-                    unfilledBackground={this.state.colors}
-                    filledBackground={this.state.colors}
+                    unfilledBackground={"white"}
+                    filledBackground={"#215DB5"}
                   />
                 </Column>
                 <Column>
                   {/* <p style={{ color: this.state.color }}> {this.renderSwatches()} </p> */}{" "}
                   <p>
-                    {Math.round((circulating_supply / 1000000000) * 100) / 100}B
+                    {nFormatter(circulating_supply)}
                     &nbsp;&nbsp; &nbsp;&nbsp;
-                    {Math.round((total_supply / 1000000000) * 100) / 100}B
+                    {nFormatter(total_supply)}
                   </p>
                   <Progressbar
                     percent={(circulating_supply * 100) / total_supply}
                     width="100px"
+                    unfilledBackground={"white"}
+                    filledBackground={"#215DB5"}
                   />
                 </Column>
                 <Column>
-                  {" "}
                   <SparkLine
                     price={sparkline_in_7d.price}
                     coinName={id}

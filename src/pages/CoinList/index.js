@@ -14,14 +14,14 @@ class CoinList extends React.Component {
   state = {
     currency: "USD",
     data: [],
-    orderList: "market_cap_desc",
+    sortedDesc: true,
     btcChartsData: [],
     btcCurrentPrice: 0,
     btcCurrentVolume: 0,
     days: 30,
   };
 
-  corsProblemFixer = "https://cors-anywhere.herokuapp.com/";
+  //corsProblemFixer = "https://cors-anywhere.herokuapp.com/";
 
   coinPrice = [];
   coinVolumes = [];
@@ -43,7 +43,7 @@ class CoinList extends React.Component {
   getCoinList = async () => {
     try {
       const { data } = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=${this.state.orderList}&per_page=100&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
       );
       this.setState({
         data: data,
@@ -74,16 +74,29 @@ class CoinList extends React.Component {
     });
   };
 
+  sortByAscOrDesc = () => {
+    if (this.state.sortedDesc === true) {
+      let sortedAsceding = this.state.data.sort((a, b) => {
+        return a.market_cap - b.market_cap;
+      });
+      this.setState({ sortedDesc: false });
+      return sortedAsceding;
+    } else if (this.state.sortedDesc === false) {
+      let sortedDesceding = this.state.data.sort((a, b) => {
+        return b.market_cap - a.market_cap;
+      });
+      this.setState({ sortedDesc: true });
+      return sortedDesceding;
+    }
+  };
+
   componentDidMount() {
     this.getCoinList();
     this.getBitcoinData();
   }
 
-  btcCurrentPrice = this.state.data.map((el) => (
-    <span>{el[0].current_price}</span>
-  ));
   render() {
-    console.log(this.state.data[0]);
+    console.log(this.state.orderList);
     return (
       <PageContainer>
         <MainContainer>
@@ -114,7 +127,12 @@ class CoinList extends React.Component {
             </ChartContainer>
           </ChartsContainer>
           <h4>Your overview</h4>
-          <Table data={this.state.data} currency={this.state.currency} />
+          <Table
+            data={this.state.data}
+            currency={this.state.currency}
+            orderList={this.state.sortedDesc}
+            orderCoinList={this.sortByAscOrDesc}
+          />
         </MainContainer>
       </PageContainer>
     );

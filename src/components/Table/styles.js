@@ -46,7 +46,7 @@ export const Column = styled.div`
   justify-content: center;
   align-items: flex-start;
   align-content: center;
-  font-size: 14px;
+  font-size: 12px;
   width: 8rem;
 
   :first-child {
@@ -82,6 +82,7 @@ export const GreenBall = styled.div`
   margin-left: 60px;
 `;
 
-export const arrowValueChangeStyled = {
+export const arrowStyled = {
   marginBottom: "-3px",
+  fontSize: "15px",
 };
