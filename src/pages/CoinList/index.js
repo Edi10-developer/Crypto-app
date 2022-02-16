@@ -12,7 +12,7 @@ import { currentDate } from "../../utils/date.js";
 
 class CoinList extends React.Component {
   state = {
-    currency: "USD",
+    currency: this.props.currency,
     data: [],
     sortedDesc: true,
     btcChartsData: [],
@@ -93,6 +93,12 @@ class CoinList extends React.Component {
   componentDidMount() {
     this.getCoinList();
     this.getBitcoinData();
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.currency !== this.props.currency) {
+      this.setState({ currency: this.props.currency });
+    }
   }
 
   render() {

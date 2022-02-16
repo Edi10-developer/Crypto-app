@@ -12,8 +12,8 @@ import { Container, LinkStyled } from "./styles";
 class NavBar extends React.Component {
   state = {
     coin: "",
+    currencies: ["USD", "EURO"],
     currency: "USD",
-    data: [],
     coinData: [],
     coins: [],
   };
@@ -21,45 +21,31 @@ class NavBar extends React.Component {
   handleChange = async (coinValue) => {
     this.setState({ coin: coinValue });
   };
+
   handleSubmit = (coinValue) => {
-    //  await this.setState({ coin: coinValue });
     this.getCoinData();
     window.location.pathname = `/${this.state.coin}`;
-  };
-
-  getBitcoinData = async () => {
-    try {
-      const { data } = await axios(
-        `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=dollar&days=30`
-      );
-      this.setState({ coinData: data });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  getCoinData = async () => {
-    try {
-      const { data } = await axios(
-        `https://api.coingecko.com/api/v3/coins/${this.state.coin}?tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=true`
-      );
-      this.setState({ coinData: data });
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   getCoinList = async () => {
     try {
       const { data } = await axios(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=${this.state.orderList}&per_page=100&page=1&sparkline=true&price_change_percentage=7d`
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&per_page=100&page=1&sparkline=true&price_change_percentage=7d`
       );
-      // const coinsIds = data.map((item) => item);
       this.setState({ coins: data });
     } catch (err) {
       console.log(err);
     }
   };
+
+  getCurrency = (value) => {
+    if (this.state.currency !== value) {
+      this.setState({
+        currency: value,
+      });
+    }
+  };
+
   componentDidMount() {
     this.getCoinList();
   }
@@ -82,8 +68,12 @@ class NavBar extends React.Component {
           {this.state.coin !== "" && (
             <DropdownCoinList coins={this.state.coins} coin={this.state.coin} />
           )}
-
-          <SelectCurrency currency1={"USD"} currency2={"EUR"} />
+          <SelectCurrency
+            currencies={this.state.currencies}
+            updateCurrency={() =>
+              this.props.updateCurrency(this.state.currency)
+            }
+          />
           <SelectTheme />
         </div>
       </Container>
@@ -91,36 +81,3 @@ class NavBar extends React.Component {
   }
 }
 export default NavBar;
-
-{
-  /* 
- <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                width: "370px",
-                position: "fixed",
-                backgroundColor: "black",
-                color: "white",
-                top: "60px",
-              }}
-            >
-              {this.state.coins
-                .filter((element) => {
-                  if (this.state.coin == "") {
-                    return element;
-                  } else if (element[0] === this.state.coin[0]) {
-                    return element;
-                  }
-                })
-                .map((item, key) => (
-                  <div
-                    onClick={() => (window.location.pathname = `/${item}`)}
-                    key={item}
-                  >
-                    {item}
-                  </div>
-                ))}
-            </div>
-*/
-}
