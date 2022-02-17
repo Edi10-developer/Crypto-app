@@ -92,7 +92,7 @@ class LineChart extends React.Component {
         ref={this.lineChartRef}
         data={this.chartData}
         options={this.chartOptions}
-        style={{ marginBottom: "0px" }}
+        style={{ marginBottom: "10px" }}
       />
     );
   }

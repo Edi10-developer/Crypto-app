@@ -11,9 +11,9 @@ import { Container, LinkStyled } from "./styles";
 
 class NavBar extends React.Component {
   state = {
+    currency: this.props.currency,
     coin: "",
-    currencies: ["USD", "EURO"],
-    currency: "USD",
+    currencies: ["USD", "EUR"],
     coinData: [],
     coins: [],
   };
@@ -38,12 +38,10 @@ class NavBar extends React.Component {
     }
   };
 
-  getCurrency = (value) => {
-    if (this.state.currency !== value) {
-      this.setState({
-        currency: value,
-      });
-    }
+  getCurrency = (e) => {
+    let index = e.target.selectedIndex;
+    let newCurrency = e.target.options[index].value;
+    this.setState({ currency: newCurrency });
   };
 
   componentDidMount() {
@@ -52,7 +50,9 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <Container>
+      <Container
+        updateCurrency={this.props.updateCurrency(this.state.currency)}
+      >
         <div>
           <LinkStyled to="/">Coins</LinkStyled>
           <LinkStyled to="/portfolio"> Portfolio</LinkStyled>
@@ -70,9 +70,8 @@ class NavBar extends React.Component {
           )}
           <SelectCurrency
             currencies={this.state.currencies}
-            updateCurrency={() =>
-              this.props.updateCurrency(this.state.currency)
-            }
+            currency={this.state.currency}
+            updateCurrency={this.getCurrency}
           />
           <SelectTheme />
         </div>

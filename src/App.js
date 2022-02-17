@@ -5,12 +5,13 @@ import { CoinList, Portfolio, Coin } from "./pages/exports";
 
 class App extends React.Component {
   state = {
-    currency: "CHF",
+    currency: "USD",
   };
 
   updateCurrency = (newCurrency) => {
-    this.setState({ currency: newCurrency });
-    console.log("currency updated", newCurrency);
+    if (this.state.currency !== newCurrency) {
+      this.setState({ currency: newCurrency });
+    }
   };
 
   render() {

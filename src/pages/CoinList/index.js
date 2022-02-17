@@ -96,13 +96,21 @@ class CoinList extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.currency !== this.props.currency) {
+    console.log("********* COINLIST **********");
+    console.log("prevProps", prevProps, "this.props", this.props);
+    console.log("prevState", prevState, "state", this.state.currency);
+    console.log("********* COINLIST END **********");
+    if (
+      prevProps.currency !== this.props.currency ||
+      prevState.currency !== this.state.currency
+    ) {
+      this.getCoinList();
+      this.getBitcoinData();
       this.setState({ currency: this.props.currency });
     }
   }
 
   render() {
-    console.log(this.state.orderList);
     return (
       <PageContainer>
         <MainContainer>
