@@ -1,6 +1,5 @@
-import { render } from "@testing-library/react";
 import React from "react";
-import { SelectStyled } from "./styles";
+import { SelectStyled, OptionStyled } from "./styles";
 
 class SelectCurrency extends React.Component {
   state = { currency: this.props.currency };
@@ -15,8 +14,8 @@ class SelectCurrency extends React.Component {
         currency={this.state.currency}
       >
         {this.props.currencies.map((element, index) => (
-          <option key={index} value={element}>
-            {element}
+          <option key={index} value={element.value} id={element.icon}>
+            {element.icon} - {element.value}
           </option>
         ))}
       </SelectStyled>

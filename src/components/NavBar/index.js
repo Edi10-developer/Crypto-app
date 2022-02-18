@@ -6,14 +6,19 @@ import {
   SelectTheme,
   DropdownCoinList,
 } from "../exports";
+import { AiOutlineDollarCircle, AiOutlineEuroCircle } from "react-icons/ai";
 
 import { Container, LinkStyled } from "./styles";
 
 class NavBar extends React.Component {
   state = {
     currency: this.props.currency,
+    icon: this.props.icon,
     coin: "",
-    currencies: ["USD", "EUR"],
+    currencies: [
+      { value: "USD", icon: "$" },
+      { value: "EURO", icon: "€" },
+    ],
     coinData: [],
     coins: [],
   };
@@ -41,7 +46,8 @@ class NavBar extends React.Component {
   getCurrency = (e) => {
     let index = e.target.selectedIndex;
     let newCurrency = e.target.options[index].value;
-    this.setState({ currency: newCurrency });
+    let newIcon = e.target.options[index].id;
+    this.setState({ currency: newCurrency, icon: newIcon });
   };
 
   componentDidMount() {
@@ -49,9 +55,11 @@ class NavBar extends React.Component {
   }
 
   render() {
+    console.log("icon", this.state.icon);
     return (
       <Container
         updateCurrency={this.props.updateCurrency(this.state.currency)}
+        updateIcon={this.props.updateIcon(this.state.icon)}
       >
         <div>
           <LinkStyled to="/">Coins</LinkStyled>

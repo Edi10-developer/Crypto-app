@@ -6,6 +6,7 @@ import { CoinList, Portfolio, Coin } from "./pages/exports";
 class App extends React.Component {
   state = {
     currency: "USD",
+    icon: "$",
   };
 
   updateCurrency = (newCurrency) => {
@@ -14,19 +15,33 @@ class App extends React.Component {
     }
   };
 
+  updateIcon = (newIcon) => {
+    if (this.state.icon !== newIcon) {
+      this.setState({ icon: newIcon });
+    }
+    console.log("app icon updated", this.state.icon);
+  };
+
   render() {
     return (
       <>
         <Router>
           <NavBar
             currency={this.state.currency}
+            icon={this.state.icon}
             updateCurrency={this.updateCurrency}
+            updateIcon={this.updateIcon}
           />
           <Switch>
             <Route
               exact
               path="/"
-              render={() => <CoinList currency={this.state.currency} />}
+              render={() => (
+                <CoinList
+                  currency={this.state.currency}
+                  icon={this.state.icon}
+                />
+              )}
             />
             <Route exact path="/portfolio" component={Portfolio} />
             <Route exact path="/:coinId" component={Coin} />

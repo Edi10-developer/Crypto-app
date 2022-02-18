@@ -7,7 +7,12 @@ import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { nFormatter } from "../../utils/nFormatter";
 
 class Table extends React.Component {
-  state = { colors: [], isNegative: true, oderList: this.props.oderList };
+  state = {
+    colors: [],
+    isNegative: true,
+    oderList: this.props.oderList,
+    icon: this.props.icon,
+  };
 
   renderSwatches = () => {
     const { colors } = this.state;
@@ -120,7 +125,7 @@ class Table extends React.Component {
                 </Column>
                 <Column>
                   {current_price}&nbsp;
-                  {this.props.currency}
+                  {this.props.icon}
                 </Column>
                 <Column
                   isNegative={this.checkIsNegative(

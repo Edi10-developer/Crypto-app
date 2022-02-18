@@ -37,13 +37,13 @@ const SparkLine = (props) => {
       },
     },
     scales: {
-      maintainAspectRatio: true,
+      //maintainAspectRatio: true,
       y: {
         display: false,
       },
       x: {
         grid: {
-          color: "transparent",
+          display: false,
         },
         ticks: {
           font: {

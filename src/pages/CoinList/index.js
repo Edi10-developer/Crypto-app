@@ -13,6 +13,7 @@ import { currentDate } from "../../utils/date.js";
 class CoinList extends React.Component {
   state = {
     currency: this.props.currency,
+    icon: this.props.icon,
     data: [],
     sortedDesc: true,
     btcChartsData: [],
@@ -38,6 +39,7 @@ class CoinList extends React.Component {
     }
     this.getBtcPrices();
     this.getBtcVolumes();
+    console.log("get bitcoin data executed", this.state.currency);
   };
 
   getCoinList = async () => {
@@ -96,18 +98,16 @@ class CoinList extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("********* COINLIST **********");
-    console.log("prevProps", prevProps, "this.props", this.props);
-    console.log("prevState", prevState, "state", this.state.currency);
-    console.log("********* COINLIST END **********");
     if (
       prevProps.currency !== this.props.currency ||
       prevState.currency !== this.state.currency
     ) {
       this.getCoinList();
       this.getBitcoinData();
-      this.setState({ currency: this.props.currency });
+      this.setState({ currency: this.props.currency, icon: this.props.icon });
+      console.log("updated");
     }
+    console.log(prevState);
   }
 
   render() {
@@ -120,7 +120,7 @@ class CoinList extends React.Component {
               <h6>BTC</h6>
               <h2>
                 {this.state.btcCurrentPrice}
-                {this.state.currency}
+                {this.state.icon}
               </h2>
               <h6>{currentDate}</h6>
               <LineChart
@@ -143,7 +143,7 @@ class CoinList extends React.Component {
           <h4>Your overview</h4>
           <Table
             data={this.state.data}
-            currency={this.state.currency}
+            icon={this.state.icon}
             orderList={this.state.sortedDesc}
             orderCoinList={this.sortByAscOrDesc}
           />
