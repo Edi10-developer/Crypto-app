@@ -22,15 +22,13 @@ ChartJS.register(
   Legend
 );
 
-class LineChart extends React.Component {
-  lineChartRef = React.createRef();
-
-  chartData = {
-    labels: this.props.coinTimestamp,
+export default function LineChart(props) {
+  const chartData = {
+    labels: props.coinTimestamp,
     datasets: [
       {
         label: "BTC Prices",
-        data: this.props.coinPrice,
+        data: props.coinPrice,
         borderColor: "rgba(0, 255, 95, 1)",
         backgroundColor: "rgba(0, 255, 95, 1)",
         pointBackgroundColor: "transparent",
@@ -42,7 +40,7 @@ class LineChart extends React.Component {
     ],
   };
 
-  chartOptions = {
+  const chartOptions = {
     showLabelBackdrop: true,
     layout: {
       padding: {
@@ -86,16 +84,15 @@ class LineChart extends React.Component {
       },
     },
   };
-  render() {
-    return (
-      <Line
-        ref={this.lineChartRef}
-        data={this.chartData}
-        options={this.chartOptions}
-        style={{ marginBottom: "10px" }}
-      />
-    );
-  }
-}
 
-export default LineChart;
+  return (
+    <Line
+      data={chartData}
+      options={chartOptions}
+      style={{
+        maxHeight: "90%",
+        marginTop: "-50px",
+      }}
+    />
+  );
+}

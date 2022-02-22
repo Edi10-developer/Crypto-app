@@ -44,7 +44,7 @@ export default function BarChart(props) {
       },
     },
     responsive: true,
-    maintainAspectRatio: false,
+    maintainAspectRatio: true,
     interaction: {
       mode: "index",
       intersect: false,

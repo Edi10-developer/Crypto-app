@@ -1,6 +1,12 @@
 import React from "react";
 import axios from "axios";
-import { LineChart, BarChart, Table } from "../../components/exports";
+import {
+  CoinsDataBar,
+  LineChart,
+  BarChart,
+  SelectDays,
+  Table,
+} from "../../components/exports";
 import {
   PageContainer,
   MainContainer,
@@ -9,6 +15,7 @@ import {
 } from "./styles";
 
 import { currentDate } from "../../utils/date.js";
+import { nFormatter } from "../../utils/nFormatter";
 
 class CoinList extends React.Component {
   state = {
@@ -20,26 +27,42 @@ class CoinList extends React.Component {
     btcCurrentPrice: 0,
     btcCurrentVolume: 0,
     days: 30,
+    daysOptions: [1, 7, 30, 180, 365],
+    coinPrice: [],
+    coinVolumes: [],
+    coinTimestamp: [],
   };
 
   //corsProblemFixer = "https://cors-anywhere.herokuapp.com/";
-
-  coinPrice = [];
-  coinVolumes = [];
-  coinTimestamp = [];
 
   getBitcoinData = async () => {
     try {
       const btcData = await axios.get(
         `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${this.state.currency}&days=${this.state.days}`
       );
-      this.setState({ btcChartsData: btcData.data });
+      const volume = btcData.data.total_volumes.map((value, index) => {
+        let vol = value[1];
+        return vol;
+      });
+      const price = btcData.data.prices.map((value, index) => {
+        let priceValue = value[1];
+        return priceValue;
+      });
+      const date = btcData.data.prices.map((value, index) => {
+        let findChartDates = new Date(value[0]);
+        let chartDate = `${findChartDates.getDate()} - ${
+          findChartDates.getMonth() + 1
+        } - ${findChartDates.getFullYear()}`;
+        return chartDate;
+      });
+      this.setState({
+        coinPrice: price,
+        coinVolumes: volume,
+        coinTimestamp: date,
+      });
     } catch (err) {
       console.log(err);
     }
-    this.getBtcPrices();
-    this.getBtcVolumes();
-    console.log("get bitcoin data executed", this.state.currency);
   };
 
   getCoinList = async () => {
@@ -47,32 +70,25 @@ class CoinList extends React.Component {
       const { data } = await axios.get(
         `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
       );
+      console.log(data);
       this.setState({
         data: data,
         btcCurrentPrice: data[0].current_price,
-        btcCurrentVolume: `${data[0].total_volume / 1000000000} B`,
+        btcCurrentVolume: data[0].total_volume,
       });
     } catch (err) {
       console.log(err);
     }
   };
 
-  getBtcPrices = () => {
-    this.state.btcChartsData.prices.map((value, index) => {
-      var price = value[1];
-      var findChartDates = new Date(value[0]);
-      var chartDate = `${findChartDates.getDate()} - ${
-        findChartDates.getMonth() + 1
-      } - ${findChartDates.getFullYear()}`;
-      this.coinTimestamp.push(chartDate);
-      this.coinPrice.push(price);
-    });
+  setDays = (daysNumber) => {
+    this.setState({ days: daysNumber });
   };
 
   getBtcVolumes = () => {
     this.state.btcChartsData.total_volumes.map((value, index) => {
       var volume = value[1];
-      this.coinVolumes.push(volume);
+      this.setState({ coinVolumes: [...this.state.coinVolumes, volume] });
     });
   };
 
@@ -92,22 +108,27 @@ class CoinList extends React.Component {
     }
   };
 
-  componentDidMount() {
+  updateBbtcData = async () => {
+    await this.getBitcoinData();
+    this.getBtcPrices();
+    this.getBtcVolumes();
+  };
+  componentDidMount = () => {
     this.getCoinList();
     this.getBitcoinData();
-  }
+  };
 
   componentDidUpdate(prevProps, prevState) {
     if (
       prevProps.currency !== this.props.currency ||
-      prevState.currency !== this.state.currency
+      prevState.currency !== this.state.currency ||
+      prevState.days !== this.state.days
     ) {
+      this.setState({ currency: this.props.currency, icon: this.props.icon });
+
       this.getCoinList();
       this.getBitcoinData();
-      this.setState({ currency: this.props.currency, icon: this.props.icon });
-      console.log("updated");
     }
-    console.log(prevState);
   }
 
   render() {
@@ -124,22 +145,26 @@ class CoinList extends React.Component {
               </h2>
               <h6>{currentDate}</h6>
               <LineChart
-                coinTimestamp={this.coinTimestamp}
-                coinPrice={this.coinPrice}
+                coinPrice={this.state.coinPrice}
+                coinTimestamp={this.state.coinTimestamp}
               />
             </ChartContainer>
             <ChartContainer>
               <h6>Volume 24H</h6>
-              <h2>{this.state.btcCurrentVolume}</h2>
+              <h2>{nFormatter(this.state.btcCurrentVolume)}</h2>
               <h6>{currentDate}</h6>
               <BarChart
-                coinTotalVolumes={this.coinVolumes}
-                coinTimestamp={this.coinTimestamp}
+                coinTotalVolumes={this.state.coinVolumes}
+                coinTimestamp={this.state.coinTimestamp}
                 width={300}
                 height={100}
               />
             </ChartContainer>
           </ChartsContainer>
+          <SelectDays
+            days={this.state.daysOptions}
+            selectNumberOfDays={(number) => this.setDays(number)}
+          />
           <h4>Your overview</h4>
           <Table
             data={this.state.data}

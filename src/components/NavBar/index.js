@@ -17,7 +17,7 @@ class NavBar extends React.Component {
     coin: "",
     currencies: [
       { value: "USD", icon: "$" },
-      { value: "EURO", icon: "€" },
+      { value: "EUR", icon: "€" },
     ],
     coinData: [],
     coins: [],
