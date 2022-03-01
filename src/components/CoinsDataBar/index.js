@@ -1,24 +1,70 @@
 import { Progressbar } from "../exports";
+import { Container, CoinImg } from "./styles";
+import { nFormatter } from "../../utils/nFormatter";
 
 const CoinsDataBar = (props) => {
+  const {
+    globalCoinsData,
+    currencyIcon,
+    totalMarketCap,
+    todayTotalMarketCap,
+    todayPercentageMarketCap,
+    btcPercentageMarketCap,
+    ethPercentageMarketCap,
+  } = props.data;
+
   return (
-    <ul>
-      <li>Coins: 234</li>
-      <li>Exchange: 344</li>
-      <li>•{props.currency}1.56T</li>
+    <Container>
+      <li>Coins: {globalCoinsData.active_cryptocurrencies}</li>
+      <li>Exchange: {globalCoinsData.markets}</li>
       <li>
-        {props.currency}124.45B <Progressbar />
+        •{currencyIcon}
+        {nFormatter(totalMarketCap)}
       </li>
       <li>
-        <img src={props.icon} alt={props.icon} />
-        <Progressbar />
+        <p>
+          {" "}
+          {currencyIcon}
+          {nFormatter(todayTotalMarketCap)}{" "}
+          <Progressbar
+            percent={todayPercentageMarketCap}
+            unfilledBackground={"white"}
+            filledBackground={"#215DB5"}
+            width={"100px"}
+          />
+        </p>
       </li>
       <li>
-        <img src={props.icon} alt={props.icon}>
-          <Progressbar />
-        </img>
+        <CoinImg
+          src={
+            "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
+          }
+          alt={"bitcoin"}
+        />
+        <span>{Math.round(btcPercentageMarketCap * 10) / 10}%</span>
+        <Progressbar
+          percent={btcPercentageMarketCap}
+          unfilledBackground={"white"}
+          filledBackground={"#215DB5"}
+          width={"100px"}
+        />
       </li>
-    </ul>
+      <li>
+        <CoinImg
+          src={
+            "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880"
+          }
+          alt={"etherium"}
+        />
+        <span>{Math.round(ethPercentageMarketCap * 10) / 10}%</span>
+        <Progressbar
+          percent={btcPercentageMarketCap}
+          unfilledBackground={"white"}
+          filledBackground={"#215DB5"}
+          width={"100px"}
+        />
+      </li>
+    </Container>
   );
 };
 

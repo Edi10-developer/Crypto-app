@@ -20,20 +20,57 @@ import { nFormatter } from "../../utils/nFormatter";
 class CoinList extends React.Component {
   state = {
     currency: this.props.currency,
-    icon: this.props.icon,
+    currencyIcon: this.props.icon,
     data: [],
     sortedDesc: true,
     btcChartsData: [],
     btcCurrentPrice: 0,
     btcCurrentVolume: 0,
+    btcMarketCap: 0,
+    ethMarketCap: 0,
     days: 30,
     daysOptions: [1, 7, 30, 180, 365],
     coinPrice: [],
     coinVolumes: [],
     coinTimestamp: [],
+    globalCoinsData: [],
+    totalMarketCap: 0,
+    todayTotalMarketCap: 0,
+    todayPercentageMarketCap: 0,
+    btcPercentageMarketCap: 0,
+    ethPercentageMarketCap: 0,
   };
 
   //corsProblemFixer = "https://cors-anywhere.herokuapp.com/";
+
+  getCoinList = async () => {
+    try {
+      const { data } = await axios.get(
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=market_cap_desc&per_page=1000&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
+      );
+      const totalCoinsMarketCap = data.reduce(
+        (total, currentValue) => (total = total + currentValue.market_cap),
+        0
+      );
+      const todayTotalMarketCap = data.reduce(
+        (total, currentValue) =>
+          (total = total + currentValue.market_cap_change_24h),
+        0
+      );
+      this.setState({
+        data: data,
+        btcCurrentPrice: data[0].current_price,
+        btcCurrentVolume: data[0].total_volume,
+        btcMarketCap: data[0].market_cap,
+        ethMarketCap: data[1].market_cap,
+        totalMarketCap: totalCoinsMarketCap,
+        todayTotalMarketCap: todayTotalMarketCap,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    this.getGlobalCoinsData();
+  };
 
   getBitcoinData = async () => {
     try {
@@ -65,16 +102,22 @@ class CoinList extends React.Component {
     }
   };
 
-  getCoinList = async () => {
+  getGlobalCoinsData = async () => {
     try {
-      const { data } = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=market_cap_desc&per_page=100&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
+      const globalData = await axios.get(
+        `https://api.coingecko.com/api/v3/global`
       );
-      console.log(data);
+      const btcPercentageMarketCap =
+        (this.state.btcMarketCap * 100) / this.state.totalMarketCap;
+      const ethPercentageMarketCap =
+        (this.state.ethMarketCap * 100) / this.state.totalMarketCap;
+      const todayPercentageMarketCap =
+        (this.state.todayTotalMarketCap * 100) / this.state.totalMarketCap;
       this.setState({
-        data: data,
-        btcCurrentPrice: data[0].current_price,
-        btcCurrentVolume: data[0].total_volume,
+        globalCoinsData: globalData.data.data,
+        todayPercentageMarketCap: todayPercentageMarketCap,
+        btcPercentageMarketCap: btcPercentageMarketCap,
+        ethPercentageMarketCap: ethPercentageMarketCap,
       });
     } catch (err) {
       console.log(err);
@@ -113,6 +156,7 @@ class CoinList extends React.Component {
     this.getBtcPrices();
     this.getBtcVolumes();
   };
+
   componentDidMount = () => {
     this.getCoinList();
     this.getBitcoinData();
@@ -125,51 +169,59 @@ class CoinList extends React.Component {
       prevState.days !== this.state.days
     ) {
       this.setState({ currency: this.props.currency, icon: this.props.icon });
-
       this.getCoinList();
       this.getBitcoinData();
     }
   }
 
   render() {
+    const {
+      btcCurrentPrice,
+      currencyIcon,
+      coinPrice,
+      coinTimestamp,
+      btcCurrentVolume,
+      coinVolumes,
+      daysOptions,
+      data,
+      sortedDesc,
+    } = this.state;
     return (
       <PageContainer>
+        <CoinsDataBar data={this.state} />
         <MainContainer>
           <h4>Your overview</h4>
           <ChartsContainer>
             <ChartContainer>
               <h6>BTC</h6>
               <h2>
-                {this.state.btcCurrentPrice}
-                {this.state.icon}
+                {btcCurrentPrice}
+                {currencyIcon}
               </h2>
               <h6>{currentDate}</h6>
-              <LineChart
-                coinPrice={this.state.coinPrice}
-                coinTimestamp={this.state.coinTimestamp}
-              />
+              <LineChart coinPrice={coinPrice} coinTimestamp={coinTimestamp} />
             </ChartContainer>
             <ChartContainer>
               <h6>Volume 24H</h6>
-              <h2>{nFormatter(this.state.btcCurrentVolume)}</h2>
+              <h2>{nFormatter(btcCurrentVolume)}</h2>
               <h6>{currentDate}</h6>
               <BarChart
-                coinTotalVolumes={this.state.coinVolumes}
-                coinTimestamp={this.state.coinTimestamp}
+                coinTotalVolumes={coinVolumes}
+                coinTimestamp={coinTimestamp}
                 width={300}
                 height={100}
               />
             </ChartContainer>
           </ChartsContainer>
           <SelectDays
-            days={this.state.daysOptions}
+            days={daysOptions}
             selectNumberOfDays={(number) => this.setDays(number)}
           />
           <h4>Your overview</h4>
           <Table
-            data={this.state.data}
-            icon={this.state.icon}
-            orderList={this.state.sortedDesc}
+            data={data}
+            icon={currencyIcon}
+            orderList={sortedDesc}
             orderCoinList={this.sortByAscOrDesc}
           />
         </MainContainer>

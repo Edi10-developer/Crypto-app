@@ -104,11 +104,11 @@ class Table extends React.Component {
                 price_change_percentage_24h,
                 price_change_percentage_7d_in_currency,
                 market_cap_change_24h,
+                market_cap_change_percentage_24h,
                 market_cap,
                 circulating_supply,
                 total_supply,
                 sparkline_in_7d,
-                total_volume,
               },
               index
             ) => (
@@ -172,12 +172,12 @@ class Table extends React.Component {
                 <Column>
                   {/* <p style={{ color: this.state.color }}> {this.renderSwatches()} </p> */}
                   <p>
-                    {nFormatter(total_volume)}
+                    {nFormatter(market_cap_change_24h)}
                     &nbsp;&nbsp; &nbsp;&nbsp;
                     {nFormatter(market_cap)}
                   </p>
                   <Progressbar
-                    percent={(market_cap_change_24h * 100) / market_cap}
+                    percent={market_cap_change_percentage_24h}
                     width="100px"
                     unfilledBackground={"white"}
                     filledBackground={"#215DB5"}

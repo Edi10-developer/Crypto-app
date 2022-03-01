@@ -20,7 +20,6 @@ export const TableData = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  border: 1px solid red;
   border-radius: 9px;
   padding-left: 10px;
   padding-right: 10px;

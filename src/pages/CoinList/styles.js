@@ -10,7 +10,6 @@ export const PageContainer = styled.div`
 
 export const MainContainer = styled.div`
   width: 1100px;
-  border: 1px solid blue;
   margin: 0px auto;
   display: flex;
   flex-direction: column;
