@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  background-color: #191b1f;
+  background-color: ${(props) => props.theme.bgColor};
   color: white;
 
   div {

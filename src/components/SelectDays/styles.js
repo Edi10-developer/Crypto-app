@@ -11,7 +11,7 @@ export const Container = styled.ul`
     width: 45px;
     height: 40px;
     margin-top: -18px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: ${(props) => props.color};
     color: black;
     border: 1px solid rgba(0, 0, 0.6);
     font-weight: 800;
@@ -19,14 +19,5 @@ export const Container = styled.ul`
     justify-content: center;
     align-items: center;
     border-radius: 3px;
-
-    &:hover,
-    &::selection {
-      background-color: rgb(0, 255, 95);
-    }
   }
 `;
-
-export const StyledLi = {
-  backgroundColor: "rgb(0, 255, 95)",
-};

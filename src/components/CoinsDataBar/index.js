@@ -30,7 +30,7 @@ const CoinsDataBar = (props) => {
             percent={todayPercentageMarketCap}
             unfilledBackground={"white"}
             filledBackground={"#215DB5"}
-            width={"100px"}
+            width={"60px"}
           />
         </p>
       </li>
@@ -46,7 +46,7 @@ const CoinsDataBar = (props) => {
           percent={btcPercentageMarketCap}
           unfilledBackground={"white"}
           filledBackground={"#215DB5"}
-          width={"100px"}
+          width={"60px"}
         />
       </li>
       <li>
@@ -58,10 +58,10 @@ const CoinsDataBar = (props) => {
         />
         <span>{Math.round(ethPercentageMarketCap * 10) / 10}%</span>
         <Progressbar
-          percent={btcPercentageMarketCap}
+          percent={ethPercentageMarketCap}
           unfilledBackground={"white"}
           filledBackground={"#215DB5"}
-          width={"100px"}
+          width={"60px"}
         />
       </li>
     </Container>

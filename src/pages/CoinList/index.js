@@ -16,6 +16,7 @@ import {
 
 import { currentDate } from "../../utils/date.js";
 import { nFormatter } from "../../utils/nFormatter";
+import { ThemeProvider } from "styled-components";
 
 class CoinList extends React.Component {
   state = {
@@ -39,6 +40,7 @@ class CoinList extends React.Component {
     todayPercentageMarketCap: 0,
     btcPercentageMarketCap: 0,
     ethPercentageMarketCap: 0,
+    primaryTheme: this.props.primaryTheme,
   };
 
   //corsProblemFixer = "https://cors-anywhere.herokuapp.com/";
@@ -168,7 +170,10 @@ class CoinList extends React.Component {
       prevState.currency !== this.state.currency ||
       prevState.days !== this.state.days
     ) {
-      this.setState({ currency: this.props.currency, icon: this.props.icon });
+      this.setState({
+        currency: this.props.currency,
+        currencyIcon: this.props.icon,
+      });
       this.getCoinList();
       this.getBitcoinData();
     }
@@ -187,45 +192,50 @@ class CoinList extends React.Component {
       sortedDesc,
     } = this.state;
     return (
-      <PageContainer>
-        <CoinsDataBar data={this.state} />
-        <MainContainer>
-          <h4>Your overview</h4>
-          <ChartsContainer>
-            <ChartContainer>
-              <h6>BTC</h6>
-              <h2>
-                {btcCurrentPrice}
-                {currencyIcon}
-              </h2>
-              <h6>{currentDate}</h6>
-              <LineChart coinPrice={coinPrice} coinTimestamp={coinTimestamp} />
-            </ChartContainer>
-            <ChartContainer>
-              <h6>Volume 24H</h6>
-              <h2>{nFormatter(btcCurrentVolume)}</h2>
-              <h6>{currentDate}</h6>
-              <BarChart
-                coinTotalVolumes={coinVolumes}
-                coinTimestamp={coinTimestamp}
-                width={300}
-                height={100}
-              />
-            </ChartContainer>
-          </ChartsContainer>
-          <SelectDays
-            days={daysOptions}
-            selectNumberOfDays={(number) => this.setDays(number)}
-          />
-          <h4>Your overview</h4>
-          <Table
-            data={data}
-            icon={currencyIcon}
-            orderList={sortedDesc}
-            orderCoinList={this.sortByAscOrDesc}
-          />
-        </MainContainer>
-      </PageContainer>
+      <ThemeProvider theme={this.props.theme}>
+        <PageContainer>
+          <CoinsDataBar data={this.state} />
+          <MainContainer>
+            <h4>Your overview</h4>
+            <ChartsContainer>
+              <ChartContainer>
+                <h6>BTC</h6>
+                <h2>
+                  {btcCurrentPrice}&nbsp;
+                  {currencyIcon}
+                </h2>
+                <h6>{currentDate}</h6>
+                <LineChart
+                  coinPrice={coinPrice}
+                  coinTimestamp={coinTimestamp}
+                />
+              </ChartContainer>
+              <ChartContainer>
+                <h6>Volume 24H</h6>
+                <h2>{nFormatter(btcCurrentVolume)}</h2>
+                <h6>{currentDate}</h6>
+                <BarChart
+                  coinTotalVolumes={coinVolumes}
+                  coinTimestamp={coinTimestamp}
+                  width={300}
+                  height={100}
+                />
+              </ChartContainer>
+            </ChartsContainer>
+            <SelectDays
+              days={daysOptions}
+              selectNumberOfDays={(number) => this.setDays(number)}
+            />
+            <h4>Your overview</h4>
+            <Table
+              data={data}
+              icon={currencyIcon}
+              orderList={sortedDesc}
+              orderCoinList={this.sortByAscOrDesc}
+            />
+          </MainContainer>
+        </PageContainer>
+      </ThemeProvider>
     );
   }
 }

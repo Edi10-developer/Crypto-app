@@ -14,11 +14,16 @@ const SelectDays = (props) => {
       return (
         <li
           key={index}
-          onClick={() => selectNumberOfDays(value)}
-          selected={true}
-          style={StyledLi}
+          onClick={(e) => {
+            console.log(e);
+            selectNumberOfDays(value);
+          }}
+          selected={selected}
+          style={{
+            backgroundColor: `${selected === true ? "green" : "white"}`,
+          }}
         >
-          {value}
+          {value}d
         </li>
       );
     });

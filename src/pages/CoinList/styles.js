@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const PageContainer = styled.div`
   text-align: left;
   padding: 50px;
-  background-color: #1f2127;
+  background-color: ${(props) => props.theme.pagBgColor};
   color: white;
   width: calc(100% - 100px);
 `;
@@ -30,7 +30,7 @@ export const ChartContainer = styled.div`
   height: 370px;
   padding-left: 20px;
   padding-right: 30px;
-  background-color: #191b1f;
+  background-color: ${(props) => props.theme.bgColor};
   border-radius: 10px;
 
   h6 {

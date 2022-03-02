@@ -1,12 +1,13 @@
 import React from "react";
 import axios from "axios";
+import styled, { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme } from "../../utils/theme";
 import {
   SearchInput,
   SelectCurrency,
   SelectTheme,
   DropdownCoinList,
 } from "../exports";
-import { AiOutlineDollarCircle, AiOutlineEuroCircle } from "react-icons/ai";
 
 import { Container, LinkStyled } from "./styles";
 
@@ -21,6 +22,7 @@ class NavBar extends React.Component {
     ],
     coinData: [],
     coins: [],
+    primaryTheme: this.props.primaryTheme,
   };
 
   handleChange = async (coinValue) => {
@@ -55,35 +57,40 @@ class NavBar extends React.Component {
   }
 
   render() {
-    console.log("icon", this.state.icon);
+    console.log(this.state.primaryTheme);
+    const { currency, icon, coin, coins, currencies, primaryTheme } =
+      this.state;
     return (
-      <Container
-        updateCurrency={this.props.updateCurrency(this.state.currency)}
-        updateIcon={this.props.updateIcon(this.state.icon)}
-      >
-        <div>
-          <LinkStyled to="/">Coins</LinkStyled>
-          <LinkStyled to="/portfolio"> Portfolio</LinkStyled>
-          <LinkStyled to={`/${this.state.coin}`} />
-        </div>
-        <div>
-          <LinkStyled to={`/${this.state.coin}`} />
-          <SearchInput
-            handleSubmit={this.handleSubmit}
-            coins={this.state.coins}
-            handleChange={this.handleChange}
-          />
-          {this.state.coin !== "" && (
-            <DropdownCoinList coins={this.state.coins} coin={this.state.coin} />
-          )}
-          <SelectCurrency
-            currencies={this.state.currencies}
-            currency={this.state.currency}
-            updateCurrency={this.getCurrency}
-          />
-          <SelectTheme />
-        </div>
-      </Container>
+      <ThemeProvider theme={this.props.theme}>
+        <Container
+          updateCurrency={this.props.updateCurrency(currency)}
+          updateIcon={this.props.updateIcon(icon)}
+        >
+          <div>
+            <LinkStyled to="/">Coins</LinkStyled>
+            <LinkStyled to="/portfolio"> Portfolio</LinkStyled>
+            <LinkStyled to={`/${coin}`} />
+          </div>
+          <div>
+            <LinkStyled to={`/${coin}`} />
+            <SearchInput
+              handleSubmit={this.handleSubmit}
+              coins={coins}
+              handleChange={this.handleChange}
+            />
+            {coin !== "" && <DropdownCoinList coins={coins} coin={coin} />}
+            <SelectCurrency
+              currencies={currencies}
+              currency={currency}
+              updateCurrency={this.getCurrency}
+            />
+            <SelectTheme
+              primary={primaryTheme}
+              changeTheme={this.props.changeTheme}
+            />
+          </div>
+        </Container>
+      </ThemeProvider>
     );
   }
 }

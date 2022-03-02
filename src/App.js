@@ -2,11 +2,14 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { NavBar } from "./components/exports";
 import { CoinList, Portfolio, Coin } from "./pages/exports";
+import { darkTheme, lightTheme } from "./utils/theme";
 
 class App extends React.Component {
   state = {
     currency: "USD",
     icon: "$",
+    primaryTheme: true,
+    theme: darkTheme,
   };
 
   updateCurrency = (newCurrency) => {
@@ -19,10 +22,18 @@ class App extends React.Component {
     if (this.state.icon !== newIcon) {
       this.setState({ icon: newIcon });
     }
-    console.log("app icon updated", this.state.icon);
+  };
+
+  changeTheme = () => {
+    if (this.state.primaryTheme === true) {
+      this.setState({ primaryTheme: false });
+    } else if (this.state.primaryTheme === false) {
+      this.setState({ primaryTheme: true });
+    }
   };
 
   render() {
+    console.log("app state theme", this.state.primaryTheme);
     return (
       <>
         <Router>
@@ -31,6 +42,9 @@ class App extends React.Component {
             icon={this.state.icon}
             updateCurrency={this.updateCurrency}
             updateIcon={this.updateIcon}
+            primaryTheme={this.state.primaryTheme}
+            changeTheme={this.changeTheme}
+            theme={this.state.theme}
           />
           <Switch>
             <Route
@@ -40,6 +54,8 @@ class App extends React.Component {
                 <CoinList
                   currency={this.state.currency}
                   icon={this.state.icon}
+                  primaryTheme={this.state.primaryTheme}
+                  theme={this.state.theme}
                 />
               )}
             />
