@@ -180,7 +180,7 @@ class Table extends React.Component {
                   <Progressbar
                     percent={market_cap_change_percentage_24h}
                     width="100px"
-                    unfilledBackground={"white"}
+                    unfilledBackground={"#FFFFF9"}
                     filledBackground={"#215DB5"}
                   />
                 </Column>

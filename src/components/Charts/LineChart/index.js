@@ -85,14 +85,5 @@ export default function LineChart(props) {
     },
   };
 
-  return (
-    <Line
-      data={chartData}
-      options={chartOptions}
-      style={{
-        maxHeight: "90%",
-        marginTop: "-50px",
-      }}
-    />
-  );
+  return <Line data={chartData} options={chartOptions} />;
 }

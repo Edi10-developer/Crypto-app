@@ -27,19 +27,11 @@ class CoinList extends React.Component {
     btcChartsData: [],
     btcCurrentPrice: 0,
     btcCurrentVolume: 0,
-    btcMarketCap: 0,
-    ethMarketCap: 0,
-    days: 30,
+    days: 1,
     daysOptions: [1, 7, 30, 180, 365],
     coinPrice: [],
     coinVolumes: [],
     coinTimestamp: [],
-    globalCoinsData: [],
-    totalMarketCap: 0,
-    todayTotalMarketCap: 0,
-    todayPercentageMarketCap: 0,
-    btcPercentageMarketCap: 0,
-    ethPercentageMarketCap: 0,
     theme: this.props.theme,
   };
 
@@ -50,28 +42,16 @@ class CoinList extends React.Component {
       const { data } = await axios.get(
         `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=market_cap_desc&per_page=1000&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
       );
-      const totalCoinsMarketCap = data.reduce(
-        (total, currentValue) => (total = total + currentValue.market_cap),
-        0
-      );
-      const todayTotalMarketCap = data.reduce(
-        (total, currentValue) =>
-          (total = total + currentValue.market_cap_change_24h),
-        0
-      );
+
       this.setState({
         data: data,
         btcCurrentPrice: data[0].current_price,
         btcCurrentVolume: data[0].total_volume,
-        btcMarketCap: data[0].market_cap,
-        ethMarketCap: data[1].market_cap,
-        totalMarketCap: totalCoinsMarketCap,
-        todayTotalMarketCap: todayTotalMarketCap,
       });
     } catch (err) {
       console.log(err);
     }
-    this.getGlobalCoinsData();
+    this.getBitcoinData();
   };
 
   getBitcoinData = async () => {
@@ -98,28 +78,6 @@ class CoinList extends React.Component {
         coinPrice: price,
         coinVolumes: volume,
         coinTimestamp: date,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  getGlobalCoinsData = async () => {
-    try {
-      const globalData = await axios.get(
-        `https://api.coingecko.com/api/v3/global`
-      );
-      const btcPercentageMarketCap =
-        (this.state.btcMarketCap * 100) / this.state.totalMarketCap;
-      const ethPercentageMarketCap =
-        (this.state.ethMarketCap * 100) / this.state.totalMarketCap;
-      const todayPercentageMarketCap =
-        (this.state.todayTotalMarketCap * 100) / this.state.totalMarketCap;
-      this.setState({
-        globalCoinsData: globalData.data.data,
-        todayPercentageMarketCap: todayPercentageMarketCap,
-        btcPercentageMarketCap: btcPercentageMarketCap,
-        ethPercentageMarketCap: ethPercentageMarketCap,
       });
     } catch (err) {
       console.log(err);
@@ -182,6 +140,7 @@ class CoinList extends React.Component {
   }
 
   render() {
+    console.log(this.state.days);
     const {
       btcCurrentPrice,
       currencyIcon,
@@ -197,7 +156,6 @@ class CoinList extends React.Component {
     return (
       <ThemeProvider theme={this.props.theme}>
         <PageContainer>
-          <CoinsDataBar data={this.state} />
           <MainContainer>
             <h4>Your overview</h4>
             <ChartsContainer>
@@ -221,13 +179,13 @@ class CoinList extends React.Component {
                   coinTotalVolumes={coinVolumes}
                   coinTimestamp={coinTimestamp}
                   width={300}
-                  height={100}
                 />
               </ChartContainer>
             </ChartsContainer>
             <SelectDays
               days={daysOptions}
               selectNumberOfDays={(number) => this.setDays(number)}
+              theme={theme}
             />
             <h4>Your overview</h4>
             <Table

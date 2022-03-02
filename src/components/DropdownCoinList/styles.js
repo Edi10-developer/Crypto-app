@@ -27,3 +27,10 @@ export const StyledCoinItem = styled.div`
     margin: 0;
   }
 `;
+
+export const StyledCoinImg = styled.img`
+  display: flex;
+  width: 15px;
+  justify-content: center;
+  align-self: center;
+`;

@@ -4,7 +4,7 @@ export const Container = styled.ul`
   width: 800px;
   height: 55px;
   margin: 20px auto;
-  margin-top: -52px;
+  margin-top: -10px;
   font-size: 14px;
   background-color: ${(props) => props.theme.bgColor};
   color: ${(props) => props.theme.textColor};
@@ -14,6 +14,7 @@ export const Container = styled.ul`
   justify-items: center;
   align-items: center;
   padding: 0 20px 0 20px;
+  z-index: 99;
 
   li {
     width: 190px;

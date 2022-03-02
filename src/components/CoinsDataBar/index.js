@@ -25,17 +25,14 @@ const CoinsDataBar = (props) => {
           {nFormatter(totalMarketCap)}
         </li>
         <li>
-          <p>
-            {" "}
-            {currencyIcon}
-            {nFormatter(todayTotalMarketCap)}{" "}
-            <Progressbar
-              percent={todayPercentageMarketCap}
-              unfilledBackground={"white"}
-              filledBackground={"#215DB5"}
-              width={"60px"}
-            />
-          </p>
+          {currencyIcon}
+          <span>{nFormatter(todayTotalMarketCap)} </span>
+          <Progressbar
+            percent={todayPercentageMarketCap}
+            unfilledBackground={"white"}
+            filledBackground={"#215DB5"}
+            width={"60px"}
+          />
         </li>
         <li>
           <CoinImg

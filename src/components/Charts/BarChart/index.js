@@ -84,14 +84,5 @@ export default function BarChart(props) {
       },
     },
   };
-  return (
-    <Bar
-      data={chartData}
-      options={chartOptions}
-      style={{
-        maxHeight: "80%",
-        marginTop: "-50px",
-      }}
-    />
-  );
+  return <Bar data={chartData} options={chartOptions} />;
 }

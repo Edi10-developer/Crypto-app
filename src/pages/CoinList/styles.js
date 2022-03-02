@@ -3,9 +3,11 @@ import styled from "styled-components";
 export const PageContainer = styled.div`
   text-align: left;
   padding: 50px;
+  margin-top: -70px;
   background-color: ${(props) => props.theme.pagBgColor};
   color: ${(props) => props.theme.textColor};
   width: calc(100% - 100px);
+  z-index: 3;
 `;
 
 export const MainContainer = styled.div`

@@ -12,7 +12,7 @@ export const FormStyled = styled.form`
     width: 100%;
     border-radius: 7px;
     margin-left: 30px;
-    background-color: ${(props) => props.theme.bgColor};
+    background-color: ${(props) => props.theme.pagBgColor};
     color: ${(props) => props.theme.textColor};
     padding-left: 7px;
     border: none;

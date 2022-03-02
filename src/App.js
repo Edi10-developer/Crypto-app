@@ -36,30 +36,38 @@ class App extends React.Component {
     return (
       <>
         <Router>
-          <NavBar
-            currency={this.state.currency}
-            icon={this.state.icon}
-            updateCurrency={this.updateCurrency}
-            updateIcon={this.updateIcon}
-            changeTheme={this.changeTheme}
-            theme={this.state.theme}
-          />
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <CoinList
-                  currency={this.state.currency}
-                  icon={this.state.icon}
-                  primaryTheme={this.state.primaryTheme}
-                  theme={this.state.theme}
-                />
-              )}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              padding: "0px",
+            }}
+          >
+            <NavBar
+              currency={this.state.currency}
+              icon={this.state.icon}
+              updateCurrency={this.updateCurrency}
+              updateIcon={this.updateIcon}
+              changeTheme={this.changeTheme}
+              theme={this.state.theme}
             />
-            <Route exact path="/portfolio" component={Portfolio} />
-            <Route exact path="/:coinId" component={Coin} />
-          </Switch>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <CoinList
+                    currency={this.state.currency}
+                    icon={this.state.icon}
+                    primaryTheme={this.state.primaryTheme}
+                    theme={this.state.theme}
+                  />
+                )}
+              />
+              <Route exact path="/portfolio" component={Portfolio} />
+              <Route exact path="/:coinId" component={Coin} />
+            </Switch>
+          </div>
         </Router>
       </>
     );

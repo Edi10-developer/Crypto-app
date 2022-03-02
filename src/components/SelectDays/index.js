@@ -15,13 +15,10 @@ const SelectDays = (props) => {
         <li
           key={index}
           onClick={(e) => {
-            console.log(e);
             selectNumberOfDays(value);
           }}
           selected={selected}
-          style={{
-            backgroundColor: `${selected === true ? "green" : "white"}`,
-          }}
+          theme={props.theme}
         >
           {value}d
         </li>

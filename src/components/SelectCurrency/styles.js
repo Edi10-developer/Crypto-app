@@ -7,8 +7,8 @@ export const SelectStyled = styled.select`
   margin-right: 20px;
   height: 39px;
   border-radius: 7px;
-  color: white;
-  background-color: #2c2f35;
+  background-color: ${(props) => props.theme.pagBgColor};
+  color: ${(props) => props.theme.textColor};
   border: none;
   padding: 4px;
 `;

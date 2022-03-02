@@ -1,5 +1,5 @@
 import { ThemeProvider } from "styled-components";
-import { Container, StyledCoinItem } from "./styles";
+import { Container, StyledCoinItem, StyledCoinImg } from "./styles";
 
 const DropdownCoinList = (props) => (
   <ThemeProvider theme={props.theme}>
@@ -19,15 +19,7 @@ const DropdownCoinList = (props) => (
             key={item.id}
           >
             <div>
-              <img
-                src={`${item.image}`}
-                style={{
-                  display: "flex",
-                  width: "15px",
-                  justifyContent: "center",
-                  alignSelf: "center",
-                }}
-              />
+              <StyledCoinImg src={`${item.image}`} alt={item.id} />
             </div>
             <div>{item.id}</div>
             <div>{item.symbol.toUpperCase()}</div>
