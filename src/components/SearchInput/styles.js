@@ -12,8 +12,8 @@ export const FormStyled = styled.form`
     width: 100%;
     border-radius: 7px;
     margin-left: 30px;
-    background-color: #2c2f35;
-    color: white;
+    background-color: ${(props) => props.theme.bgColor};
+    color: ${(props) => props.theme.textColor};
     padding-left: 7px;
     border: none;
 
@@ -21,7 +21,7 @@ export const FormStyled = styled.form`
       outline: none;
     }
     ::placeholder {
-      color: white;
+      color: ${(props) => props.theme.textColor};
       opacity: 0.9;
     }
   }

@@ -4,7 +4,7 @@ export const PageContainer = styled.div`
   text-align: left;
   padding: 50px;
   background-color: ${(props) => props.theme.pagBgColor};
-  color: white;
+  color: ${(props) => props.theme.textColor};
   width: calc(100% - 100px);
 `;
 
@@ -35,9 +35,11 @@ export const ChartContainer = styled.div`
 
   h6 {
     font-size: 14px;
+    color: ${(props) => props.theme.textColor};
   }
   h2 {
     margin-top: -30px;
     margin-bottom: -30px;
+    color: ${(props) => props.theme.textColor};
   }
 `;

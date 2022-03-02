@@ -1,4 +1,5 @@
 import React from "react";
+import { ThemeProvider } from "styled-components";
 import { FormStyled } from "./styles";
 
 class SearchInput extends React.Component {
@@ -24,13 +25,15 @@ class SearchInput extends React.Component {
   }
   render() {
     return (
-      <FormStyled onSubmit={this.handleSubmit}>
-        <input
-          type="text"
-          placeholder={` Search...`}
-          onChange={this.handleChange}
-        />
-      </FormStyled>
+      <ThemeProvider theme={this.props.theme}>
+        <FormStyled onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            placeholder={` Search...`}
+            onChange={this.handleChange}
+          />
+        </FormStyled>
+      </ThemeProvider>
     );
   }
 }

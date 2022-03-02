@@ -6,8 +6,8 @@ export const Container = styled.ul`
   margin: 20px auto;
   margin-top: -52px;
   font-size: 14px;
-
-  background-color: #191b1f;
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   display: flex;
   justify-content: space-evenly;
   align-items: center;

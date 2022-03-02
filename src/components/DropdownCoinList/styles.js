@@ -5,9 +5,10 @@ export const Container = styled.div`
   flex-direction: column;
   width: 355px;
   position: absolute;
-  background-color: black;
-  color: white;
+  background-color: ${(props) => props.theme.bgColor};
+  color: ${(props) => props.theme.textColor};
   top: 60px;
+  z-index: 999;
 `;
 
 export const StyledCoinItem = styled.div`

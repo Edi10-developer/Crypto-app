@@ -22,7 +22,7 @@ class NavBar extends React.Component {
     ],
     coinData: [],
     coins: [],
-    primaryTheme: this.props.primaryTheme,
+    theme: this.props.theme,
   };
 
   handleChange = async (coinValue) => {
@@ -56,12 +56,17 @@ class NavBar extends React.Component {
     this.getCoinList();
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.theme !== this.props.theme) {
+      this.setState({ theme: this.props.theme });
+    }
+  }
+
   render() {
-    console.log(this.state.primaryTheme);
     const { currency, icon, coin, coins, currencies, primaryTheme } =
       this.state;
     return (
-      <ThemeProvider theme={this.props.theme}>
+      <ThemeProvider theme={this.state.theme}>
         <Container
           updateCurrency={this.props.updateCurrency(currency)}
           updateIcon={this.props.updateIcon(icon)}
@@ -77,17 +82,22 @@ class NavBar extends React.Component {
               handleSubmit={this.handleSubmit}
               coins={coins}
               handleChange={this.handleChange}
+              theme={this.state.theme}
             />
-            {coin !== "" && <DropdownCoinList coins={coins} coin={coin} />}
+            {coin !== "" && (
+              <DropdownCoinList
+                coins={coins}
+                coin={coin}
+                theme={this.state.theme}
+              />
+            )}
             <SelectCurrency
               currencies={currencies}
               currency={currency}
               updateCurrency={this.getCurrency}
+              theme={this.state.theme}
             />
-            <SelectTheme
-              primary={primaryTheme}
-              changeTheme={this.props.changeTheme}
-            />
+            <SelectTheme changeTheme={this.props.changeTheme} />
           </div>
         </Container>
       </ThemeProvider>

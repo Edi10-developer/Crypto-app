@@ -40,7 +40,7 @@ class CoinList extends React.Component {
     todayPercentageMarketCap: 0,
     btcPercentageMarketCap: 0,
     ethPercentageMarketCap: 0,
-    primaryTheme: this.props.primaryTheme,
+    theme: this.props.theme,
   };
 
   //corsProblemFixer = "https://cors-anywhere.herokuapp.com/";
@@ -168,11 +168,13 @@ class CoinList extends React.Component {
     if (
       prevProps.currency !== this.props.currency ||
       prevState.currency !== this.state.currency ||
-      prevState.days !== this.state.days
+      prevState.days !== this.state.days ||
+      prevProps.theme !== this.props.theme
     ) {
       this.setState({
         currency: this.props.currency,
         currencyIcon: this.props.icon,
+        theme: this.props.theme,
       });
       this.getCoinList();
       this.getBitcoinData();
@@ -190,6 +192,7 @@ class CoinList extends React.Component {
       daysOptions,
       data,
       sortedDesc,
+      theme,
     } = this.state;
     return (
       <ThemeProvider theme={this.props.theme}>
@@ -232,6 +235,7 @@ class CoinList extends React.Component {
               icon={currencyIcon}
               orderList={sortedDesc}
               orderCoinList={this.sortByAscOrDesc}
+              theme={theme}
             />
           </MainContainer>
         </PageContainer>

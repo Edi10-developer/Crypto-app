@@ -13,8 +13,8 @@ export const TableStyled = styled.table`
 
 export const TableData = styled.div`
   width: calc(100% - 20px);
-  background-color: #191b1f;
-  color: white;
+  background-color: ${(props) => props.theme.pagBgColor};
+  color: ${(props) => props.theme.textColor};
   padding-bottom: 10px;
   margin: 20px auto;
   display: flex;

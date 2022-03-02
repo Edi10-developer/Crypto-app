@@ -5,7 +5,6 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: ${(props) => props.theme.bgColor};
-  color: white;
 
   div {
     display: flex;
@@ -19,7 +18,7 @@ export const LinkStyled = styled(Link)`
   padding: 8px;
   border-radius: 7px;
   text-decoration: none;
-  color: white;
+  color: ${(props) => props.theme.textColor};
   font-weight: bold;
   transition: 300ms;
 

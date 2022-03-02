@@ -8,7 +8,6 @@ class App extends React.Component {
   state = {
     currency: "USD",
     icon: "$",
-    primaryTheme: true,
     theme: darkTheme,
   };
 
@@ -25,10 +24,10 @@ class App extends React.Component {
   };
 
   changeTheme = () => {
-    if (this.state.primaryTheme === true) {
-      this.setState({ primaryTheme: false });
-    } else if (this.state.primaryTheme === false) {
-      this.setState({ primaryTheme: true });
+    if (this.state.theme === darkTheme) {
+      this.setState({ theme: lightTheme });
+    } else if (this.state.theme === lightTheme) {
+      this.setState({ theme: darkTheme });
     }
   };
 
@@ -42,7 +41,6 @@ class App extends React.Component {
             icon={this.state.icon}
             updateCurrency={this.updateCurrency}
             updateIcon={this.updateIcon}
-            primaryTheme={this.state.primaryTheme}
             changeTheme={this.changeTheme}
             theme={this.state.theme}
           />
