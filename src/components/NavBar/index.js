@@ -7,7 +7,7 @@ import {
   SelectTheme,
   DropdownCoinList,
   CoinsDataBar,
-} from "../exports";
+} from "components/exports";
 
 import { Container, LinkStyled } from "./styles";
 

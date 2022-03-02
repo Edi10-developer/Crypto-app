@@ -1,10 +1,10 @@
 import React from "react";
 import { Row, Column, TableData, GreenBall, arrowStyled } from "./styles";
-import { Progressbar } from "../exports";
+import { Progressbar } from "components/exports";
 import { ColorExtractor } from "react-color-extractor";
-import { SparkLine } from "../Charts/exports";
+import { SparkLine } from "components/Charts/exports";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
-import { nFormatter } from "../../utils/nFormatter";
+import { nFormatter } from "utils/nFormatter";
 import { ThemeProvider } from "styled-components";
 
 class Table extends React.Component {

@@ -1,5 +1,5 @@
 import Reac, { useState } from "react";
-import { Container, StyledLi } from "./styles";
+import { Container } from "./styles";
 
 const SelectDays = (props) => {
   const [selected, setSelected] = useState(false);

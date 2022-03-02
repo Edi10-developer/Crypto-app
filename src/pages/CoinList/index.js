@@ -6,7 +6,7 @@ import {
   BarChart,
   SelectDays,
   Table,
-} from "../../components/exports";
+} from "components/exports";
 import {
   PageContainer,
   MainContainer,
@@ -14,8 +14,8 @@ import {
   ChartContainer,
 } from "./styles";
 
-import { currentDate } from "../../utils/date.js";
-import { nFormatter } from "../../utils/nFormatter";
+import { currentDate } from "utils/date.js";
+import { nFormatter } from "utils/nFormatter";
 import { ThemeProvider } from "styled-components";
 
 class CoinList extends React.Component {

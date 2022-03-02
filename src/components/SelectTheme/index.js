@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container } from "./styles";
-import themeToggle from "../img/themeToggleSelect.png";
+import themeToggle from "components/img/themeToggleSelect.png";
 
 const SelectTheme = (props) => {
   return (

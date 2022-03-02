@@ -1,6 +1,6 @@
-import { Progressbar } from "../exports";
+import { Progressbar } from "components/exports";
 import { Container, CoinImg } from "./styles";
-import { nFormatter } from "../../utils/nFormatter";
+import { nFormatter } from "utils/nFormatter";
 import { ThemeProvider } from "styled-components";
 
 const CoinsDataBar = (props) => {

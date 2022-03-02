@@ -1,6 +1,6 @@
 import React from "react";
 import "react-step-progress-bar/styles.css";
-import { Step, ProgressBar } from "react-step-progress-bar";
+import { ProgressBar } from "react-step-progress-bar";
 
 class Progressbar extends React.Component {
   render() {

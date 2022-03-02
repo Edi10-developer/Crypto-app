@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { NavBar } from "./components/exports";
-import { CoinList, Portfolio, Coin } from "./pages/exports";
-import { darkTheme, lightTheme } from "./utils/theme";
+import { NavBar } from "components/exports";
+import { CoinList, Portfolio, Coin } from "pages/exports";
+import { darkTheme, lightTheme } from "utils/theme";
 
 class App extends React.Component {
   state = {
@@ -32,7 +32,6 @@ class App extends React.Component {
   };
 
   render() {
-    console.log("app state theme", this.state.primaryTheme);
     return (
       <>
         <Router>
