@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container } from "./styles";
+import { PageContainer, MainContainer, Div1 } from "./styles";
 
 const Coin = () => {
   const coinId =
@@ -13,9 +13,17 @@ const Coin = () => {
   }, []);
 
   return (
-    <Container>
+    <PageContainer>
       <h1>{coinName} Page</h1>
-    </Container>
+      <MainContainer>
+        <div>
+          <Div1>1</Div1>
+          <div>1b</div>
+        </div>
+        <div>2</div>
+        <div>3</div>
+      </MainContainer>
+    </PageContainer>
   );
 };
 

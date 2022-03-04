@@ -111,7 +111,7 @@ class App extends React.Component {
 
   render() {
     const { currency, coin, icon, theme } = this.state;
-    console.log(coin);
+    console.log(this.state.data);
     return (
       <>
         <Router>
