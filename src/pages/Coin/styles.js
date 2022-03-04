@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
+import { AiFillPlusSquare } from "react-icons/ai";
 
 export const PageContainer = styled.div`
   border: 1px solid red;
@@ -25,7 +26,29 @@ export const Column = styled.div`
   align-items: center;
   background-color: ${(props) => props.theme.bgColor};
   border: 1px solid blue;
+  min-width: 20%;
   padding: 20px;
+  margin: 10px;
+
+  h2 {
+    font-size: 45px;
+    margin: -10px;
+
+    span {
+      font-size: 15px;
+    }
+  }
+`;
+
+export const DateSpan = styled.span`
+  display: block;
+  text-align: center;
+  margin-left: 15px;
+`;
+
+export const StyledSpan = styled.span`
+  color: ${(props) =>
+    props.isNegative === false ? "rgb(0, 255, 95)" : "#FF0008"};
 `;
 
 export const ImageContainer = styled.div`
@@ -46,7 +69,8 @@ export const CoinImage = styled.img`
 `;
 
 export const DownArrow = styled(TiArrowSortedDown)`
-  color: red;
+  color: #ff0008;
+  margin-bottom: -2px;
 `;
 
 export const UpArrow = styled(TiArrowSortedUp)`
@@ -60,4 +84,10 @@ export const LinkStyled = styled.a`
   &:hover {
     color: rgb(0, 255, 95);
   }
+`;
+
+export const Plus = styled(AiFillPlusSquare)`
+  color: #2172e5;
+  background-color: white;
+  margin-right: 7px;
 `;

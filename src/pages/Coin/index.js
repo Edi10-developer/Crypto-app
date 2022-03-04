@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 import {
   PageContainer,
   Row,
@@ -9,8 +10,12 @@ import {
   DownArrow,
   ImageContainer,
   LinkStyled,
+  DateSpan,
+  StyledSpan,
+  Plus,
 } from "./styles";
 import { ThemeProvider } from "styled-components";
+import { Progressbar } from "components/exports";
 
 const Coin = (props) => {
   const coinId =
@@ -31,7 +36,7 @@ const Coin = (props) => {
         data: coinData.data,
         coinImg: coinData.data.image.small,
         coinId: coinData.data.id,
-        coinSymbol: coinData.data.symbol,
+        coinSymbol: coinData.data.symbol.toUpperCase(),
         coinLink: coinData.data.links.homepage[0],
         coinDescription: coinData.data.description.en,
         coinPrice: `${
@@ -39,21 +44,61 @@ const Coin = (props) => {
             ? coinData.data.market_data.current_price.usd
             : coinData.data.market_data.current_price.eur
         }`,
-
-        coinPriceEuro: coinData.data.market_data.current_price.eur,
-        coinATH: coinData.data.market_data.ath.usd,
-
+        coinATH: `${
+          props.currency === "USD"
+            ? coinData.data.market_data.ath.usd
+            : coinData.data.market_data.ath.eur
+        }`,
         coinATL: `${
           props.currency === "USD"
             ? coinData.data.market_data.atl.usd
             : coinData.data.market_data.atl.eur
         }`,
+        coinATLDate: `${
+          props.currency === "USD"
+            ? moment(coinData.data.market_data.atl_date.usd).format(
+                "DD, MMM, YYYY, HH:mm:ss"
+              )
+            : moment(coinData.data.market_data.atl_date.eur).format(
+                "DD, MMM, YYYY, HH:mm:ss"
+              )
+        }`,
+        coinATHDate: `${
+          props.currency === "USD"
+            ? moment(coinData.data.market_data.ath_date.usd).format(
+                "DD, MMM, YYYY, HH:mm:ss"
+              )
+            : moment(coinData.data.market_data.ath_date.eur).format(
+                "DD, MMM, YYYY, HH:mm:ss"
+              )
+        }`,
+        marketChangePercentage24h:
+          coinData.data.market_data.market_cap_change_percentage_24h,
 
-        coinATLDate: coinData.data.market_data.atl_date.usd,
-        coinATHDate: coinData.data.market_data.ath_date.usd,
+        priceChange24h: `${
+          props.currency === "USD"
+            ? coinData.data.market_data.price_change_24h_in_currency.usd
+            : coinData.data.market_data.price_change_24h_in_currency.eur
+        }`,
       });
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const checkIsNegative = (number) => {
+    if (number < 0) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const arrowValueChange = (number) => {
+    if (number < 0) {
+      return <DownArrow />;
+    } else {
+      return <UpArrow />;
     }
   };
 
@@ -63,7 +108,7 @@ const Coin = (props) => {
     getCoinData();
   }, [data]);
 
-  ////console.log(data);
+  //console.log(data.data);
   return (
     <ThemeProvider theme={props.theme}>
       <PageContainer>
@@ -81,8 +126,7 @@ const Coin = (props) => {
                 <ImageContainer>
                   <CoinImage src={data.coinImg} alt={data.coinId} />
                 </ImageContainer>
-                {formattName(`${data.coinId}`)}`${data.coinSymbol}
-                .toUpperCase()`)
+                {formattName(`${data.coinId}`)} &nbsp; ({data.coinSymbol})
               </Column>
             </Column>
             <Column>
@@ -94,43 +138,76 @@ const Coin = (props) => {
 
           <Column>
             <h2>
-              {data.coinPrice}
-              {props.icon}
+              {data.coinPrice}&nbsp;
+              {props.icon}{" "}
+              <StyledSpan
+                isNegative={checkIsNegative(data.marketChangePercentage24h)}
+              >
+                {arrowValueChange(data.marketChangePercentage24h)}{" "}
+                {Math.round(data.marketChangePercentage24h * 10) / 10} %
+              </StyledSpan>
             </h2>
-            <p>Profit: 7777</p>
+            <p>
+              Profit:{" "}
+              <StyledSpan isNegative={checkIsNegative(data.priceChange24h)}>
+                {" "}
+                {data.priceChange24h}&nbsp;
+                {props.icon}
+              </StyledSpan>
+            </p>
             <div>
               <p>
                 <UpArrow />
-                All Time High: {data.coinATH}
+                All Time High: {data.coinATH}&nbsp;
+                {props.icon}
+                <br />
+                <DateSpan>{data.coinATHDate} GMT</DateSpan>
               </p>
-              <p>{data.coinATHDate}</p>
 
               <p>
                 <DownArrow />
-                All Time Low: {data.coinATL}
+                All Time Low: {data.coinATL}&nbsp;
+                {props.icon}
+                <br />
+                <DateSpan>{data.coinATLDate} GMT</DateSpan>
               </p>
-              <p>{data.coinATLDate}</p>
             </div>
           </Column>
           <Column>
-            <h3>
-              {data.coinPriceUsd}
-              {props.icon}
-            </h3>
-            <p>Profit: 7777</p>
-            <div>
-              <p>
-                <UpArrow />
-                All Time High: {data.coinATH}
-              </p>
-              <p>{data.coinATHDate}</p>
-
-              <p>
-                <DownArrow />
-                All Time Low: {data.coinATL}
-              </p>
-              <p>{data.coinATLDate}</p>
-            </div>
+            <ul style={{ listStyleType: "none" }}>
+              <li>
+                <Plus />
+                Market cap:
+              </li>
+              <li>
+                <Plus /> Fully Diliuted Valuation:
+              </li>
+              <li>
+                <Plus /> Volume 24h:
+              </li>
+              <li>
+                <Plus />
+                Volume / Market:
+              </li>
+              <li>.</li>
+              <li>
+                <Plus /> Total Volume:
+              </li>
+              <li>
+                <Plus /> Circulating Supply:
+              </li>
+              <li>
+                <Plus /> Max Supply:
+              </li>
+              <li>
+                <Progressbar
+                  percent={data.priceChange24h}
+                  unfilledBackground={"white"}
+                  filledBackground={"#215DB5"}
+                  width={"60px"}
+                />
+              </li>
+            </ul>
           </Column>
         </Row>
         <h3>Description</h3>
@@ -143,5 +220,4 @@ const Coin = (props) => {
     </ThemeProvider>
   );
 };
-
 export default Coin;
