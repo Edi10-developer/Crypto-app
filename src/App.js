@@ -8,6 +8,7 @@ class App extends React.Component {
   state = {
     currency: "USD",
     icon: "$",
+    // coin: "",
     theme: darkTheme,
   };
 
@@ -32,6 +33,8 @@ class App extends React.Component {
   };
 
   render() {
+    const { currency, coin, icon, theme } = this.state;
+    console.log(coin);
     return (
       <>
         <Router>
@@ -43,28 +46,30 @@ class App extends React.Component {
             }}
           >
             <NavBar
-              currency={this.state.currency}
-              icon={this.state.icon}
+              currency={currency}
+              icon={icon}
               updateCurrency={this.updateCurrency}
               updateIcon={this.updateIcon}
+              // updateCoin={this.updateCoin}
               changeTheme={this.changeTheme}
-              theme={this.state.theme}
+              theme={theme}
             />
             <Switch>
               <Route
                 exact
                 path="/"
                 render={() => (
-                  <CoinList
-                    currency={this.state.currency}
-                    icon={this.state.icon}
-                    primaryTheme={this.state.primaryTheme}
-                    theme={this.state.theme}
-                  />
+                  <CoinList currency={currency} icon={icon} theme={theme} />
                 )}
               />
               <Route exact path="/portfolio" component={Portfolio} />
-              <Route exact path="/:coinId" component={Coin} />
+              <Route
+                exact
+                path="/:coinId"
+                render={() => (
+                  <Coin currency={currency} coin={coin} theme={theme} />
+                )}
+              />
             </Switch>
           </div>
         </Router>

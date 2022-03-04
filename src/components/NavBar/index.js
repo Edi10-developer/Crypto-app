@@ -33,19 +33,19 @@ class NavBar extends React.Component {
     theme: this.props.theme,
   };
 
-  handleChange = async (coinValue) => {
-    this.setState({ coin: coinValue });
+  handleChange = (coinName) => {
+    this.setState({ coin: coinName });
   };
 
-  handleSubmit = (coinValue) => {
-    this.getCoinData();
+  handleSubmit = () => {
+    this.props.updateCoin(this.state.coin);
     window.location.pathname = `/${this.state.coin}`;
   };
 
   getCoinList = async () => {
     try {
       const { data } = await axios(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&per_page=100&page=1&sparkline=true&price_change_percentage=7d`
+        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.props.currency}&per_page=30&page=1&sparkline=true&price_change_percentage=7d`
       );
       const totalCoinsMarketCap = data.reduce(
         (total, currentValue) => (total = total + currentValue.market_cap),
@@ -92,10 +92,18 @@ class NavBar extends React.Component {
   };
 
   getCurrency = (e) => {
-    let index = e.target.selectedIndex;
-    let newCurrency = e.target.options[index].value;
-    let newIcon = e.target.options[index].id;
-    this.setState({ currency: newCurrency, icon: newIcon });
+    const index = e.target.selectedIndex;
+    const newCurrency = e.target.options[index].value;
+    const newIcon = e.target.options[index].id;
+
+    this.props.updateCurrency(newCurrency);
+    this.props.updateIcon(newIcon);
+  };
+
+  updateCoin = (newCoin) => {
+    if (this.state.coin !== newCoin) {
+      this.setState({ coin: newCoin });
+    }
   };
 
   componentDidMount() {
@@ -112,13 +120,11 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { currency, icon, coin, coins, currencies, theme } = this.state;
+    const { coin, coins, theme } = this.state;
+    const { changeTheme } = this.props;
     return (
       <ThemeProvider theme={theme}>
-        <Container
-          updateCurrency={this.props.updateCurrency(currency)}
-          updateIcon={this.props.updateIcon(icon)}
-        >
+        <Container>
           <div>
             <LinkStyled to="/">Coins</LinkStyled>
             <LinkStyled to="/portfolio"> Portfolio</LinkStyled>
@@ -126,22 +132,15 @@ class NavBar extends React.Component {
           </div>
           <div>
             <LinkStyled to={`/${coin}`} />
-            <SearchInput
-              handleSubmit={this.handleSubmit}
-              coins={coins}
-              handleChange={this.handleChange}
-              theme={theme}
-            />
+            <SearchInput data={this.state} handleChange={this.handleChange} />
             {coin !== "" && (
               <DropdownCoinList coins={coins} coin={coin} theme={theme} />
             )}
             <SelectCurrency
-              currencies={currencies}
-              currency={currency}
+              data={this.state}
               updateCurrency={this.getCurrency}
-              theme={theme}
             />
-            <SelectTheme changeTheme={this.props.changeTheme} />
+            <SelectTheme changeTheme={changeTheme} />
           </div>
         </Container>
         <CoinsDataBar data={this.state} />

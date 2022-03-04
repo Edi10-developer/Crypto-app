@@ -1,22 +1,21 @@
 import { ThemeProvider } from "styled-components";
 import { Container, StyledCoinItem, StyledCoinImg } from "./styles";
 
-const DropdownCoinList = (props) => (
-  <ThemeProvider theme={props.theme}>
+const DropdownCoinList = ({ coins, theme, coin }) => (
+  <ThemeProvider theme={theme}>
     <Container>
-      {props.coins
+      {coins
         .filter((element) => {
-          if (props.coin == "") {
+          if (coin == "") {
             return element;
-          } else if (element.id[0] === props.coin[0]) {
-            console.log("element ", element);
+          } else if (element.id[0] === coin[0]) {
             return element;
           }
         })
-        .map((item, key) => (
+        .map((item, index) => (
           <StyledCoinItem
             onClick={() => (window.location.pathname = `/${item.id}`)}
-            key={item.id}
+            key={index}
           >
             <div>
               <StyledCoinImg src={`${item.image}`} alt={item.id} />

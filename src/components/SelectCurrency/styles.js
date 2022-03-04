@@ -11,4 +11,8 @@ export const SelectStyled = styled.select`
   color: ${(props) => props.theme.textColor};
   border: none;
   padding: 4px;
+
+  :focus {
+    outline: none;
+  }
 `;
