@@ -14,7 +14,7 @@ const DropdownCoinList = ({ coins, theme, coin }) => (
         })
         .map((item, index) => (
           <StyledCoinItem
-            onClick={() => (window.location.pathname = `/${item.id}`)}
+            onClick={() => (window.location.pathname = `/coins/${item.id}`)}
             key={index}
           >
             <div>

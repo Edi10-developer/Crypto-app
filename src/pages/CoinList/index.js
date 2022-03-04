@@ -41,6 +41,7 @@ const CoinList = ({ dataCoinList, data, updateDays }) => {
     daysOptions,
     theme,
   } = dataCoinList;
+
   return (
     <ThemeProvider theme={theme}>
       <PageContainer>

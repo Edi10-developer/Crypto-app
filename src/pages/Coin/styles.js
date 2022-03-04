@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 
 export const PageContainer = styled.div`
   border: 1px solid red;
@@ -11,33 +12,52 @@ export const PageContainer = styled.div`
   z-index: 3;
 `;
 
-export const MainContainer = styled.div`
-  width: 1100px;
-  margin: 0px auto;
+export const Row = styled.div`
   display: flex;
-  justify-content: center;
-  align-content: center;
-  align-items: center;
-  justify-items: center;
-
-  div {
-    width: 300px;
-    height: 400px;
-
-    border: 1px solid black;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    div {
-      :nth-child(2) {
-        width: 100%;
-        height: 100px;
-        border: 1px solid red;
-      }
-    }
-  }
+  border: 1px solid red;
+  justify-content: space-between;
 `;
 
-export const Div1 = styled.div`
-  height: 300px;
+export const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.bgColor};
+  border: 1px solid blue;
+  padding: 20px;
+`;
+
+export const ImageContainer = styled.div`
+  margin: 30px auto;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  align-self: center;
+  align-items: center;
+
+  background-color: ${(props) => props.theme.pagBgColor};
+`;
+export const CoinImage = styled.img`
+  width: 50px;
+`;
+
+export const DownArrow = styled(TiArrowSortedDown)`
+  color: red;
+`;
+
+export const UpArrow = styled(TiArrowSortedUp)`
+  color: rgb(0, 255, 95);
+`;
+
+export const LinkStyled = styled.a`
+  color: ${(props) => props.theme.textColor};
+  text-decoration: none;
+
+  &:hover {
+    color: rgb(0, 255, 95);
+  }
 `;

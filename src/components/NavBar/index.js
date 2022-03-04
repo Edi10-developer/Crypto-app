@@ -33,19 +33,21 @@ class NavBar extends React.Component {
     theme: this.props.theme,
   };
 
+  baseurl = process.env.REACT_APP_ENDPOINT;
+
   handleChange = (coinName) => {
     this.setState({ coin: coinName });
   };
 
   handleSubmit = () => {
     this.props.updateCoin(this.state.coin);
-    window.location.pathname = `/${this.state.coin}`;
+    window.location.pathname = `/coins/${this.state.coin}`;
   };
 
   getCoinList = async () => {
     try {
       const { data } = await axios(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.props.currency}&per_page=30&page=1&sparkline=true&price_change_percentage=7d`
+        `${this.baseurl}/coins/markets?vs_currency=${this.props.currency}&per_page=30&page=1&sparkline=true&price_change_percentage=7d`
       );
       const totalCoinsMarketCap = data.reduce(
         (total, currentValue) => (total = total + currentValue.market_cap),
@@ -71,9 +73,7 @@ class NavBar extends React.Component {
 
   getGlobalCoinsData = async () => {
     try {
-      const globalData = await axios.get(
-        `https://api.coingecko.com/api/v3/global`
-      );
+      const globalData = await axios.get(`${this.baseurl}/global`);
       const btcPercentageMarketCap =
         (this.state.btcMarketCap * 100) / this.state.totalMarketCap;
       const ethPercentageMarketCap =
@@ -128,10 +128,9 @@ class NavBar extends React.Component {
           <div>
             <LinkStyled to="/">Coins</LinkStyled>
             <LinkStyled to="/portfolio"> Portfolio</LinkStyled>
-            <LinkStyled to={`/${coin}`} />
           </div>
           <div>
-            <LinkStyled to={`/${coin}`} />
+            <LinkStyled to={`/coins/${coin}`} />
             <SearchInput data={this.state} handleChange={this.handleChange} />
             {coin !== "" && (
               <DropdownCoinList coins={coins} coin={coin} theme={theme} />

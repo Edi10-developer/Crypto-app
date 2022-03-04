@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { SelectStyled, OptionStyled } from "./styles";
+import { SelectStyled } from "./styles";
 
 const SelectCurrency = (props) => {
   const selectNewCurrency = (e) => {

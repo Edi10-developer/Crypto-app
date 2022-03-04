@@ -20,6 +20,7 @@ class App extends React.Component {
     daysOptions: [1, 7, 30, 180, 365],
     // coin: "",
     theme: darkTheme,
+    baseUrl: process.env.REACT_APP_ENDPOINT,
   };
 
   updateCurrency = (newCurrency) => {
@@ -51,7 +52,7 @@ class App extends React.Component {
   getCoinList = async () => {
     try {
       const { data } = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${this.state.currency}&order=market_cap_desc&per_page=1000&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
+        `${this.state.baseUrl}/coins/markets?vs_currency=${this.state.currency}&order=market_cap_desc&per_page=1000&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
       );
 
       this.setState({
@@ -67,7 +68,7 @@ class App extends React.Component {
   getBitcoinData = async () => {
     try {
       const btcData = await axios.get(
-        `https://api.coingecko.com/api/v3/coins/bitcoin/market_chart?vs_currency=${this.state.currency}&days=${this.state.days}`
+        `${this.state.baseUrl}/coins/bitcoin/market_chart?vs_currency=${this.state.currency}&days=${this.state.days}`
       );
       const volume = btcData.data.total_volumes.map((value, index) => {
         let vol = value[1];
@@ -111,7 +112,6 @@ class App extends React.Component {
 
   render() {
     const { currency, coin, icon, theme } = this.state;
-    console.log(this.state.data);
     return (
       <>
         <Router>
@@ -145,9 +145,15 @@ class App extends React.Component {
               <Route exact path="/portfolio" component={Portfolio} />
               <Route
                 exact
-                path="/:coinId"
+                path="/coins/:coinId"
                 render={() => (
-                  <Coin currency={currency} coin={coin} theme={theme} />
+                  <Coin
+                    currency={currency}
+                    coin={coin}
+                    theme={theme}
+                    currency={currency}
+                    icon={icon}
+                  />
                 )}
               />
             </Switch>
