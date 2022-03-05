@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const PageContainer = styled.div`
+  display: flex;
   text-align: left;
   padding: 50px;
   margin-top: -70px;

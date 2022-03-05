@@ -52,7 +52,7 @@ class App extends React.Component {
   getCoinList = async () => {
     try {
       const { data } = await axios.get(
-        `${this.state.baseUrl}/coins/markets?vs_currency=${this.state.currency}&order=market_cap_desc&per_page=1000&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
+        `${this.state.baseUrl}/coins/markets?vs_currency=${this.state.currency}&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=1h,24h,7d`
       );
 
       this.setState({
