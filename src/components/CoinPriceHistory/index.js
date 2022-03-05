@@ -1,4 +1,11 @@
-import { StyledSpan, DataIcon, UpArrow, DownArrow, DateSpan } from "./styles";
+import {
+  StyledSpan,
+  PriceStyled,
+  DataIcon,
+  UpArrow,
+  DownArrow,
+  DateSpan,
+} from "./styles";
 
 const CoinPriceHistory = (props) => {
   const {
@@ -14,13 +21,15 @@ const CoinPriceHistory = (props) => {
   const { icon, checkIsNegative, arrowValueChange } = props;
   return (
     <>
-      <h2>
-        {icon} {coinPrice}&nbsp;
-        <StyledSpan isNegative={checkIsNegative(marketChangePercentage24h)}>
-          {arrowValueChange(marketChangePercentage24h)}{" "}
-          {Math.round(marketChangePercentage24h * 10) / 10} %
-        </StyledSpan>
-      </h2>
+      <PriceStyled>
+        <h2>
+          {icon} {coinPrice}&nbsp;
+          <StyledSpan isNegative={checkIsNegative(marketChangePercentage24h)}>
+            {arrowValueChange(marketChangePercentage24h)}{" "}
+            {Math.round(marketChangePercentage24h * 10) / 10} %
+          </StyledSpan>
+        </h2>
+      </PriceStyled>
       <p>
         Profit:{" "}
         <StyledSpan isNegative={checkIsNegative(priceChange24h)}>

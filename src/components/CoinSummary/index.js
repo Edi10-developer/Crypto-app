@@ -63,6 +63,7 @@ const CoinSummary = (props) => {
             <CopyIcon />
           </Row>
         </Column>
+
         <Column>
           <Row>
             {coinForumLink !== "" && (

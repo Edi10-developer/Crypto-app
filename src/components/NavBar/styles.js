@@ -5,6 +5,7 @@ export const Container = styled.div`
   display: flex;
   justify-content: space-between;
   background-color: ${(props) => props.theme.bgColor};
+  width: 100%;
 
   div {
     display: flex;

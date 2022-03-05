@@ -2,13 +2,24 @@ import styled from "styled-components";
 import { TiArrowSortedDown, TiArrowSortedUp } from "react-icons/ti";
 import { SiDatabricks } from "react-icons/si";
 
+export const PriceStyled = styled.div`
+  h2 {
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    align-content: center;
+    font-size: 41px;
+    margin: -5px;
+  }
+`;
 export const DateSpan = styled.span`
-  display: block;
   text-align: center;
   margin-left: 15px;
 `;
 
 export const StyledSpan = styled.span`
+  font-size: 12px;
   color: ${(props) =>
     props.isNegative === false ? "rgb(0, 255, 95)" : "#FF0008"};
 `;

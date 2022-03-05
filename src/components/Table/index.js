@@ -1,13 +1,13 @@
 import React from "react";
-import { Row, Column, TableData, GreenBall, arrowStyled } from "./styles";
-import { TableRow } from "components/exports";
+import { Row, TableData, arrowStyled } from "./styles";
+import { TableHead, TableRow } from "components/exports";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { ThemeProvider } from "styled-components";
 
 class Table extends React.Component {
   state = {
     isNegative: true,
-    oderList: this.props.oderList,
+    orderList: this.props.orderList,
     icon: this.props.icon,
   };
 
@@ -29,7 +29,11 @@ class Table extends React.Component {
 
   arrowSort = (sortedDesc) => {
     if (sortedDesc === true) {
-      return <button onClick={this.props.orderCoinList}></button>;
+      return (
+        <button onClick={this.props.orderCoinList}>
+          <TiArrowSortedUp />
+        </button>
+      );
     } else {
       return (
         <button onClick={this.props.orderCoinList}>
@@ -43,36 +47,11 @@ class Table extends React.Component {
     return (
       <ThemeProvider theme={this.props.theme}>
         <TableData>
-          <Row>
-            <Column>#</Column>
-            <Column>
-              <p>
-                Name{" "}
-                <span onClick={this.props.orderCoinList}>
-                  {this.props.orderList === true ? (
-                    <TiArrowSortedDown style={arrowStyled} />
-                  ) : (
-                    <TiArrowSortedUp style={arrowStyled} />
-                  )}
-                </span>
-              </p>
-            </Column>
-            <Column>Price</Column>
-            <Column>
-              <span>1h %</span>
-            </Column>
-            <Column>
-              <span>24h %</span>
-            </Column>
-            <Column>
-              <span>7d %</span>
-            </Column>
-            <Column>24h Volume/Market Cap</Column>
-            <Column>Circulating/Total Supply</Column>
-            <Column>
-              Last7days <GreenBall />
-            </Column>
-          </Row>
+          <TableHead
+            orderCoinList={this.props.orderCoinList}
+            orderList={this.props.orderList}
+            arrowSort={this.arrowSort}
+          />
           {this.props.data.map(
             (
               {

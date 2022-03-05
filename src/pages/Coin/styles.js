@@ -13,7 +13,7 @@ export const PageContainer = styled.div`
 
 export const Row = styled.div`
   display: flex;
-  min-width: 80%;
+  max-width: 80%;
   border: 1px solid red;
   justify-content: space-between;
 `;

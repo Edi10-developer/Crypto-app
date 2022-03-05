@@ -45,15 +45,6 @@ export const Column = styled.div`
   }
 `;
 
-export const GreenBall = styled.div`
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background-color: rgba(0, 255, 95, 1);
-  margin-top: -13px;
-  margin-left: 60px;
-`;
-
 export const arrowStyled = {
   marginBottom: "-3px",
   fontSize: "15px",

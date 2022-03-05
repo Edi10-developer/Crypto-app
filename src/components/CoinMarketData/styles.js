@@ -12,5 +12,6 @@ export const Plus = styled(AiFillPlusSquare)`
 `;
 
 export const StyledDataSpan = styled.span`
-  color: rgba(255, 255, 255, 0.7);
+  color: ${(props) => props.theme.textColor};
+  opacity: 0.6;
 `;

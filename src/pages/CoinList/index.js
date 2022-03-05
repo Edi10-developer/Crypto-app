@@ -5,6 +5,7 @@ import {
   MainContainer,
   ChartsContainer,
   ChartContainer,
+  CoinDataContainer,
 } from "./styles";
 
 import { currentDate } from "utils/date.js";
@@ -49,18 +50,22 @@ const CoinList = ({ dataCoinList, data, updateDays }) => {
           <h4>Your overview</h4>
           <ChartsContainer>
             <ChartContainer>
-              <h6>BTC</h6>
-              <h2>
-                {btcCurrentPrice}&nbsp;
-                {icon}
-              </h2>
-              <h6>{currentDate}</h6>
+              <CoinDataContainer>
+                <h6>BTC</h6>
+                <h2>
+                  {btcCurrentPrice}&nbsp;
+                  {icon}
+                </h2>
+                <h6>{currentDate}</h6>
+              </CoinDataContainer>
               <LineChart coinPrice={coinPrice} coinTimestamp={coinTimestamp} />
             </ChartContainer>
             <ChartContainer>
-              <h6>Volume 24H</h6>
-              <h2>{nFormatter(btcCurrentVolume)}</h2>
-              <h6>{currentDate}</h6>
+              <CoinDataContainer>
+                <h6>Volume 24H</h6>
+                <h2>{nFormatter(btcCurrentVolume)}</h2>
+                <h6>{currentDate}</h6>
+              </CoinDataContainer>
               <BarChart
                 coinTotalVolumes={coinVolumes}
                 coinTimestamp={coinTimestamp}

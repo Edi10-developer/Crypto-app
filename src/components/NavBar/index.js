@@ -130,7 +130,6 @@ class NavBar extends React.Component {
             <LinkStyled to="/portfolio"> Portfolio</LinkStyled>
           </div>
           <div>
-            <LinkStyled to={`/coins/${coin}`} />
             <SearchInput data={this.state} handleChange={this.handleChange} />
             {coin !== "" && (
               <DropdownCoinList coins={coins} coin={coin} theme={theme} />
@@ -139,7 +138,7 @@ class NavBar extends React.Component {
               data={this.state}
               updateCurrency={this.getCurrency}
             />
-            <SelectTheme changeTheme={changeTheme} />
+            <SelectTheme changeTheme={changeTheme} theme={theme} />
           </div>
         </Container>
         <CoinsDataBar data={this.state} />

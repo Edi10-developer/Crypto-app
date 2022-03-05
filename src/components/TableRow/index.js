@@ -40,9 +40,11 @@ const RenderSwatches = () => {
     total_supply,
     market_cap,
     sparkline_in_7d,
+    icon,
+    checkIsNegative,
+    arrowValueChange,
   } = props;
 
-  const { icon, checkIsNegative, arrowValueChange } = props;
   return (
     <Row>
       <Column>{props.index + 1}</Column>

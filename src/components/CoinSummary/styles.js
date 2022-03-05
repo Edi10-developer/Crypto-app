@@ -32,13 +32,6 @@ export const Column = styled.div`
   min-width: 15%;
   padding: 10px;
   margin: 10px;
-  h2 {
-    font-size: 45px;
-    margin: -10px;
-    span {
-      font-size: 15px;
-    }
-  }
 `;
 
 export const DateSpan = styled.span`
