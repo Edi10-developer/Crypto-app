@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Row, Column, TableData, GreenBall, arrowStyled } from "./styles";
+import { Row, Column } from "./styles";
 import { ColorExtractor } from "react-color-extractor";
 import { nFormatter } from "utils/nFormatter";
 import { Progressbar } from "components/exports";

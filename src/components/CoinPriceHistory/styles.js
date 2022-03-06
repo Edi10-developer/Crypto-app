@@ -20,8 +20,8 @@ export const DateSpan = styled.span`
 
 export const StyledSpan = styled.span`
   font-size: 12px;
-  color: ${(props) =>
-    props.isNegative === false ? "rgb(0, 255, 95)" : "#FF0008"};
+  color: ${({ isNegative }) =>
+    isNegative === false ? "rgb(0, 255, 95)" : "#FF0008"};
 `;
 
 export const DownArrow = styled(TiArrowSortedDown)`

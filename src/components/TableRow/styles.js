@@ -30,8 +30,8 @@ export const Column = styled.div`
   :nth-child(6) {
     color: ${(props) =>
       props.isNegative === false
-        ? "rgba(0, 255, 95, 1)"
-        : "rgba(255, 0, 7, 1)"};
+        ? props.theme.positiveData
+        : props.theme.negativeData};
 
     span {
       color: white;

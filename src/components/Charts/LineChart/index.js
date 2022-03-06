@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,8 +10,10 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import gradient from "chartjs-plugin-gradient";
 
 ChartJS.register(
+  gradient,
   CategoryScale,
   LinearScale,
   PointElement,
@@ -21,20 +23,42 @@ ChartJS.register(
   Legend
 );
 
-export default function LineChart(props) {
+const LineChart = (props) => {
   const chartData = {
     labels: props.coinTimestamp,
     datasets: [
       {
         label: "BTC Prices",
         data: props.coinPrice,
-        borderColor: "rgba(0, 255, 95, 1)",
-        backgroundColor: "rgba(0, 255, 95, 1)",
-        pointBackgroundColor: "transparent",
-        pointBorderColor: "transparent",
-        tension: 0.4,
+        borderColor: props.borderColor,
+        pointBackgroundColor: props.pointBackgroundColor,
+        pointBorderColor: props.pointBorderColor,
+        tension: props.tension,
         drawOnChartArea: true,
         drawTicks: true,
+        fill: true,
+
+        gradient: {
+          backgroundColor: {
+            axis: "y",
+            colors: {
+              10000: "red",
+              20000: "white",
+              30000: "black",
+              40000: "white",
+              60000: props.borderColor,
+            },
+          },
+          /* borderColor: {
+            axis: "y",
+            colors: {
+              20000: "black",
+              30000: "white",
+              60000: props.borderColor,
+            }
+            
+          },*/
+        },
       },
     ],
   };
@@ -43,7 +67,7 @@ export default function LineChart(props) {
     showLabelBackdrop: true,
     layout: {
       padding: {
-        top: 100,
+        top: 60,
       },
     },
 
@@ -53,7 +77,7 @@ export default function LineChart(props) {
       },
     },
     animation: {
-      duration: 2000,
+      duration: 1500,
     },
     maintainAspectRatio: true,
     responsive: true,
@@ -73,7 +97,7 @@ export default function LineChart(props) {
       },
       y: {
         grid: {
-          display: false,
+          color: "transparent",
         },
         ticks: {
           display: false,
@@ -84,5 +108,11 @@ export default function LineChart(props) {
     },
   };
 
+  const divStyle = {
+    height: "200px",
+  };
+
   return <Line data={chartData} options={chartOptions} />;
-}
+};
+
+export default LineChart;

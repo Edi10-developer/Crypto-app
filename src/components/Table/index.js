@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, TableData, arrowStyled } from "./styles";
+import { TableData, arrowStyled } from "./styles";
 import { TableHead, TableRow } from "components/exports";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 import { ThemeProvider } from "styled-components";

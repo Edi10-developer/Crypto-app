@@ -5,7 +5,7 @@ export const Container = styled.ul`
   justify-content: center;
   align-items: center;
   list-style-type: none;
-  border-radius: 6px;
+  border-radius: ${(props) => props.borderRadius};
 
   li {
     width: 35px;

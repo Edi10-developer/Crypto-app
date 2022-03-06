@@ -21,22 +21,8 @@ export const TableData = styled.div`
   align-items: center;
   flex-direction: column;
   border-radius: 9px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 20px;
+  padding: 20px;
   overflow: hidden;
-`;
-
-export const Row = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 7px;
-  border-bottom: 1px solid #ccc;
-  padding-left: 10px;
-
-  :first-child {
-    border-bottom: none;
-  }
 `;
 
 export const arrowStyled = {

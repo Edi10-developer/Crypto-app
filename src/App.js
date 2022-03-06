@@ -94,6 +94,7 @@ class App extends React.Component {
       console.log(err);
     }
   };
+
   componentDidMount = () => {
     this.getCoinList();
     this.getBitcoinData();
@@ -111,7 +112,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { currency, coin, icon, theme } = this.state;
+    const { currency, coin, icon, theme, daysOptions } = this.state;
     return (
       <>
         <Router>
@@ -153,6 +154,7 @@ class App extends React.Component {
                     theme={theme}
                     currency={currency}
                     icon={icon}
+                    daysOptions={daysOptions}
                   />
                 )}
               />

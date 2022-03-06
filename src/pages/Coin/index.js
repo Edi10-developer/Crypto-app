@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-import { PageContainer, UpArrow, DownArrow } from "./styles";
+import { PageContainer, UpArrow, DownArrow, ChartContainer } from "./styles";
 import { ThemeProvider } from "styled-components";
 
-import CoinSummary from "../../components/CoinSummary";
+import { CoinSummary, SelectDays } from "components/exports";
+import { LineChart } from "components/Charts/exports";
 
 const Coin = (props) => {
   const coinId =
@@ -13,11 +14,13 @@ const Coin = (props) => {
 
   const [coinName, updateCoinName] = useState(coinId);
   const [data, setData] = useState({});
+  const [days, setDays] = useState(7);
+  const [chartData, updateChartData] = useState({});
 
   const getCoinData = async () => {
     try {
       const coinData = await axios.get(
-        `${baseUrl}/coins/${coinName}?tickers=true`
+        `${baseUrl}/coins/${coinName}?tickers=true&sparkline=true`
       );
 
       setData({
@@ -111,11 +114,43 @@ const Coin = (props) => {
     }
   };
 
+  const getCoinChartData = async () => {
+    try {
+      const coinChartData = await axios.get(
+        `${baseUrl}/coins/${coinName}/market_chart?vs_currency=${props.currency}&days=${days}`
+      );
+      const volume = coinChartData.data.total_volumes.map((value, index) => {
+        let vol = value[1];
+        return vol;
+      });
+      const price = coinChartData.data.prices.map((value, index) => {
+        let priceValue = value[1];
+        return priceValue;
+      });
+      const date = coinChartData.data.prices.map((value, index) => {
+        let findChartDates = new Date(value[0]);
+        let chartDate = `${findChartDates.getDate()} - ${
+          findChartDates.getMonth() + 1
+        } - ${findChartDates.getFullYear()}`;
+        return chartDate;
+      });
+      updateChartData({
+        coinPrice: price,
+        coinVolumes: volume,
+        coinTimestamp: date,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     getCoinData();
+    getCoinChartData();
   }, [data]);
 
-  //console.log(data.data);
+  //console.log(chartData);
+  const { coinPrice, coinTimestamp } = chartData;
   return (
     <ThemeProvider theme={props.theme}>
       <PageContainer>
@@ -126,6 +161,21 @@ const Coin = (props) => {
           arrowValueChange={arrowValueChange}
           theme={props.theme}
         />
+        <SelectDays
+          days={props.daysOptions}
+          selectNumberOfDays={(number) => setDays(number)}
+          borderRadius={"50"}
+        />
+        <ChartContainer>
+          <LineChart
+            coinPrice={coinPrice}
+            coinTimestamp={coinTimestamp}
+            borderColor={props.theme.textColor}
+            tension={0.2}
+            pointBackgroundColor={"transparent"}
+            pointBorderColor={"transparent"}
+          />
+        </ChartContainer>
       </PageContainer>
     </ThemeProvider>
   );

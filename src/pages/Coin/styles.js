@@ -47,3 +47,17 @@ export const DownArrow = styled(TiArrowSortedDown)`
 export const UpArrow = styled(TiArrowSortedUp)`
   color: rgb(0, 255, 95);
 `;
+
+export const ChartContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  justify-items: center;
+  align-items: baseline;
+  overflow: hidden;
+  height: 500px;
+  width: calc(100% + 100px);
+  margin: 0 -50px -0 -50px;
+
+  border: 1px solid green;
+`;

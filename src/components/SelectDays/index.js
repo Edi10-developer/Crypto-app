@@ -25,7 +25,7 @@ const SelectDays = (props) => {
       );
     });
 
-  return <Container>{li(props)}</Container>;
+  return <Container borderRadius={props.borderRadius}>{li(props)}</Container>;
 };
 
 export default SelectDays;

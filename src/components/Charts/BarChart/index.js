@@ -21,7 +21,7 @@ ChartJS.register(
   Legend
 );
 
-export default function BarChart(props) {
+const BarChart = (props) => {
   const chartData = {
     labels: props.coinTimestamp,
     datasets: [
@@ -85,4 +85,6 @@ export default function BarChart(props) {
     },
   };
   return <Bar data={chartData} options={chartOptions} />;
-}
+};
+
+export default BarChart;

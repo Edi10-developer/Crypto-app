@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { LineChart, BarChart, SelectDays, Table } from "components/exports";
+import { LineChart, BarChart } from "components/Charts/exports";
+import { SelectDays, Table } from "components/exports";
 import {
   PageContainer,
   MainContainer,
@@ -58,7 +59,14 @@ const CoinList = ({ dataCoinList, data, updateDays }) => {
                 </h2>
                 <h6>{currentDate}</h6>
               </CoinDataContainer>
-              <LineChart coinPrice={coinPrice} coinTimestamp={coinTimestamp} />
+              <LineChart
+                coinPrice={coinPrice}
+                coinTimestamp={coinTimestamp}
+                borderColor={theme.positiveData}
+                pointBackgroundColor={"transparent"}
+                pointBorderColor={"transparent"}
+                backgroundColor={"red"}
+              />
             </ChartContainer>
             <ChartContainer>
               <CoinDataContainer>

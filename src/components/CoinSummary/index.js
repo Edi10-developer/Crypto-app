@@ -47,14 +47,16 @@ const CoinSummary = (props) => {
           />
         </Column>
         <Column>
-          <CoinMarketData icon={props.icon} data={props.data} />
+          <CoinMarketData
+            icon={props.icon}
+            data={props.data}
+            theme={props.theme}
+          />
         </Column>
       </Row>
       <h3>Description</h3>
       <Row>
-        <Column>
-          <CoinDescription description={coinDescription} />
-        </Column>
+        <CoinDescription description={coinDescription} />
       </Row>
       <Row>
         <Column>

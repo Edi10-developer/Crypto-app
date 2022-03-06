@@ -1,8 +1,6 @@
 export { default as SearchInput } from "./SearchInput/index";
 export { default as SelectCurrency } from "./SelectCurrency/index";
 export { default as SelectTheme } from "./SelectTheme/index";
-export { default as LineChart } from "./Charts/LineChart/index";
-export { default as BarChart } from "./Charts/BarChart/index";
 export { default as NavBar } from "./NavBar";
 export { default as Table } from "./Table";
 export { default as TableHead } from "./TableHead";
