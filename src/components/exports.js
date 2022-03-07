@@ -15,3 +15,5 @@ export { default as CoinPriceHistory } from "./CoinPriceHistory";
 export { default as CoinMarketData } from "./CoinMarketData";
 export { default as CoinDescription } from "./CoinDescription";
 export { default as CoinLink } from "./CoinLink";
+export { default as SelectCoinChartDays } from "./SelectCoinChartDays/index";
+export { default as CoinConverter } from "./CoinConverter";

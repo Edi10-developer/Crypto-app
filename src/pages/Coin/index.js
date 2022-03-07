@@ -4,7 +4,11 @@ import moment from "moment";
 import { PageContainer, UpArrow, DownArrow, ChartContainer } from "./styles";
 import { ThemeProvider } from "styled-components";
 
-import { CoinSummary, SelectDays } from "components/exports";
+import {
+  CoinSummary,
+  SelectCoinChartDays,
+  CoinConverter,
+} from "components/exports";
 import { LineChart } from "components/Charts/exports";
 
 const Coin = (props) => {
@@ -161,11 +165,12 @@ const Coin = (props) => {
           arrowValueChange={arrowValueChange}
           theme={props.theme}
         />
-        <SelectDays
+        <SelectCoinChartDays
           days={props.daysOptions}
           selectNumberOfDays={(number) => setDays(number)}
           borderRadius={"50"}
         />
+        <CoinConverter />
         <ChartContainer>
           <LineChart
             coinPrice={coinPrice}
