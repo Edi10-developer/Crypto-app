@@ -31,6 +31,7 @@ const LineChart = (props) => {
         label: "BTC Prices",
         data: props.coinPrice,
         borderColor: props.borderColor,
+        fill: true,
         pointBackgroundColor: props.pointBackgroundColor,
         pointBorderColor: props.pointBorderColor,
         tension: props.tension,
@@ -42,22 +43,15 @@ const LineChart = (props) => {
           backgroundColor: {
             axis: "y",
             colors: {
-              10000: "red",
-              20000: "white",
-              30000: "black",
-              40000: "white",
-              60000: props.borderColor,
+              10000: "rgba(0, 255, 95, .01)",
+              20000: "rgba(0, 255, 95, .0025)",
+              30000: "rgba(0, 255, 95, .05)",
+              40000: "rgba(0, 255, 95, .1)",
+              50000: "rgba(0, 255, 95, .2)",
+              60000: "rgba(0, 255, 95, .4)",
+              70000: "rgba(0, 255, 95, .8)",
             },
           },
-          /* borderColor: {
-            axis: "y",
-            colors: {
-              20000: "black",
-              30000: "white",
-              60000: props.borderColor,
-            }
-            
-          },*/
         },
       },
     ],

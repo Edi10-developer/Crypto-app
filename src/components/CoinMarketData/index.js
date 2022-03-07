@@ -1,4 +1,4 @@
-import { ListContainer, StyledDataSpan, Plus } from "./styles";
+import { ListContainer, StyledDataSpan, Plus, DataStyled } from "./styles";
 import { Progressbar } from "components/exports";
 import { nFormatter } from "utils/nFormatter";
 
@@ -67,13 +67,20 @@ const CoinMarketData = (props) => {
         </StyledDataSpan>
       </li>
       <li>
-        <p>30% 94%</p>
-        <Progressbar
-          percent={30}
+        <DataStyled>
+          <span>{Math.round((circulatingSupply * 100) / maxSupply)}%</span>
+          <span>
+            {100 - Math.round((circulatingSupply * 100) / maxSupply)} %
+          </span>
+        </DataStyled>
+        {/*
+       <Progressbar
+          percent={(circulatingSupply * 100) / maxSupply}
           unfilledBackground={"white"}
           filledBackground={"#215DB5"}
           width={"230px"}
         />
+       */}
       </li>
     </ListContainer>
   );

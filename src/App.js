@@ -18,7 +18,7 @@ class App extends React.Component {
     coinTimestamp: [],
     days: 7,
     daysOptions: [1, 7, 30, 180, 365],
-    // coin: "",
+    coin: "",
     theme: darkTheme,
     baseUrl: process.env.REACT_APP_ENDPOINT,
   };
@@ -38,6 +38,12 @@ class App extends React.Component {
   updateIcon = (newIcon) => {
     if (this.state.icon !== newIcon) {
       this.setState({ icon: newIcon });
+    }
+  };
+
+  updateCoin = (newCoin) => {
+    if (this.state.coin !== newCoin) {
+      this.setState({ coin: newCoin });
     }
   };
 

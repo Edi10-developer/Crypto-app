@@ -49,3 +49,9 @@ export const arrowStyled = {
   marginBottom: "-3px",
   fontSize: "15px",
 };
+
+export const DataStyled = styled.div`
+  width: 95px;
+  display: flex;
+  justify-content: space-between;
+`;

@@ -15,3 +15,10 @@ export const StyledDataSpan = styled.span`
   color: ${(props) => props.theme.textColor};
   opacity: 0.6;
 `;
+
+export const DataStyled = styled.div`
+  width: 225px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+`;

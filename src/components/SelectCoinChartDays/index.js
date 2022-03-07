@@ -21,11 +21,10 @@ const SelectCoinChartDays = (props) => {
 
   const li = (props) =>
     props.days.map((value, index) => {
-      //console.log("1****", indexOf(value), index);
       return (
         <li
           key={index}
-          onClick={(e) => {
+          onClick={() => {
             selectNumberOfDays(value);
           }}
           selected={selected}

@@ -35,13 +35,11 @@ class NavBar extends React.Component {
 
   baseurl = process.env.REACT_APP_ENDPOINT;
 
-  handleChange = (coinName) => {
-    this.setState({ coin: coinName });
-  };
+  handleChange = (coinName) => this.setState({ coin: coinName });
 
   handleSubmit = () => {
     this.props.updateCoin(this.state.coin);
-    window.location.pathname = `/coins/${this.state.coin}`;
+    //  window.location.pathname = `/coins/${this.state.coin}`;
   };
 
   getCoinList = async () => {
@@ -100,23 +98,14 @@ class NavBar extends React.Component {
     this.props.updateIcon(newIcon);
   };
 
-  updateCoin = (newCoin) => {
-    if (this.state.coin !== newCoin) {
-      this.setState({ coin: newCoin });
-    }
-  };
-
   componentDidMount() {
     this.getCoinList();
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.theme !== this.props.theme) {
+    prevProps.theme !== this.props.theme &&
       this.setState({ theme: this.props.theme });
-    }
-    if (prevState.currency !== this.state.currency) {
-      this.getCoinList();
-    }
+    prevState.currency !== this.state.currency && this.getCoinList();
   }
 
   render() {
@@ -132,7 +121,12 @@ class NavBar extends React.Component {
           <div>
             <SearchInput data={this.state} handleChange={this.handleChange} />
             {coin !== "" && (
-              <DropdownCoinList coins={coins} coin={coin} theme={theme} />
+              <DropdownCoinList
+                coins={coins}
+                coin={coin}
+                theme={theme}
+                updateCoin={() => this.props.updateCoin}
+              />
             )}
             <SelectCurrency
               data={this.state}

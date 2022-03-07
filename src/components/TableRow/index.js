@@ -1,4 +1,4 @@
-import { Row, Column } from "./styles";
+import { Row, Column, DataStyled } from "./styles";
 import { ColorExtractor } from "react-color-extractor";
 import { nFormatter } from "utils/nFormatter";
 import { Progressbar } from "components/exports";
@@ -42,6 +42,7 @@ const RenderSwatches = () => {
     icon,
     checkIsNegative,
     arrowValueChange,
+    total_volume,
   } = props;
 
   return (
@@ -90,13 +91,12 @@ const RenderSwatches = () => {
       </Column>
       <Column>
         {/* <p style={{ color: this.state.color }}> {this.renderSwatches()} </p> */}
-        <p>
-          {nFormatter(market_cap_change_24h)}
-          &nbsp;&nbsp; &nbsp;&nbsp;
-          {nFormatter(market_cap)}
-        </p>
+        <DataStyled>
+          <span>{nFormatter(total_volume)}</span>
+          <span>{nFormatter(market_cap)}</span>
+        </DataStyled>
         <Progressbar
-          percent={market_cap_change_percentage_24h}
+          percent={(total_volume / market_cap) * 100}
           width="100px"
           unfilledBackground={"#FFFFF9"}
           filledBackground={"#215DB5"}
@@ -104,11 +104,10 @@ const RenderSwatches = () => {
       </Column>
       <Column>
         {/* <p style={{ color: this.state.color }}> {this.renderSwatches()} </p> */}{" "}
-        <p>
-          {nFormatter(circulating_supply)}
-          &nbsp;&nbsp; &nbsp;&nbsp;
-          {nFormatter(total_supply)}
-        </p>
+        <DataStyled>
+          <span>{nFormatter(circulating_supply)}</span>
+          <span>{nFormatter(total_supply)}</span>
+        </DataStyled>
         <Progressbar
           percent={(circulating_supply * 100) / total_supply}
           width="100px"

@@ -37,62 +37,32 @@ const Coin = (props) => {
         coinBlockchainViewLink: coinData.data.links.blockchain_site[2],
         coinForumLink: coinData.data.links.official_forum_url[0],
         coinDescription: coinData.data.description.en,
-        coinPrice: `${
-          props.currency === "USD"
-            ? coinData.data.market_data.current_price.usd
-            : coinData.data.market_data.current_price.eur
-        }`,
-        coinATH: `${
-          props.currency === "USD"
-            ? coinData.data.market_data.ath.usd
-            : coinData.data.market_data.ath.eur
-        }`,
-        coinATL: `${
-          props.currency === "USD"
-            ? coinData.data.market_data.atl.usd
-            : coinData.data.market_data.atl.eur
-        }`,
-        coinATLDate: `${
-          props.currency === "USD"
-            ? moment(coinData.data.market_data.atl_date.usd).format(
-                "DD, MMM, YYYY, HH:mm:ss"
-              )
-            : moment(coinData.data.market_data.atl_date.eur).format(
-                "DD, MMM, YYYY, HH:mm:ss"
-              )
-        }`,
-        coinATHDate: `${
-          props.currency === "USD"
-            ? moment(coinData.data.market_data.ath_date.usd).format(
-                "DD, MMM, YYYY, HH:mm:ss"
-              )
-            : moment(coinData.data.market_data.ath_date.eur).format(
-                "DD, MMM, YYYY, HH:mm:ss"
-              )
-        }`,
+        coinPrice:
+          coinData.data.market_data.current_price[props.currency.toLowerCase()],
+        coinATH: coinData.data.market_data.ath[props.currency.toLowerCase()],
+        coinATL: coinData.data.market_data.atl[props.currency.toLowerCase()],
+        coinATLDate: moment(
+          coinData.data.market_data.atl_date[props.currency.toLowerCase()]
+        ).format("DD, MMM, YYYY, HH:mm:ss"),
+        coinATHDate: moment(
+          coinData.data.market_data.ath_date[props.currency.toLowerCase()]
+        ).format("DD, MMM, YYYY, HH:mm:ss"),
         marketChangePercentage24h:
           coinData.data.market_data.market_cap_change_percentage_24h,
-
-        priceChange24h: `${
-          props.currency === "USD"
-            ? coinData.data.market_data.price_change_24h_in_currency.usd
-            : coinData.data.market_data.price_change_24h_in_currency.eur
-        }`,
-        marketCap: `${
-          props.currency === "USD"
-            ? coinData.data.market_data.market_cap.usd
-            : coinData.data.market_data.market_cap.eur
-        }`,
-        fullyDilutedValuation: `${
-          props.currency === "USD"
-            ? coinData.data.market_data.fully_diluted_valuation.usd
-            : coinData.data.market_data.fully_diluted_valuation.eur
-        }`,
-        marketVolume24h: `${
-          props.currency === "USD"
-            ? coinData.data.market_data.market_cap_change_24h_in_currency.usd
-            : coinData.data.market_data.market_cap_change_24h_in_currency.eur
-        }`,
+        priceChange24h:
+          coinData.data.market_data.price_change_24h_in_currency[
+            props.currency.toLowerCase()
+          ],
+        marketCap:
+          coinData.data.market_data.market_cap[props.currency.toLowerCase()],
+        fullyDilutedValuation:
+          coinData.data.market_data.fully_diluted_valuation[
+            props.currency.toLowerCase()
+          ],
+        marketVolume24h:
+          coinData.data.market_data.market_cap_change_24h_in_currency[
+            props.currency.toLowerCase()
+          ],
         totalVolume: coinData.data.market_data.total_supply,
         maxSupply: coinData.data.market_data.max_supply,
         circulatingSupply: coinData.data.market_data.circulating_supply,
@@ -102,42 +72,26 @@ const Coin = (props) => {
     }
   };
 
-  const checkIsNegative = (number) => {
-    if (number < 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const checkIsNegative = (number) => (number < 0 ? true : false);
 
-  const arrowValueChange = (number) => {
-    if (number < 0) {
-      return <DownArrow />;
-    } else {
-      return <UpArrow />;
-    }
-  };
+  const arrowValueChange = (number) =>
+    number < 0 ? <DownArrow /> : <UpArrow />;
 
   const getCoinChartData = async () => {
     try {
       const coinChartData = await axios.get(
         `${baseUrl}/coins/${coinName}/market_chart?vs_currency=${props.currency}&days=${days}`
       );
-      const volume = coinChartData.data.total_volumes.map((value, index) => {
-        let vol = value[1];
-        return vol;
-      });
-      const price = coinChartData.data.prices.map((value, index) => {
-        let priceValue = value[1];
-        return priceValue;
-      });
-      const date = coinChartData.data.prices.map((value, index) => {
+      const volume = coinChartData.data.total_volumes.map((value) => value[1]);
+      const price = coinChartData.data.prices.map((value) => value[1]);
+      const date = coinChartData.data.prices.map((value) => {
         let findChartDates = new Date(value[0]);
         let chartDate = `${findChartDates.getDate()} - ${
           findChartDates.getMonth() + 1
         } - ${findChartDates.getFullYear()}`;
         return chartDate;
       });
+
       updateChartData({
         coinPrice: price,
         coinVolumes: volume,
@@ -151,9 +105,9 @@ const Coin = (props) => {
   useEffect(() => {
     getCoinData();
     getCoinChartData();
-  }, [data]);
+    coinId !== coinName && updateCoinName(coinId);
+  }, [coinId, coinName, days]);
 
-  //console.log(chartData);
   const { coinPrice, coinTimestamp } = chartData;
   return (
     <ThemeProvider theme={props.theme}>
@@ -170,7 +124,12 @@ const Coin = (props) => {
           selectNumberOfDays={(number) => setDays(number)}
           borderRadius={"50"}
         />
-        <CoinConverter />
+        <CoinConverter
+          currency={props.currency}
+          coinSymbol={data.coinSymbol}
+          coin={coinId}
+          currencyIcon={props.icon}
+        />
         <ChartContainer>
           <LineChart
             coinPrice={coinPrice}

@@ -11,36 +11,25 @@ class Table extends React.Component {
     icon: this.props.icon,
   };
 
-  checkIsNegative = (number) => {
-    if (number < 0) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  checkIsNegative = (number) => (number < 0 ? true : false);
 
-  arrowValueChange = (number) => {
-    if (number < 0) {
-      return <TiArrowSortedDown style={arrowStyled} />;
-    } else {
-      return <TiArrowSortedUp style={arrowStyled} />;
-    }
-  };
+  arrowValueChange = (number) =>
+    number < 0 ? (
+      <TiArrowSortedDown style={arrowStyled} />
+    ) : (
+      <TiArrowSortedUp style={arrowStyled} />
+    );
 
   arrowSort = (sortedDesc) => {
-    if (sortedDesc === true) {
-      return (
-        <button onClick={this.props.orderCoinList}>
-          <TiArrowSortedUp />
-        </button>
-      );
-    } else {
-      return (
-        <button onClick={this.props.orderCoinList}>
-          <TiArrowSortedDown />
-        </button>
-      );
-    }
+    sortedDesc ? (
+      <button onClick={this.props.orderCoinList}>
+        <TiArrowSortedUp />
+      </button>
+    ) : (
+      <button onClick={this.props.orderCoinList}>
+        <TiArrowSortedDown />
+      </button>
+    );
   };
 
   render() {
@@ -67,6 +56,7 @@ class Table extends React.Component {
                 circulating_supply,
                 total_supply,
                 sparkline_in_7d,
+                total_volume,
               },
               index
             ) => (
@@ -75,6 +65,7 @@ class Table extends React.Component {
                 index={index}
                 image={image}
                 id={id}
+                total_volume={total_volume}
                 current_price={current_price}
                 price_change_percentage_1h_in_currency={
                   price_change_percentage_1h_in_currency

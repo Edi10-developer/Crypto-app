@@ -1,4 +1,4 @@
-import Reac, { useState } from "react";
+import React, { useState } from "react";
 import { Container } from "./styles";
 
 const SelectDays = (props) => {
