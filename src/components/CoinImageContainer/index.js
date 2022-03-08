@@ -1,14 +1,14 @@
 import { ImageContainer, CoinImage } from "./styles";
 
-const CoinImageContainer = (props) => {
-  const { coinImg, coinId, coinSymbol } = props.data;
+const CoinImageContainer = ({ data }) => {
   const formattName = (name) => name.charAt(0).toUpperCase() + name.slice(1);
+  const { image, id, symbol } = data;
   return (
     <>
       <ImageContainer>
-        <CoinImage src={coinImg} alt={coinId} />
+        <CoinImage src={image.small} alt={id} />
       </ImageContainer>
-      {formattName(`${coinId}`)} &nbsp; ({coinSymbol})
+      {formattName(`${id}`)} &nbsp; ({symbol.toUpperCase()})
     </>
   );
 };

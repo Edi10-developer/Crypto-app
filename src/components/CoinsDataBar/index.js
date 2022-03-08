@@ -28,7 +28,7 @@ const CoinsDataBar = (props) => {
           {currencyIcon}
           <span>{nFormatter(todayTotalMarketCap)} </span>
           <Progressbar
-            percent={todayPercentageMarketCap}
+            percent={todayTotalMarketCap}
             unfilledBackground={"white"}
             filledBackground={"#215DB5"}
             width={"60px"}

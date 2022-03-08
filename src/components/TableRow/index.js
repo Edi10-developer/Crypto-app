@@ -109,7 +109,7 @@ const RenderSwatches = () => {
           <span>{nFormatter(total_supply)}</span>
         </DataStyled>
         <Progressbar
-          percent={(circulating_supply * 100) / total_supply}
+          percent={(circulating_supply / total_supply) * 100}
           width="100px"
           unfilledBackground={"white"}
           filledBackground={"#215DB5"}

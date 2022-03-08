@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import moment from "moment";
-import { PageContainer, UpArrow, DownArrow, ChartContainer } from "./styles";
+import {
+  PageContainer,
+  MainContainer,
+  UpArrow,
+  DownArrow,
+  ChartContainer,
+  GradientChart,
+} from "./styles";
 import { ThemeProvider } from "styled-components";
 
 import {
@@ -12,12 +18,13 @@ import {
 import { LineChart } from "components/Charts/exports";
 
 const Coin = (props) => {
+  const { theme, currency, icon, daysOptions } = props.data;
   const coinId =
     window.location.pathname.charAt(7) + window.location.pathname.slice(8);
   const baseUrl = process.env.REACT_APP_ENDPOINT;
 
   const [coinName, updateCoinName] = useState(coinId);
-  const [data, setData] = useState({});
+  const [dataCoin, setDataCoin] = useState({});
   const [days, setDays] = useState(7);
   const [chartData, updateChartData] = useState({});
 
@@ -26,47 +33,7 @@ const Coin = (props) => {
       const coinData = await axios.get(
         `${baseUrl}/coins/${coinName}?tickers=true&sparkline=true`
       );
-
-      setData({
-        data: coinData.data,
-        coinImg: coinData.data.image.small,
-        coinId: coinData.data.id,
-        coinSymbol: coinData.data.symbol.toUpperCase(),
-        coinLink: coinData.data.links.homepage[0],
-        coinBlockchainLink: coinData.data.links.blockchain_site[0],
-        coinBlockchainViewLink: coinData.data.links.blockchain_site[2],
-        coinForumLink: coinData.data.links.official_forum_url[0],
-        coinDescription: coinData.data.description.en,
-        coinPrice:
-          coinData.data.market_data.current_price[props.currency.toLowerCase()],
-        coinATH: coinData.data.market_data.ath[props.currency.toLowerCase()],
-        coinATL: coinData.data.market_data.atl[props.currency.toLowerCase()],
-        coinATLDate: moment(
-          coinData.data.market_data.atl_date[props.currency.toLowerCase()]
-        ).format("DD, MMM, YYYY, HH:mm:ss"),
-        coinATHDate: moment(
-          coinData.data.market_data.ath_date[props.currency.toLowerCase()]
-        ).format("DD, MMM, YYYY, HH:mm:ss"),
-        marketChangePercentage24h:
-          coinData.data.market_data.market_cap_change_percentage_24h,
-        priceChange24h:
-          coinData.data.market_data.price_change_24h_in_currency[
-            props.currency.toLowerCase()
-          ],
-        marketCap:
-          coinData.data.market_data.market_cap[props.currency.toLowerCase()],
-        fullyDilutedValuation:
-          coinData.data.market_data.fully_diluted_valuation[
-            props.currency.toLowerCase()
-          ],
-        marketVolume24h:
-          coinData.data.market_data.market_cap_change_24h_in_currency[
-            props.currency.toLowerCase()
-          ],
-        totalVolume: coinData.data.market_data.total_supply,
-        maxSupply: coinData.data.market_data.max_supply,
-        circulatingSupply: coinData.data.market_data.circulating_supply,
-      });
+      setDataCoin(coinData);
     } catch (err) {
       console.log(err);
     }
@@ -80,7 +47,7 @@ const Coin = (props) => {
   const getCoinChartData = async () => {
     try {
       const coinChartData = await axios.get(
-        `${baseUrl}/coins/${coinName}/market_chart?vs_currency=${props.currency}&days=${days}`
+        `${baseUrl}/coins/${coinName}/market_chart?vs_currency=${currency}&days=${days}`
       );
       const volume = coinChartData.data.total_volumes.map((value) => value[1]);
       const price = coinChartData.data.prices.map((value) => value[1]);
@@ -103,41 +70,48 @@ const Coin = (props) => {
   };
 
   useEffect(() => {
+    coinId !== coinName && updateCoinName(coinId);
     getCoinData();
     getCoinChartData();
-    coinId !== coinName && updateCoinName(coinId);
   }, [coinId, coinName, days]);
 
   const { coinPrice, coinTimestamp } = chartData;
   return (
-    <ThemeProvider theme={props.theme}>
+    <ThemeProvider theme={theme}>
       <PageContainer>
-        <CoinSummary
-          icon={props.icon}
-          data={data}
-          checkIsNegative={checkIsNegative}
-          arrowValueChange={arrowValueChange}
-          theme={props.theme}
-        />
-        <SelectCoinChartDays
-          days={props.daysOptions}
-          selectNumberOfDays={(number) => setDays(number)}
-          borderRadius={"50"}
-        />
-        <CoinConverter
-          currency={props.currency}
-          coinSymbol={data.coinSymbol}
-          coin={coinId}
-          currencyIcon={props.icon}
-        />
+        <MainContainer>
+          <CoinSummary
+            icon={icon}
+            data={dataCoin}
+            checkIsNegative={checkIsNegative}
+            arrowValueChange={arrowValueChange}
+            theme={theme}
+            currency={currency.toLowerCase()}
+          />
+          <SelectCoinChartDays
+            days={daysOptions}
+            selectNumberOfDays={(number) => setDays(number)}
+            borderRadius={"50"}
+          />
+          {Object.entries(dataCoin).length > 0 && (
+            <CoinConverter
+              dataCoin={dataCoin}
+              currency={currency}
+              currencyIcon={icon}
+              symbol={dataCoin.data.symbol.toUpperCase()}
+              coin={dataCoin.data.id}
+            />
+          )}
+        </MainContainer>
         <ChartContainer>
           <LineChart
             coinPrice={coinPrice}
             coinTimestamp={coinTimestamp}
-            borderColor={props.theme.textColor}
             tension={0.2}
             pointBackgroundColor={"transparent"}
             pointBorderColor={"transparent"}
+            gradient={GradientChart}
+            displayTicks={false}
           />
         </ChartContainer>
       </PageContainer>

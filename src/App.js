@@ -153,16 +153,7 @@ class App extends React.Component {
               <Route
                 exact
                 path="/coins/:coinId"
-                render={() => (
-                  <Coin
-                    currency={currency}
-                    coin={coin}
-                    theme={theme}
-                    currency={currency}
-                    icon={icon}
-                    daysOptions={daysOptions}
-                  />
-                )}
+                render={() => <Coin data={this.state} />}
               />
             </Switch>
           </div>

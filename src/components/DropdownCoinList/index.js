@@ -1,37 +1,30 @@
-import React, { useState, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
-import { Container, StyledCoinItem, StyledCoinImg } from "./styles";
-import { Link } from "react-router-dom";
+import { Container, StyledLink, StyledCoinImg } from "./styles";
 
 const DropdownCoinList = ({ coins, theme, coin, updateCoin }) => {
-  const { currentCoinName, setCurrentCoinName } = useState(
-    window.location.pathname
-  );
-
   return (
     <ThemeProvider theme={theme}>
       <Container>
-        {coins
+        {coins.coins
           .filter((element) => {
-            if (coin === "") {
+            if (coin.id === "") {
               return element;
             } else if (element.id[0] === coin[0]) {
               return element;
             }
           })
           .map((item, index) => (
-            <StyledCoinItem
-              // onClick={() => (window.location.pathname = `/coins/${item.id}`)}
+            <StyledLink
+              to={`/coins/${item.id}`}
+              onClick={updateCoin(item.id)}
               key={index}
             >
-              <Link to={`/coins/${item.id}`} onClick={updateCoin(item.id)}>
-                <div>
-                  <StyledCoinImg src={`${item.image}`} alt={item.id} />
-                </div>
-                <div>{item.id}</div>
-                <div>{item.symbol.toUpperCase()}</div>
-              </Link>
-            </StyledCoinItem>
+              <div>
+                <StyledCoinImg src={`${item.thumb}`} alt={item.id} />
+              </div>
+              <div>{item.id}</div>
+              <div>{item.symbol.toUpperCase()}</div>
+            </StyledLink>
           ))}
       </Container>
     </ThemeProvider>

@@ -2,21 +2,13 @@ import styled from "styled-components";
 import { IoCopyOutline } from "react-icons/io5";
 import { HiLink } from "react-icons/hi";
 
-export const PageContainer = styled.div`
-  border: 1px solid red;
-  text-align: left;
-  padding: 50px;
-  background-color: ${(props) => props.theme.pagBgColor};
-  color: ${(props) => props.theme.textColor};
-  width: calc(100% - 100px);
-`;
-
 export const Row = styled.div`
   display: flex;
   margin: 0 auto;
-  border: 1px solid red;
   justify-content: space-between;
-  padding: 10px;
+  width: 100%;
+  margin-top: 15px;
+  margin-bottom: 30px;
 `;
 
 export const Column = styled.div`
@@ -25,10 +17,8 @@ export const Column = styled.div`
   justify-content: center;
   align-items: center;
   background-color: ${(props) => props.theme.bgColor};
-  border: 1px solid blue;
   min-width: 15%;
-  padding: 10px;
-  margin: 10px;
+  padding: 15px;
 `;
 
 export const LinkStyled = styled.a`

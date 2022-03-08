@@ -12,7 +12,7 @@ export const PageContainer = styled.div`
 `;
 
 export const MainContainer = styled.div`
-  width: 80%;
+  width: 100%;
   margin: 0px auto;
   display: flex;
   flex-direction: column;
@@ -54,3 +54,18 @@ export const CoinDataContainer = styled.div`
   align-items: baseline;
   margin-bottom: -50px;
 `;
+
+export const GradientChart = {
+  backgroundColor: {
+    axis: "y",
+    colors: {
+      10000: "rgba(0, 255, 95, .01)",
+      20000: "rgba(0, 255, 95, .0025)",
+      30000: "rgba(0, 255, 95, .05)",
+      40000: "rgba(0, 255, 95, .1)",
+      50000: "rgba(0, 255, 95, .2)",
+      60000: "rgba(0, 255, 95, .4)",
+      70000: "rgba(0, 255, 95, .9)",
+    },
+  },
+};

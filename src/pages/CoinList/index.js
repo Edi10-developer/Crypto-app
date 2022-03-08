@@ -7,6 +7,7 @@ import {
   ChartsContainer,
   ChartContainer,
   CoinDataContainer,
+  GradientChart,
 } from "./styles";
 
 import { currentDate } from "utils/date.js";
@@ -66,6 +67,8 @@ const CoinList = ({ dataCoinList, data, updateDays }) => {
                 pointBackgroundColor={"transparent"}
                 pointBorderColor={"transparent"}
                 backgroundColor={"red"}
+                gradient={GradientChart}
+                displayTicks={true}
               />
             </ChartContainer>
             <ChartContainer>

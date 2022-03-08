@@ -2,41 +2,18 @@ import styled from "styled-components";
 import { TiArrowSortedUp, TiArrowSortedDown } from "react-icons/ti";
 
 export const PageContainer = styled.div`
-  border: 1px solid red;
   text-align: left;
   padding: 50px;
   margin-top: -70px;
   background-color: ${(props) => props.theme.pagBgColor};
   color: ${(props) => props.theme.textColor};
-  width: calc(100% - 100px);
 `;
 
-export const Row = styled.div`
-  display: flex;
-  max-width: 80%;
-  border: 1px solid red;
-  justify-content: space-between;
-`;
-
-export const Column = styled.div`
+export const MainContainer = styled.div`
+  width: 90%;
+  margin: 0px auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: ${(props) => props.theme.bgColor};
-  border: 1px solid blue;
-  min-width: 20%;
-  padding: 20px;
-  margin: 10px;
-
-  h2 {
-    font-size: 45px;
-    margin: -10px;
-
-    span {
-      font-size: 15px;
-    }
-  }
 `;
 
 export const DownArrow = styled(TiArrowSortedDown)`
@@ -55,9 +32,33 @@ export const ChartContainer = styled.div`
   justify-items: center;
   align-items: baseline;
   overflow: hidden;
-  height: 500px;
+  margin-bottom: -80px;
   width: calc(100% + 100px);
-  margin: 0 -50px -0 -50px;
-
-  border: 1px solid green;
+  margin-right: -50px;
+  margin-left: -50px;
 `;
+
+export const GradientChart = {
+  backgroundColor: {
+    axis: "y",
+    colors: {
+      0.1: "rgba(64, 64, 64, .003)",
+      0.2: "rgba(64, 64, 64, .06)",
+      0.5: "rgba(64, 64, 64, .1)",
+      1: "rgba(64, 64, 64, .3)",
+      2: "rgba(64, 64, 64, .6)",
+      5: "rgba(64, 64, 64, .8)",
+      10: "rgba(64, 64, 64, 1)",
+      50: "rgba(64, 62, 61, 1)",
+      100: "rgba(64, 62, 78, .7)",
+      500: "rgba(64, 64, 64, .7)",
+      1000: "rgba(64, 64, 64, .7)",
+      2000: "rgba(64, 64, 64, .7)",
+      5000: "rgba(164, 164, 164, .2)",
+      10000: "rgba(164, 164, 164, .3)",
+      30000: "rgba(164, 164, 164, .5)",
+      60000: "rgba(164, 164, 164, .8)",
+      70000: "rgba(164, 164, 164, 1)",
+    },
+  },
+};

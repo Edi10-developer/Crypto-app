@@ -3,17 +3,8 @@ import { Progressbar } from "components/exports";
 import { nFormatter } from "utils/nFormatter";
 
 const CoinMarketData = (props) => {
-  const {
-    marketCap,
-    fullyDilutedValuation,
-    marketVolume24h,
-    totalVolume,
-    circulatingSupply,
-    coinSymbol,
-    maxSupply,
-  } = props.data;
-
-  const { icon } = props;
+  const { icon, currency } = props;
+  const { market_data, symbol } = props.data;
   return (
     <ListContainer>
       <li>
@@ -21,7 +12,7 @@ const CoinMarketData = (props) => {
         Market cap:{" "}
         <StyledDataSpan>
           {icon}&nbsp;
-          {nFormatter(marketCap)}
+          {nFormatter(market_data.market_cap[currency])}
         </StyledDataSpan>
       </li>
       <li>
@@ -29,7 +20,7 @@ const CoinMarketData = (props) => {
         <StyledDataSpan>
           {" "}
           {icon}&nbsp;
-          {nFormatter(fullyDilutedValuation)}
+          {nFormatter(market_data.fully_diluted_valuation[currency])}
         </StyledDataSpan>
       </li>
       <li>
@@ -37,13 +28,16 @@ const CoinMarketData = (props) => {
         <StyledDataSpan>
           {" "}
           {icon}&nbsp;
-          {nFormatter(marketVolume24h)}
+          {nFormatter(market_data.market_cap_change_24h_in_currency[currency])}
         </StyledDataSpan>
       </li>
       <li>
         <Plus />
         Volume / Market:{" "}
-        <StyledDataSpan>{marketVolume24h / marketCap}</StyledDataSpan>
+        <StyledDataSpan>
+          {market_data.market_cap_change_24h_in_currency[currency] /
+            market_data.market_cap[currency]}
+        </StyledDataSpan>
       </li>
       <li>
         <br />
@@ -51,26 +45,35 @@ const CoinMarketData = (props) => {
       <li>
         <Plus /> Total Volume:{" "}
         <StyledDataSpan>
-          {totalVolume}&nbsp;{coinSymbol}
+          {market_data.total_supply}&nbsp;{symbol.toUpperCase()}
         </StyledDataSpan>
       </li>
       <li>
         <Plus /> Circulating Supply:{" "}
         <StyledDataSpan>
-          {circulatingSupply}&nbsp;{coinSymbol}
+          {market_data.circulating_supply}&nbsp;{symbol.toUpperCase()}
         </StyledDataSpan>
       </li>
       <li>
         <Plus /> Max Supply:{" "}
         <StyledDataSpan>
-          {maxSupply}&nbsp;{coinSymbol}
+          {market_data.max_supply}&nbsp;{symbol.toUpperCase()}
         </StyledDataSpan>
       </li>
       <li>
         <DataStyled>
-          <span>{Math.round((circulatingSupply * 100) / maxSupply)}%</span>
           <span>
-            {100 - Math.round((circulatingSupply * 100) / maxSupply)} %
+            {Math.round(
+              (market_data.circulating_supply * 100) / market_data.max_supply
+            )}
+            %
+          </span>
+          <span>
+            {100 -
+              Math.round(
+                (market_data.circulating_supply * 100) / market_data.max_supply
+              )}{" "}
+            %
           </span>
         </DataStyled>
         {/*

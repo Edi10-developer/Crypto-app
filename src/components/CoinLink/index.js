@@ -1,6 +1,6 @@
 import { LinkStyled, LinkIcon } from "../CoinSummary/styles";
 
-const CoinLink = ({ link, handleClick, theme }) => {
+const CoinLink = ({ link, handleClick }) => {
   return (
     <LinkStyled href={link} onClick={handleClick}>
       <LinkIcon />

@@ -11,6 +11,7 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import gradient from "chartjs-plugin-gradient";
+import { Container } from "./styles";
 
 ChartJS.register(
   gradient,
@@ -38,21 +39,7 @@ const LineChart = (props) => {
         drawOnChartArea: true,
         drawTicks: true,
         fill: true,
-
-        gradient: {
-          backgroundColor: {
-            axis: "y",
-            colors: {
-              10000: "rgba(0, 255, 95, .01)",
-              20000: "rgba(0, 255, 95, .0025)",
-              30000: "rgba(0, 255, 95, .05)",
-              40000: "rgba(0, 255, 95, .1)",
-              50000: "rgba(0, 255, 95, .2)",
-              60000: "rgba(0, 255, 95, .4)",
-              70000: "rgba(0, 255, 95, .8)",
-            },
-          },
-        },
+        gradient: props.gradient,
       },
     ],
   };
@@ -82,6 +69,7 @@ const LineChart = (props) => {
           color: "transparent",
         },
         ticks: {
+          display: props.displayTicks,
           font: {
             size: 7,
           },
@@ -94,7 +82,7 @@ const LineChart = (props) => {
           color: "transparent",
         },
         ticks: {
-          display: false,
+          display: props.displayTicks,
           beginAtZero: true,
           maxTicksLimit: 5,
         },
@@ -102,11 +90,11 @@ const LineChart = (props) => {
     },
   };
 
-  const divStyle = {
-    height: "200px",
-  };
-
-  return <Line data={chartData} options={chartOptions} />;
+  return (
+    <Container>
+      <Line data={chartData} options={chartOptions} />
+    </Container>
+  );
 };
 
 export default LineChart;

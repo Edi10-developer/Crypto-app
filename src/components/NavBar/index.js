@@ -25,6 +25,7 @@ class NavBar extends React.Component {
     btcMarketCap: 0,
     ethMarketCap: 0,
     globalCoinsData: [],
+    totalVolume: 0,
     totalMarketCap: 0,
     todayTotalMarketCap: 0,
     todayPercentageMarketCap: 0,
@@ -37,8 +38,9 @@ class NavBar extends React.Component {
 
   handleChange = (coinName) => this.setState({ coin: coinName });
 
-  handleSubmit = () => {
-    this.props.updateCoin(this.state.coin);
+  handleSubmit = async () => {
+    await this.props.updateCoin(this.state.coin);
+    this.handleChange("");
     //  window.location.pathname = `/coins/${this.state.coin}`;
   };
 
@@ -57,7 +59,6 @@ class NavBar extends React.Component {
         0
       );
       this.setState({
-        coins: data,
         btcMarketCap: data[0].market_cap,
         ethMarketCap: data[1].market_cap,
         totalMarketCap: totalCoinsMarketCap,
@@ -89,6 +90,17 @@ class NavBar extends React.Component {
     }
   };
 
+  getAllCoinList = async () => {
+    try {
+      const { data } = await axios(`${this.baseurl}/search?query=${""}`);
+      this.setState({
+        coins: data,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   getCurrency = (e) => {
     const index = e.target.selectedIndex;
     const newCurrency = e.target.options[index].value;
@@ -100,6 +112,7 @@ class NavBar extends React.Component {
 
   componentDidMount() {
     this.getCoinList();
+    this.getAllCoinList();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -111,6 +124,7 @@ class NavBar extends React.Component {
   render() {
     const { coin, coins, theme } = this.state;
     const { changeTheme } = this.props;
+
     return (
       <ThemeProvider theme={theme}>
         <Container>

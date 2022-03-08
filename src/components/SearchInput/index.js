@@ -1,10 +1,14 @@
+import React, { useState } from "react";
 import { ThemeProvider } from "styled-components";
 import { FormStyled } from "./styles";
 
 const SearchInput = (props) => {
+  const [searchValue, updateSearchValue] = useState("");
   const handleChange = (e) => {
     props.handleChange(e.target.value);
+    updateSearchValue("");
   };
+
   const { theme, handleSubmit } = props.data;
   return (
     <ThemeProvider theme={theme}>

@@ -6,52 +6,62 @@ import {
   DownArrow,
   DateSpan,
 } from "./styles";
+import moment from "moment";
 
 const CoinPriceHistory = (props) => {
-  const {
-    coinPrice,
-    marketChangePercentage24h,
-    priceChange24h,
-    coinATH,
-    coinATHDate,
-    coinATL,
-    coinATLDate,
-  } = props.data;
-
-  const { icon, checkIsNegative, arrowValueChange } = props;
+  const { icon, checkIsNegative, arrowValueChange, currency } = props;
+  const { market_data } = props.data;
   return (
     <>
       <PriceStyled>
         <h2>
-          {icon} {coinPrice}&nbsp;
-          <StyledSpan isNegative={checkIsNegative(marketChangePercentage24h)}>
-            {arrowValueChange(marketChangePercentage24h)}{" "}
-            {Math.round(marketChangePercentage24h * 10) / 10} %
+          {icon} {market_data.current_price[currency]}
+          &nbsp;
+          <StyledSpan
+            isNegative={checkIsNegative(market_data.current_price[currency])}
+          >
+            {arrowValueChange(market_data.market_cap_change_percentage_24h)}{" "}
+            {Math.round(market_data.market_cap_change_percentage_24h * 10) / 10}{" "}
+            %
           </StyledSpan>
         </h2>
       </PriceStyled>
       <p>
         Profit:{" "}
-        <StyledSpan isNegative={checkIsNegative(priceChange24h)}>
-          {" "}
+        <StyledSpan
+          isNegative={checkIsNegative(
+            market_data.price_change_24h_in_currency[currency]
+          )}
+        >
           {icon}&nbsp;
-          {priceChange24h}
+          {market_data.price_change_24h_in_currency[currency]}
         </StyledSpan>
       </p>
       <DataIcon />
       <div>
         <p>
           <UpArrow />
-          All Time High: {props.icon} &nbsp;{coinATH}
+          All Time High: {icon} &nbsp;
+          {market_data.ath[currency]}
           <br />
-          <DateSpan>{coinATHDate} GMT</DateSpan>
+          <DateSpan>
+            {moment(market_data.ath_date[currency]).format(
+              "DD, MMM, YYYY, HH:mm:ss"
+            )}{" "}
+            GMT
+          </DateSpan>
         </p>
 
         <p>
           <DownArrow />
-          All Time Low: {icon}&nbsp; {coinATL}
+          All Time Low: {icon}&nbsp; {market_data.atl[currency]}
           <br />
-          <DateSpan>{coinATLDate} GMT</DateSpan>
+          <DateSpan>
+            {moment(market_data.atl_date[currency]).format(
+              "DD, MMM, YYYY, HH:mm:ss"
+            )}{" "}
+            GMT
+          </DateSpan>
         </p>
       </div>
     </>

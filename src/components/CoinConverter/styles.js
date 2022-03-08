@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { HiOutlineSwitchHorizontal } from "react-icons/hi";
 
 export const Container = styled.div`
-  width: 40%;
+  width: 50%;
   display: flex;
   justify-content: space-around;
   align-content: center;
@@ -12,7 +12,6 @@ export const Container = styled.div`
 
 export const InputContainer = styled.div`
   height: 42px;
-  //border: 1px solid red;
   border-radius: 9px;
   overflow: hidden;
 
