@@ -70,9 +70,9 @@ const Coin = (props) => {
   };
 
   useEffect(() => {
-    coinId !== coinName && updateCoinName(coinId);
     getCoinData();
     getCoinChartData();
+    coinId !== coinName && updateCoinName(coinId);
   }, [coinId, coinName, days]);
 
   const { coinPrice, coinTimestamp } = chartData;

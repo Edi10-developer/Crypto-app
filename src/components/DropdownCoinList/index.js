@@ -7,7 +7,7 @@ const DropdownCoinList = ({ coins, theme, coin, updateCoin }) => {
       <Container>
         {coins.coins
           .filter((element) => {
-            if (coin.id === "") {
+            if (coin === "" || coin === "adx") {
               return element;
             } else if (element.id[0] === coin[0]) {
               return element;

@@ -14,7 +14,6 @@ const CoinsDataBar = (props) => {
     ethPercentageMarketCap,
     theme,
   } = props.data;
-
   return (
     <ThemeProvider theme={theme}>
       <Container>

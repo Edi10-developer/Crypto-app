@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import { useState, useRef } from "react";
 import { ThemeProvider } from "styled-components";
 import { FormStyled } from "./styles";
 
 const SearchInput = (props) => {
-  const [searchValue, updateSearchValue] = useState("");
+  const [searchValue, updateSearchValue] = useState(props.inputValue);
+
+  const formRef = useRef();
+
   const handleChange = (e) => {
-    props.handleChange(e.target.value);
-    updateSearchValue("");
+    const value = e.target.value;
+    updateSearchValue(value);
+    props.updateCoin(value);
   };
 
-  const { theme, handleSubmit } = props.data;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    formRef.current.reset();
+  };
+  const { theme } = props.data;
   return (
     <ThemeProvider theme={theme}>
-      <FormStyled onSubmit={handleSubmit}>
-        <input type="text" placeholder={` Search...`} onChange={handleChange} />
+      <FormStyled onSubmit={handleSubmit} ref={formRef}>
+        <input
+          type="text"
+          placeholder={` Search...`}
+          onChange={handleChange}
+          //value={searchValue}
+        />
       </FormStyled>
     </ThemeProvider>
   );
