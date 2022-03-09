@@ -8,6 +8,8 @@ import {
   DropdownCoinList,
   CoinsDataBar,
 } from "components/exports";
+import { connect } from "react-redux";
+import { default as selectCoin } from "store/allCoins/allCoinsActions.js";
 
 import { Container, LinkStyled } from "./styles";
 
@@ -125,6 +127,7 @@ class NavBar extends React.Component {
     const { coin, coins, theme } = this.state;
     const { changeTheme } = this.props;
 
+    console.log("from navbar", selectCoin());
     return (
       <ThemeProvider theme={theme}>
         <Container>
@@ -154,4 +157,12 @@ class NavBar extends React.Component {
     );
   }
 }
-export default NavBar;
+
+const mapStateToProps = (state) => ({
+  tracks: state.songs,
+  // mySong: state.selectedSong,
+});
+const mapDispatchToProps = {
+  // selectCoolSong: "",
+};
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
