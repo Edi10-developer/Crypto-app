@@ -9,6 +9,7 @@ class App extends React.Component {
   state = {
     currency: "USD",
     icon: "$",
+    coin: "",
     data: [],
     btcChartsData: [],
     btcCurrentPrice: 0,
@@ -18,7 +19,6 @@ class App extends React.Component {
     coinTimestamp: [],
     days: 7,
     daysOptions: [1, 7, 30, 180, 365],
-    coin: "",
     theme: darkTheme,
     baseUrl: process.env.REACT_APP_ENDPOINT,
   };

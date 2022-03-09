@@ -16,7 +16,6 @@ class NavBar extends React.Component {
     currency: this.props.currency,
     icon: this.props.icon,
     coin: "",
-    inputValue: "",
     currencies: [
       { value: "USD", icon: "$" },
       { value: "EUR", icon: "€" },
@@ -37,8 +36,13 @@ class NavBar extends React.Component {
 
   baseurl = process.env.REACT_APP_ENDPOINT;
 
-  updateCoin = (coinName) =>
-    this.setState({ coin: coinName, inputValue: coinName });
+  updateCoin = (coinName) => this.setState({ coin: coinName });
+
+  handleSubmit = async () => {
+    await this.props.updateCoin(this.state.coin);
+    this.handleChange("");
+    //  window.location.pathname = `/coins/${this.state.coin}`;
+  };
 
   getCoinList = async () => {
     try {
@@ -88,7 +92,7 @@ class NavBar extends React.Component {
 
   getAllCoinList = async () => {
     try {
-      const { data } = await axios(`${this.baseurl}/search?query=${""}`);
+      const { data } = await axios(`${this.baseurl}/search`);
       this.setState({
         coins: data,
       });
@@ -107,8 +111,8 @@ class NavBar extends React.Component {
   };
 
   componentDidMount() {
-    this.getCoinList();
     this.getAllCoinList();
+    this.getCoinList();
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -120,6 +124,7 @@ class NavBar extends React.Component {
   render() {
     const { coin, coins, theme } = this.state;
     const { changeTheme } = this.props;
+
     return (
       <ThemeProvider theme={theme}>
         <Container>

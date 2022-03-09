@@ -96,7 +96,7 @@ const RenderSwatches = () => {
           <span>{nFormatter(market_cap)}</span>
         </DataStyled>
         <Progressbar
-          percent={(total_volume / market_cap) * 100}
+          percent={Math.round((total_volume / market_cap) * 100)}
           width="100px"
           unfilledBackground={"#FFFFF9"}
           filledBackground={"#215DB5"}
@@ -109,7 +109,7 @@ const RenderSwatches = () => {
           <span>{nFormatter(total_supply)}</span>
         </DataStyled>
         <Progressbar
-          percent={(circulating_supply / total_supply) * 100}
+          percent={Math.round((circulating_supply / total_supply) * 100)}
           width="100px"
           unfilledBackground={"white"}
           filledBackground={"#215DB5"}
