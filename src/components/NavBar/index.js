@@ -8,8 +8,9 @@ import {
   DropdownCoinList,
   CoinsDataBar,
 } from "components/exports";
+
 import { connect } from "react-redux";
-import { default as selectCoin } from "store/allCoins/allCoinsActions.js";
+import { getData } from "store/allCoins/actions";
 
 import { Container, LinkStyled } from "./styles";
 
@@ -23,7 +24,6 @@ class NavBar extends React.Component {
       { value: "EUR", icon: "€" },
     ],
     coinData: [],
-    coins: [],
     btcMarketCap: 0,
     ethMarketCap: 0,
     globalCoinsData: [],
@@ -34,6 +34,7 @@ class NavBar extends React.Component {
     btcPercentageMarketCap: 0,
     ethPercentageMarketCap: 0,
     theme: this.props.theme,
+    value: 0,
   };
 
   baseurl = process.env.REACT_APP_ENDPOINT;
@@ -92,17 +93,6 @@ class NavBar extends React.Component {
     }
   };
 
-  getAllCoinList = async () => {
-    try {
-      const { data } = await axios(`${this.baseurl}/search`);
-      this.setState({
-        coins: data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   getCurrency = (e) => {
     const index = e.target.selectedIndex;
     const newCurrency = e.target.options[index].value;
@@ -113,7 +103,7 @@ class NavBar extends React.Component {
   };
 
   componentDidMount() {
-    this.getAllCoinList();
+    this.props.getData();
     this.getCoinList();
   }
 
@@ -125,9 +115,10 @@ class NavBar extends React.Component {
 
   render() {
     const { coin, coins, theme } = this.state;
-    const { changeTheme } = this.props;
+    // const { changeTheme } = this.props;
 
-    console.log("from navbar", selectCoin());
+    //console.log("coins", this.props.coinso.coins);
+    console.log(props);
     return (
       <ThemeProvider theme={theme}>
         <Container>
@@ -135,11 +126,12 @@ class NavBar extends React.Component {
             <LinkStyled to="/">Coins</LinkStyled>
             <LinkStyled to="/portfolio"> Portfolio</LinkStyled>
           </div>
+          <div></div>
           <div>
             <SearchInput data={this.state} updateCoin={this.updateCoin} />
             {coin !== "" && (
               <DropdownCoinList
-                coins={coins}
+                coins={this.props.coins.coins}
                 coin={coin}
                 theme={theme}
                 updateCoin={() => this.props.updateCoin}
@@ -149,7 +141,7 @@ class NavBar extends React.Component {
               data={this.state}
               updateCurrency={this.getCurrency}
             />
-            <SelectTheme changeTheme={changeTheme} theme={theme} />
+            <SelectTheme changeTheme={this.props.changeTheme} theme={theme} />
           </div>
         </Container>
         <CoinsDataBar data={this.state} />
@@ -159,10 +151,9 @@ class NavBar extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  tracks: state.songs,
-  // mySong: state.selectedSong,
+  coins: state.allCoins.data,
 });
 const mapDispatchToProps = {
-  // selectCoolSong: "",
+  getData,
 };
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

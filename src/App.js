@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { NavBar } from "components/exports";
 import { CoinList, Portfolio, Coin } from "pages/exports";
 import { darkTheme, lightTheme } from "utils/theme";
+import { ThemeProvider } from "styled-components";
 
 class App extends React.Component {
   state = {
@@ -120,7 +121,7 @@ class App extends React.Component {
   render() {
     const { currency, coin, icon, theme, daysOptions } = this.state;
     return (
-      <>
+      <ThemeProvider theme={this.state.theme}>
         <Router>
           <div
             style={{
@@ -158,7 +159,7 @@ class App extends React.Component {
             </Switch>
           </div>
         </Router>
-      </>
+      </ThemeProvider>
     );
   }
 }

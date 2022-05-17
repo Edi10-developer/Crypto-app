@@ -1,1 +1,0 @@
-export const COIN_SELECTED = "COIN_SELECTED";

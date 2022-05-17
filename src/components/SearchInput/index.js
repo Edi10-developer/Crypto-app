@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import { ThemeProvider } from "styled-components";
 import { FormStyled } from "./styles";
 
 const SearchInput = (props) => {
@@ -12,16 +11,14 @@ const SearchInput = (props) => {
   };
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
+    e.preventDefault();
     //  formRef.current.reset();
+    props.updateCoin("");
   };
-  const { theme } = props.data;
   return (
-    <ThemeProvider theme={theme}>
-      <FormStyled onSubmit={handleSubmit} ref={formRef}>
-        <input type="text" placeholder={` Search...`} onChange={handleChange} />
-      </FormStyled>
-    </ThemeProvider>
+    <FormStyled onSubmit={handleSubmit} ref={formRef}>
+      <input type="text" placeholder={` Search...`} onChange={handleChange} />
+    </FormStyled>
   );
 };
 

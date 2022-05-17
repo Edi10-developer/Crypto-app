@@ -1,71 +1,87 @@
+import React, { useState, useEffect } from "react";
 import { Progressbar } from "components/exports";
 import { Container, CoinImg } from "./styles";
 import { nFormatter } from "utils/nFormatter";
-import { ThemeProvider } from "styled-components";
+
+import { connect } from "react-redux";
+import { getData } from "store/globalCoinsData/actions";
 
 const CoinsDataBar = (props) => {
+  const { todayTotalMarketCap } = props;
   const {
-    globalCoinsData,
+    active_cryptocurrencies,
+    markets,
     currencyIcon,
-    totalMarketCap,
-    todayTotalMarketCap,
-    todayPercentageMarketCap,
-    btcPercentageMarketCap,
-    ethPercentageMarketCap,
-    theme,
-  } = props.data;
+    total_volume,
+    market_cap_percentage,
+    market_cap_change_percentage_24h_usd,
+  } = props.data.globalCoinsData;
+
+  useEffect(() => {
+    props.getData();
+  }, []);
+
   return (
-    <ThemeProvider theme={theme}>
-      <Container>
-        <li>Coins: {globalCoinsData.active_cryptocurrencies}</li>
-        <li>Exchange: {globalCoinsData.markets}</li>
-        <li>
-          •{currencyIcon}
-          {nFormatter(totalMarketCap)}
-        </li>
-        <li>
-          {currencyIcon}
-          <span>{nFormatter(todayTotalMarketCap)} </span>
-          <Progressbar
-            percent={todayTotalMarketCap}
-            unfilledBackground={"white"}
-            filledBackground={"#215DB5"}
-            width={"60px"}
-          />
-        </li>
-        <li>
-          <CoinImg
-            src={
-              "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
-            }
-            alt={"bitcoin"}
-          />
-          <span>{Math.round(btcPercentageMarketCap * 10) / 10}%</span>
-          <Progressbar
-            percent={btcPercentageMarketCap}
-            unfilledBackground={"white"}
-            filledBackground={"#215DB5"}
-            width={"60px"}
-          />
-        </li>
-        <li>
-          <CoinImg
-            src={
-              "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880"
-            }
-            alt={"etherium"}
-          />
-          <span>{Math.round(ethPercentageMarketCap * 10) / 10}%</span>
-          <Progressbar
-            percent={ethPercentageMarketCap}
-            unfilledBackground={"white"}
-            filledBackground={"#215DB5"}
-            width={"60px"}
-          />
-        </li>
-      </Container>
-    </ThemeProvider>
+    <Container>
+      {props.data.globalCoinsData.length !== 0 && (
+        <>
+          <li>Coins: {active_cryptocurrencies}</li>
+          <li>Exchange: {markets}</li>{" "}
+          <li>
+            •{currencyIcon}
+            {nFormatter(total_volume.usd)}
+          </li>
+          <li>
+            {currencyIcon}
+            <span>{Math.round(market_cap_change_percentage_24h_usd)} % </span>
+            <Progressbar
+              percent={market_cap_change_percentage_24h_usd}
+              unfilledBackground={"white"}
+              filledBackground={"#215DB5"}
+              width={"60px"}
+            />
+          </li>
+          <li>
+            <CoinImg
+              src={
+                "https://assets.coingecko.com/coins/images/1/large/bitcoin.png?1547033579"
+              }
+              alt={"bitcoin"}
+            />{" "}
+            <span>{Math.round(market_cap_percentage.btc)}%</span>
+            <Progressbar
+              percent={market_cap_percentage.btc}
+              unfilledBackground={"white"}
+              filledBackground={"#215DB5"}
+              width={"60px"}
+            />
+          </li>
+          <li>
+            <CoinImg
+              src={
+                "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1595348880"
+              }
+              alt={"etherium"}
+            />
+            <span>{Math.round(market_cap_percentage.eth)}%</span>
+            <Progressbar
+              percent={market_cap_percentage.eth}
+              unfilledBackground={"white"}
+              filledBackground={"#215DB5"}
+              width={"60px"}
+            />
+          </li>
+        </>
+      )}
+    </Container>
   );
 };
 
-export default CoinsDataBar;
+const mapStateToProps = (state) => ({
+  data: state.globalCoinsData,
+});
+const mapDispatchToProps = {
+  getData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CoinsDataBar);
